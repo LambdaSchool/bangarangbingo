@@ -12,4 +12,9 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
+UserSchema.static('exists', async function exists(username) {
+  const user = await this.findOne({ username }).exec();
+  return !!user;
+});
+
 module.exports = mongoose.model('User', UserSchema);

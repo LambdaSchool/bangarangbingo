@@ -26,12 +26,19 @@ server.post('/auth/register', async (req, res) => {
       });
       return;
     }
-    //check if user exists
-    
-    //create user
+
+    if (await User.exists(username)) {
+      res.json({
+        isValid: false,
+        error: {
+          message: 'Username already exists.',
+        },
+      });
+      return;
+    }
     const user = await User.create({ username, password });
-    console.log(user);
-    res.json({});
+
+    res.json({ user });
   } catch (e) {
     console.log('something happened', e.name);
   }

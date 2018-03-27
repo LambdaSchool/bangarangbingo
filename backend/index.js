@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const bcrypt = require('bcrypt');
+
 const User = require('./models/user');
 
 const server = express();
@@ -16,7 +18,9 @@ server.use(express.static(path.join(__dirname, '../bingo/build')));
 
 server.post('/auth/register', async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username } = req.body;
+    let { password } = req.body;
+
     if (!username || !password) {
       res.json({
         isValid: false,
@@ -36,6 +40,7 @@ server.post('/auth/register', async (req, res) => {
       });
       return;
     }
+    password = await bcrypt.hash(password, 12);
     const user = await User.create({ username, password });
 
     res.json({ user });
@@ -45,7 +50,9 @@ server.post('/auth/register', async (req, res) => {
 });
 
 server.post('/auth/login', async (req, res) => {
-  res.json({});
+  const { username, password } = req.body;
+  const user = await User.authenticate(username, password);
+  return user ? res.json({ user }) : res.json({ error: 'failed to authenticate' });
 });
 
 server.get('/cards', (req, res) => {

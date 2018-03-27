@@ -3,19 +3,20 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const User = require('./models/user');
+const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/bingo';
 
 const server = express();
 server.use(bodyParser.json());
-const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/bingo';
+
 mongoose.connect(DB_URL);
 mongoose.set('debug', true);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 server.use(express.static(path.join(__dirname, '../bingo/build')));
-
 server.post('/auth/register', async (req, res) => {
   try {
     const { username } = req.body;

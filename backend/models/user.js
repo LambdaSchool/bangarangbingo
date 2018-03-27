@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
 UserSchema.static('authenticate', async function authenticate(username, password) {
   const user = await this.findOne({ username }).exec();
   const validated = await bcrypt.compare(password, user.password);
-  
+
   return validated ? user : false;
 });
 

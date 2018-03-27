@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const SECRET = 'thisNeedsToChange';
 
 const User = require('./models/user');
 const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/bingo';
@@ -43,8 +44,9 @@ server.post('/auth/register', async (req, res) => {
     }
     password = await bcrypt.hash(password, 12);
     const user = await User.create({ username, password });
-
-    res.json({ user });
+    const payload = { id: user._id, username: user.username };
+    const token = jwt.sign(payload, SECRET, { expiresInMinutes: '1h' });
+    res.json({ user, token });
   } catch (e) {
     console.log('something happened', e.name);
   }
@@ -53,7 +55,9 @@ server.post('/auth/register', async (req, res) => {
 server.post('/auth/login', async (req, res) => {
   const { username, password } = req.body;
   const user = await User.authenticate(username, password);
-  return user ? res.json({ user }) : res.json({ error: 'failed to authenticate' });
+  const payload = { id: user._id, username: user.username };
+  const token = jwt.sign(payload, SECRET, { expiresIn: '1h' });
+  return user ? res.json({ user, token }) : res.json({ error: 'failed to authenticate' });
 });
 
 server.get('/cards', (req, res) => {

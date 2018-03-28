@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const SECRET = 'thisNeedsToChange';
-
 const User = require('./models/user');
+
+const SECRET = 'thisNeedsToChange';
 const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/bingo';
 
 const server = express();

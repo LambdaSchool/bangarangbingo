@@ -48,7 +48,7 @@ server.post('/auth/register', async (req, res) => {
     const token = jwt.sign(payload, SECRET, { expiresInMinutes: '1h' });
     res.json({ user, token });
   } catch (e) {
-    console.log('something happened', e.name);
+    res.json({ error: 'Failed to register' });
   }
 });
 

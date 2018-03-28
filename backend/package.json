@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "heroku-postbuild": "cd ../bingo/ && yarn --production=false && yarn run build"
+    "test": "jest"
   },
   "dependencies": {
     "bcrypt": "^1.0.3",

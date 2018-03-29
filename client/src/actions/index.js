@@ -1,7 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-const ROOT_URL = 'http://localhost:5000';
+const ROOT_URL = 'http://localhost:8080';
 
 export const USER_REGISTERED = 'USER_REGISTERED';
 export const USER_AUTHENTICATED = 'USER_AUTHENTICATED';
@@ -23,7 +23,7 @@ export const register = (username, password, confirmPassword, history) => {
       return;
     }
     axios
-      .post(`${ROOT_URL}/users`, { username, password })
+      .post(`${ROOT_URL}/auth/register`, { username, password })
       .then(() => {
         dispatch({
           type: USER_REGISTERED
@@ -39,12 +39,12 @@ export const register = (username, password, confirmPassword, history) => {
 export const login = (username, password, history) => {
   return dispatch => {
     axios
-      .post(`${ROOT_URL}/login`, { username, password })
+      .post(`${ROOT_URL}/auth/login`, { username, password })
       .then(() => {
         dispatch({
           type: USER_AUTHENTICATED
         });
-        history.push('/users');
+        history.push('/cards');
       })
       .catch(() => {
         dispatch(authError('Incorrect email/password combo'));

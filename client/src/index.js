@@ -20,7 +20,7 @@ ReactDOM.render(
         <Route exact path="/" component={App} />
         <Route path="/SignIn" component={SignIn} />
         <Route path="/SignUp" component={SignUp} />
-        <Route path="/Settings" component={RequireAuth(Cards)} />
+        <Route path="/Cards" component={RequireAuth(Cards)} />
         <Route path="/Settings" component={RequireAuth(Settings)} />
         <Route path="/Billing" component={RequireAuth(Billing)} />
       </div>

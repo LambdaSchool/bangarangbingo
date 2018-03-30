@@ -17,7 +17,7 @@ mongoose.set('debug', true);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-server.use(express.static(path.join(__dirname, '../bingo/build')));
+server.use(express.static(path.join(__dirname, '../client/build')));
 server.post('/auth/register', async (req, res) => {
   try {
     const { username } = req.body;

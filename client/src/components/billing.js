@@ -1,13 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import SideNav from './sidenav';
 
 const Billing = () => (
   <div>
-    <h1>Bangarang Bingo</h1>
+    <SideNav />
     <div className="billing">
-      USER BILLING PAGE
+      <h1>BILLING</h1>
+      <div className="paymentbox">
+        <p>Payment Info</p>
+        <input placeholder="CC#" />
+        <input placeholder="EXP#" />
+        <input placeholder="CVV" />
+      </div>
+      <div>
+        <p>1 Year Subscriptiohn</p>
+        <p>1 Year Subscriptiohn</p>
+      </div>
+      <button>Buy Now</button>
     </div>
-    <Link to="/">LANDING PAGE</Link>
   </div>
 );
 

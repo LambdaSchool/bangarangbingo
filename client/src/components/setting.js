@@ -1,13 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import SideNav from './sidenav';
 
 const Settings = () => (
   <div>
-    <h1>Bangarang Bingo</h1>
+    <SideNav />
     <div className="settings">
-      USER SETTINGS PAGE
+      <h1>Settings</h1>
+      <div className="paymentbox">
+        <h3>NOT Wired Up and Working</h3>
+        <input placeholder="Email" />
+        <input placeholder="Old Password" />
+        <input placeholder="New Password" />
+      </div>
+      <button>Save</button>
     </div>
-    <Link to="/">LANDING PAGE</Link>
   </div>
 );
 

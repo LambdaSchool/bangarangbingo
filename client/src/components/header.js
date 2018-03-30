@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -12,26 +14,26 @@ class Header extends Component {
         </div>
       );
     }
-    return [
-        <div className="navlinks">
-          <Link to="/signin" className="navlinks__button">Sign In</Link>
-          <Link to="/signup" className="navlinks__button">Sign Up</Link>
-        </div>
-    ];
+    return (
+      <div className="navlinks">
+        <Link to="/signin" className="navlinks__button">Sign In</Link>
+        <Link to="/signup" className="navlinks__button">Sign Up</Link>
+      </div>
+    );
   }
 
   render() {
     return (
       <div>
-        <ul>{this.getLinks()}</ul>
+        {this.getLinks()}
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    authenticated: state.auth.authenticated
+    authenticated: state.auth.authenticated,
   };
 };
 

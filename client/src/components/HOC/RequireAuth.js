@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Header from '../header';
 
 function ComposedComponent(WrappedComponent) {
   class RequireAuthentication extends Component {
@@ -13,7 +14,12 @@ function ComposedComponent(WrappedComponent) {
 
     render() {
       if (!this.props.authenticated) return <div><p>No Auth</p></div>;
-      return <WrappedComponent />;
+      return (
+        <div>
+          <Header />
+          <WrappedComponent />
+        </div>
+      );
     }
   }
 

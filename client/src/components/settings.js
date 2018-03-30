@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { register } from '../actions';
+import { updateUser } from '../actions';
+import SideNav from './sidenav';
 
 class Settings extends Component {
   handleFormSubmit({ username, oldPassword, newPassword, confirmNewPassword }) {
@@ -21,6 +22,7 @@ class Settings extends Component {
 
     return (
       <div>
+        <SideNav />
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <fieldset>
             <label>Email:</label>
@@ -52,7 +54,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-SignUp = connect(mapStateToProps, { updateUser })(Settings);
+Settings = connect(mapStateToProps, { updateUser })(Settings);
 
 export default reduxForm({
   form: 'settings',

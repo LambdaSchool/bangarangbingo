@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 const SideNav = () => (
   <div>
-    <Link path="/Cards">Cards</Link>
-    <Link path="/Billing">Billing</Link>
-    <Link path="/Settings">Settings</Link>
+    <Link to="/Cards">Cards</Link>
+    <Link to="/Billing">Billing</Link>
+    <Link to="/Settings">Settings</Link>
   </div>
 );
 

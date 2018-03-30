@@ -37,6 +37,7 @@ export const register = (username, password, confirmPassword, history) => {
 };
 
 // updateUser needs work
+export const updateUser = () => {};
 // export const updateUser = (username, oldPassword, newPassword, confirmNewPassword, history) => {
 //   return dispatch => {
 //     if (password !== confirmPassword) {

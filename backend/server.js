@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -10,6 +11,12 @@ const SECRET = 'thisNeedsToChange';
 const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/bingo';
 
 const server = express();
+
+server.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
+
 server.use(bodyParser.json());
 
 mongoose.connect(DB_URL);
@@ -17,7 +24,7 @@ mongoose.set('debug', true);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-server.use(express.static(path.join(__dirname, '../bingo/build')));
+server.use(express.static(path.join(__dirname, '../client/build')));
 server.post('/auth/register', async (req, res) => {
   try {
     const { username } = req.body;

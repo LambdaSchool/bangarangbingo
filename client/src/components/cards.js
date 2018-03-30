@@ -1,13 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import SideNav from './sidenav';
 
 const Cards = () => (
   <div>
-    <h1>Bangarang Bingo</h1>
+    <SideNav />
     <div className="cards">
       USER CARD PAGE
     </div>
-    <Link to="/">LANDING PAGE</Link>
   </div>
 );
 

@@ -2,7 +2,7 @@ import Landing from './landing';
 import SignIn from './signin';
 import SignUp from './signup';
 import Cards from './cards';
-import Settings from './setting';
+import Settings from './settings';
 import Billing from './billing';
 import Header from './header';
 

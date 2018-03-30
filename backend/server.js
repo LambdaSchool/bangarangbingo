@@ -60,6 +60,24 @@ server.post('/auth/login', async (req, res) => {
   return user ? res.json({ user, token }) : res.json({ error: 'failed to authenticate' });
 });
 
+server.post('/auth/reset', async (req, res) => {
+  const { username, password, confirmPassword } = req.body;
+  let { newPassword } = req.body;
+
+  if (password !== confirmPassword) {
+    res.send({ error: 'Passwords do not match.' });
+    return;
+  }
+  const user = await User.authenticate(username, password);
+  if (!user) {
+    res.send({ error: 'Could not authenticate' });
+    return;
+  }
+  newPassword = await bcrypt.hash(newPassword, 12);
+  user.set({ password: newPassword });
+  const updatedUser = await user.save();
+  res.send({ user: updatedUser });
+});
 server.get('/cards', (req, res) => {
   res.json([]);
 });

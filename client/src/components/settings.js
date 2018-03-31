@@ -4,10 +4,11 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { register } from '../actions';
+import { updateUser } from '../actions';
+import SideNav from './sidenav';
 
-class SignUp extends Component {
-  handleFormSubmit({ username, password, confirmPassword }) {
+class Settings extends Component {
+  handleFormSubmit({ username, oldPassword, newPassword, confirmNewPassword }) {
     this.props.register(username, password, confirmPassword, this.props.history);
   }
 
@@ -21,24 +22,27 @@ class SignUp extends Component {
 
     return (
       <div>
+        <SideNav />
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <fieldset>
             <label>Email:</label>
             <Field name="username" component="input" type="text" />
           </fieldset>
           <fieldset>
-            <label>Password:</label>
-            <Field name="password" component="input" type="password" />
+            <label>Old Password:</label>
+            <Field name="oldPassword" component="input" type="password" />
           </fieldset>
           <fieldset>
-            <label>Confirm Password:</label>
-            <Field name="confirmPassword" component="input" type="password" />
+            <label>New Password:</label>
+            <Field name="newPassword" component="input" type="password" />
           </fieldset>
-          <button action="submit">Sign Up</button>
+          <fieldset>
+            <label>Confirm New Password:</label>
+            <Field name="confirmNew Password" component="input" type="password" />
+          </fieldset>
+          <button action="submit">Save</button>
           {this.renderAlert()}
         </form>
-        <div>If you already have an account, <Link to="/SignIn">Sign In</Link>!</div>
-        <Link to="/">LANDING PAGE</Link>
       </div>
     );
   }
@@ -50,9 +54,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-SignUp = connect(mapStateToProps, { register })(SignUp);
+Settings = connect(mapStateToProps, { updateUser })(Settings);
 
 export default reduxForm({
-  form: 'signup',
-  fields: ['username', 'password', 'confirmPassword']
-})(SignUp);
+  form: 'settings',
+  fields: ['username', 'oldPassword', 'newPassword', 'confirmNewPassword']
+})(Settings);

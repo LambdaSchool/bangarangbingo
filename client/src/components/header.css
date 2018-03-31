@@ -1,0 +1,15 @@
+.navlinks {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.navlinks__button {
+    background-color: #239999;
+    color: white;
+    padding: 10px 10px;
+    margin: 0px 5px 0px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}

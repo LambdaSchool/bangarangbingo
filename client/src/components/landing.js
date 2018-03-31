@@ -4,10 +4,6 @@ import './landing.css';
 
 const Landing = () => (
   <div className="landing">
-    <div className="navlinks">
-      <div><Link to="/SignUp" className="navlinks__button">Sign Up</Link></div>
-      <div><Link to="/SignIn" className="navlinks__button">Sign In</Link></div>
-    </div>
     <div className="landing__content">
       <div className="header">Bangarang Bingo</div>
       <div className="carousel">

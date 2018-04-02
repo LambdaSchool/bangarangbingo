@@ -2,6 +2,7 @@ import Landing from './landing';
 import SignIn from './signin';
 import SignUp from './signup';
 import Cards from './cards';
+import Card from './card';
 import Settings from './settings';
 import Billing from './billing';
 import Header from './header';
@@ -12,6 +13,7 @@ export {
   SignIn,
   SignUp,
   Cards,
+  Card,
   Settings,
   Billing,
   Header,

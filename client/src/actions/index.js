@@ -37,26 +37,29 @@ export const register = (username, password, confirmPassword, history) => {
 };
 
 // updateUser needs work
-export const updateUser = () => {};
-// export const updateUser = (username, oldPassword, newPassword, confirmNewPassword, history) => {
-//   return dispatch => {
-//     if (password !== confirmPassword) {
-//       dispatch(authError('New passwords do not match'));
-//       return;
-//     }
-//     axios
-//       .post(`${ROOT_URL}/auth/updateUser`, { username, password })
-//       .then(() => {
-//         dispatch({
-//           type: USER_REGISTERED
-//         });
-//         history.push('/signin');
-//       })
-//       .catch(() => {
-//         dispatch(authError('Failed to register user'));
-//       });
-//   };
-// };
+export const updateUser = (username, password, confirmPassword, newPassword, confirmNewPassword, history) => {
+  return dispatch => {
+    if (password !== confirmPassword) {
+      dispatch(authError('Old passwords do not match'));
+      return;
+    }
+    if (newPassword !== confirmNewPassword) {
+      dispatch(authError('New passwords do not match'));
+      return;
+    }
+    axios
+      .post(`${ROOT_URL}/auth/reset`, { username, password, confirmPassword, newPassword })
+      .then(() => {
+        dispatch({
+          type: USER_REGISTERED
+        });
+        history.push('/cards');
+      })
+      .catch(() => {
+        dispatch(authError('Failed to update user password'));
+      });
+  };
+};
 
 export const login = (username, password, history) => {
   return dispatch => {

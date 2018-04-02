@@ -8,8 +8,8 @@ import { updateUser } from '../actions';
 import SideNav from './sidenav';
 
 class Settings extends Component {
-  handleFormSubmit({ username, oldPassword, newPassword, confirmNewPassword }) {
-    this.props.register(username, password, confirmPassword, this.props.history);
+  handleFormSubmit({ username, password, confirmPassword, newPassword, confirmNewPassword }) {
+    this.props.updateUser(username, password, confirmPassword, newPassword, confirmNewPassword, this.props.history);
   }
 
   renderAlert() {
@@ -30,7 +30,11 @@ class Settings extends Component {
           </fieldset>
           <fieldset>
             <label>Old Password:</label>
-            <Field name="oldPassword" component="input" type="password" />
+            <Field name="password" component="input" type="password" />
+          </fieldset>
+          <fieldset>
+            <label>Confirm Old Password:</label>
+            <Field name="confirmPassword" component="input" type="password" />
           </fieldset>
           <fieldset>
             <label>New Password:</label>
@@ -38,7 +42,7 @@ class Settings extends Component {
           </fieldset>
           <fieldset>
             <label>Confirm New Password:</label>
-            <Field name="confirmNew Password" component="input" type="password" />
+            <Field name="confirmNewPassword" component="input" type="password" />
           </fieldset>
           <button action="submit">Save</button>
           {this.renderAlert()}
@@ -58,5 +62,5 @@ Settings = connect(mapStateToProps, { updateUser })(Settings);
 
 export default reduxForm({
   form: 'settings',
-  fields: ['username', 'oldPassword', 'newPassword', 'confirmNewPassword']
+  fields: ['username', 'password', 'confirmPassword', 'newPassword', 'confirmNewPassword']
 })(Settings);

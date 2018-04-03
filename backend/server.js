@@ -61,23 +61,34 @@ server.post('/auth/register', async (req, res) => {
 
 server.post('/auth/login', async (req, res) => {
   const { username, password } = req.body;
+  if (!username || !password) return res.status(422).json({ error: 'Request must have both username and password.' });
   const user = await User.authenticate(username, password);
   const payload = { id: user._id, username: user.username };
   const token = jwt.sign(payload, SECRET, { expiresIn: '1h' });
-  return user ? res.json({ user, token }) : res.json({ error: 'failed to authenticate' });
+  return user ? res.json({ user, token }) : res.status(403).json({ error: 'failed to authenticate' });
 });
 
 server.post('/auth/reset', async (req, res) => {
-  const { username, password, confirmPassword } = req.body;
+  const {
+    username,
+    password,
+    confirmPassword,
+    confirmNewPassword,
+  } = req.body;
+
   let { newPassword } = req.body;
 
   if (password !== confirmPassword) {
-    res.send({ error: 'Passwords do not match.' });
+    res.status(422).send({ error: 'Current Passwords do not match.' });
+    return;
+  }
+  if (newPassword !== confirmNewPassword) {
+    res.status(422).send({ error: 'New Passwords do not match.' });
     return;
   }
   const user = await User.authenticate(username, password);
   if (!user) {
-    res.send({ error: 'Could not authenticate' });
+    res.status(403).send({ error: 'Could not authenticate' });
     return;
   }
   newPassword = await bcrypt.hash(newPassword, 12);

@@ -48,7 +48,7 @@ export const updateUser = (username, password, confirmPassword, newPassword, con
       return;
     }
     axios
-      .post(`${ROOT_URL}/auth/reset`, { username, password, confirmPassword, newPassword })
+      .post(`${ROOT_URL}/auth/reset`, { username, password, confirmPassword, newPassword, confirmNewPassword })
       .then(() => {
         dispatch({
           type: USER_REGISTERED

@@ -62,10 +62,13 @@ export const login = (username, password, history) => {
   return dispatch => {
     axios
       .post(`${ROOT_URL}/auth/login`, { username, password })
-      .then(() => {
+      .then((res) => {
         dispatch({
           type: USER_AUTHENTICATED
         });
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        console.log(res.data);
         history.push('/cards');
       })
       .catch(() => {

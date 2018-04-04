@@ -26,9 +26,18 @@ class Cards extends Component {
       <div>
         <SideNav />
         <div className="cards">
-          USER CARD PAGE
+          <h3>USER CARD PAGE</h3>
+          <ul className='cardsList'>
+            { this.props.cards.map((card, i) => {
+              if (card.author === this.state.user._id) {
+                return (
+                  <Link className="cardLinks" to={`/cards/${card._id}`} key={card._id+i}>{card.title}</Link>
+                )
+              }
+            })}
+          </ul>
+          <Link to="/Card">Link to SINGLE Card Create/Edit</Link>
         </div>
-        <Link to="/Card">Link to SINGLE Card Create/Edit</Link>
         <p>{this.state.user._id}</p>
         <p>{this.state.user.username}</p>
       </div>

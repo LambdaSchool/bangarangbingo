@@ -7,6 +7,9 @@ export const USER_REGISTERED = 'USER_REGISTERED';
 export const USER_AUTHENTICATED = 'USER_AUTHENTICATED';
 export const USER_UNAUTHENTICATED = 'USER_UNAUTHENTICATED';
 export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR';
+export const GET_CARDS = 'GET_CARDS';
+export const GET_CARD = 'GET_CARD';
+export const ADD_CARD = 'ADD_CARD';
 // export const CHECK_IF_AUTHENTICATED = 'CHECK_IF_AUTHENTICATED';
 
 export const authError = error => {
@@ -89,5 +92,29 @@ export const logout = () => {
       .catch(() => {
         dispatch(authError('Failed to log you out'));
       });
+  };
+};
+
+export const getCards = () => {
+  const promise = axios.get(`${ROOT_URL}/cards`);
+  return {
+    type: GET_CARDS,
+    payload: promise
+  };
+};
+
+export const getCard = (id) => {
+  const promise = axios.get(`${ROOT_URL}/card/${id}`);
+  return {
+    type: GET_CARD,
+    payload: promise
+  };
+};
+
+export const addCard = (card) => {
+  const promise = axios.post(`${ROOT_URL}/card/create`, card);
+  return {
+    type: ADD_CARD,
+    payload: promise
   };
 };

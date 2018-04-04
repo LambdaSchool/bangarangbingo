@@ -31,7 +31,7 @@ class Cards extends Component {
             { this.props.cards.map((card, i) => {
               if (card.author === this.state.user._id) {
                 return (
-                  <Link className="cardLinks" to={`/cards/${card._id}`} key={card._id+i}>{card.title}</Link>
+                  <Link className="cardLinks" to={`/Cards/${card._id}`} key={card._id+i}>{card.title}</Link>
                 )
               }
             })}

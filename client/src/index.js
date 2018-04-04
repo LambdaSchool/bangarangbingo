@@ -26,7 +26,7 @@ ReactDOM.render(
         <Route path="/SignIn" component={SignIn} />
         <Route path="/SignUp" component={SignUp} />
         <Route path="/Cards" component={RequireAuth(Cards)} />
-        <Route path="/Card" component={RequireAuth(Card)} />
+        <Route path="/Cards/:id" component={RequireAuth(Card)} />
         <Route path="/Settings" component={RequireAuth(Settings)} />
         <Route path="/Billing" component={RequireAuth(Billing)} />
       </div>

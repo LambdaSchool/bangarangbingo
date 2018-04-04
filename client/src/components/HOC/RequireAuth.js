@@ -17,7 +17,7 @@ function ComposedComponent(WrappedComponent) {
       return (
         <div>
           <Header />
-          <WrappedComponent />
+          <WrappedComponent history={this.props.history}/>
         </div>
       );
     }

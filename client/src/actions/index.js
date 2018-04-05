@@ -7,6 +7,9 @@ export const USER_REGISTERED = 'USER_REGISTERED';
 export const USER_AUTHENTICATED = 'USER_AUTHENTICATED';
 export const USER_UNAUTHENTICATED = 'USER_UNAUTHENTICATED';
 export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR';
+export const GET_CARDS = 'GET_CARDS';
+export const GET_CARD = 'GET_CARD';
+export const ADD_CARD = 'ADD_CARD';
 // export const CHECK_IF_AUTHENTICATED = 'CHECK_IF_AUTHENTICATED';
 
 export const authError = error => {
@@ -65,10 +68,13 @@ export const login = (username, password, history) => {
   return dispatch => {
     axios
       .post(`${ROOT_URL}/auth/login`, { username, password })
-      .then(() => {
+      .then((res) => {
         dispatch({
           type: USER_AUTHENTICATED
         });
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        console.log(res.data);
         history.push('/cards');
       })
       .catch(() => {
@@ -88,6 +94,54 @@ export const logout = () => {
       })
       .catch(() => {
         dispatch(authError('Failed to log you out'));
+      });
+  };
+};
+
+export const getCards = () => {
+  return dispatch => {
+    axios
+      .get(`${ROOT_URL}/cards`)
+      .then((res) => {
+        dispatch({
+          type: GET_CARDS,
+          payload: res
+        });
+      })
+      .catch(() => {
+        dispatch(authError('Failed to get cards'));
+      });
+  };
+};
+
+export const getCard = (id) => {
+  return dispatch => {
+    axios
+      .get(`${ROOT_URL}/cards/${id}`)
+      .then((res) => {
+        dispatch({
+          type: GET_CARD,
+          payload: res
+        });
+      })
+      .catch(() => {
+        dispatch(authError('Failed to get card by that id'));
+      });
+  };
+};
+
+export const addCard = (card) => {
+  return dispatch => {
+    axios
+      .post(`${ROOT_URL}/card/create`, card)
+      .then((res) => {
+        dispatch({
+          type: ADD_CARD,
+          payload: res
+        });
+      })
+      .catch(() => {
+        dispatch(authError('Failed to add new card'));
       });
   };
 };

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { register } from '../actions';
+import './auth.css';
 
 class SignUp extends Component {
   handleFormSubmit({ username, password, confirmPassword }) {
@@ -20,25 +21,28 @@ class SignUp extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <div>
-        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-          <fieldset>
-            <label>Email:</label>
-            <Field name="username" component="input" type="text" />
-          </fieldset>
-          <fieldset>
-            <label>Password:</label>
-            <Field name="password" component="input" type="password" />
-          </fieldset>
-          <fieldset>
-            <label>Confirm Password:</label>
-            <Field name="confirmPassword" component="input" type="password" />
-          </fieldset>
-          <button action="submit">Sign Up</button>
-          {this.renderAlert()}
-        </form>
-        <div>If you already have an account, <Link to="/SignIn">Sign In</Link>!</div>
-        <Link to="/">LANDING PAGE</Link>
+      <div className="authForm">
+        <div className="formContainer">
+          <h3 className="formTitle">Sign Up</h3>
+          <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+            <fieldset>
+              <label>Email:</label>
+              <Field name="username" component="input" type="text" />
+            </fieldset>
+            <fieldset>
+              <label>Password:</label>
+              <Field name="password" component="input" type="password" />
+            </fieldset>
+            <fieldset>
+              <label>Confirm Password:</label>
+              <Field name="confirmPassword" component="input" type="password" />
+            </fieldset>
+            <button action="submit" className="formButton">Sign Up</button>
+            {this.renderAlert()}
+          </form>
+        </div>
+        <div className="redirect">Already have an account? <Link to="/SignIn">Sign In</Link>!</div>
+        <Link to="/" className="return">LANDING PAGE</Link>
       </div>
     );
   }

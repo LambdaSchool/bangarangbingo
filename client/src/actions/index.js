@@ -99,30 +99,13 @@ export const logout = () => {
 };
 
 export const getCards = () => {
-  return dispatch => {
-    axios
-      .get(`${ROOT_URL}/cards`)
-      .then((res) => {
-        dispatch({
-          type: GET_CARDS,
-          payload: res
-        });
-        console.log('action getCards fired with returned res.data:', res.data);
-      })
-      .catch(() => {
-        dispatch(authError('unable to get cards'));
-      })
+  const promise = axios.get(`${ROOT_URL}/cards`);
+  console.log('Action getCards fired with returned promise:', promise);
+  return {
+    type: GET_CARDS,
+    payload: promise
   };
 };
-
-// export const getCards = () => {
-//   const promise = axios.get(`${ROOT_URL}/cards`);
-//   console.log('action getCards fired with returned promise:', promise);
-//   return {
-//     type: GET_CARDS,
-//     payload: promise
-//   };
-// };
 
 export const getCard = (id) => {
   const promise = axios.get(`${ROOT_URL}/card/${id}`);

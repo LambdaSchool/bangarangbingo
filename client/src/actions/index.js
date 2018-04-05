@@ -99,26 +99,49 @@ export const logout = () => {
 };
 
 export const getCards = () => {
-  const promise = axios.get(`${ROOT_URL}/cards`);
-  console.log('Action getCards fired with returned promise:', promise);
-  return {
-    type: GET_CARDS,
-    payload: promise
+  return dispatch => {
+    axios
+      .get(`${ROOT_URL}/cards`)
+      .then((res) => {
+        dispatch({
+          type: GET_CARDS,
+          payload: res
+        });
+      })
+      .catch(() => {
+        dispatch(authError('Failed to get cards'));
+      });
   };
 };
 
 export const getCard = (id) => {
-  const promise = axios.get(`${ROOT_URL}/card/${id}`);
-  return {
-    type: GET_CARD,
-    payload: promise
+  return dispatch => {
+    axios
+      .get(`${ROOT_URL}/cards/${id}`)
+      .then((res) => {
+        dispatch({
+          type: GET_CARD,
+          payload: res
+        });
+      })
+      .catch(() => {
+        dispatch(authError('Failed to get card by that id'));
+      });
   };
 };
 
 export const addCard = (card) => {
-  const promise = axios.post(`${ROOT_URL}/card/create`, card);
-  return {
-    type: ADD_CARD,
-    payload: promise
+  return dispatch => {
+    axios
+      .post(`${ROOT_URL}/card/create`, card)
+      .then((res) => {
+        dispatch({
+          type: ADD_CARD,
+          payload: res
+        });
+      })
+      .catch(() => {
+        dispatch(authError('Failed to add new card'));
+      });
   };
 };

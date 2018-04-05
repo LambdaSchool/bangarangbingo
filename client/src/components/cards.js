@@ -19,23 +19,27 @@ class Cards extends Component {
   componentDidMount() {
     const authUser = JSON.parse(localStorage.getItem('user'));
     this.setState({'user': authUser});
+    this.props.getCards();
   }
 
   render() {
+    console.log('in cards.js', this.props);
     return (
       <div>
         <SideNav />
         <div className="cards">
           <h3>USER CARD PAGE</h3>
-          <ul className='cardsList'>
-            { this.props.cards.map((card, i) => {
-              if (card.author === this.state.user._id) {
-                return (
-                  <Link className="cardLinks" to={`/Cards/${card._id}`} key={card._id+i}>{card.title}</Link>
-                )
-              }
-            })}
-          </ul>
+          if (this.props.cards) {
+            <ul className='cardsList'>
+              { this.props.cards.map((card, i) => {
+                if (card.author === this.state.user._id) {
+                  return (
+                    <Link className="cardLinks" to={`/Cards/${card._id}`} key={card._id+i}>{card.title}</Link>
+                  )
+                }
+              })}
+            </ul>
+          }
           <Link to="/Card">Link to SINGLE Card Create/Edit</Link>
         </div>
         <p>{this.state.user._id}</p>

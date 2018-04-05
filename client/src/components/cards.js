@@ -39,7 +39,7 @@ class Cards extends Component {
             })
             }
           </ul>
-          <Link to="/Card">Link to SINGLE Card Create/Edit</Link>
+          <Link to="/Card/Create">Link to SINGLE Card Create/Edit</Link>
         </div>
         <p>{this.state.user._id}</p>
         <p>{this.state.user.username}</p>

@@ -171,7 +171,7 @@ server.get('/cards/download', (req, res) => {
 });
 
 server.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../bingo/build/index.html'));
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
 module.exports = server;

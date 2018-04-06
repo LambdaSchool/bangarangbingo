@@ -5,7 +5,55 @@ const mongoose = require('mongoose');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const PDFDocument = require('pdfkit');
+const SVGtoPDF = require('svg-to-pdfkit');
 const User = require('./models/user');
+
+PDFDocument.prototype.addSVG = function addSVG(svg, x, y, options) {
+  return SVGtoPDF(this, svg, x, y, options);
+};
+
+function generateCell(x, y, content) {
+  return `
+    <g>
+      <rect
+        x="${x}"
+        y="${y}"
+        width="200"
+        height="200"
+        fill="#fff"
+        stroke="#000"
+        strokeWidth="3"
+      />
+      <text
+        x="${x + 100}"
+        y="${y + 100}"
+        font-size="32"
+        text-anchor="middle"
+        alignment-baseline="central"
+      >
+        ${content}
+      </text>
+    </g>`;
+}
+
+function generateCard(w, h) {
+  const cells = [];
+  const totalCells = w * h;
+  const freeSpace = Math.round(totalCells / 2);
+
+  let cell = 0;
+  for (let i = 0; i < w; i++) {
+    for (let j = 0; j < h; j++) {
+      cell++;
+      const x = ((j + 1) * 200);
+      const y = 200 * (i + 1);
+      const content = cell === freeSpace ? 'free' : Math.floor(Math.random() * 100);
+      cells.push(generateCell(x, y, content));
+    }
+  }
+  return `<svg id="preview" viewBox="0 0 1400 1400">${cells.join('')}</svg>`;
+}
 
 const SECRET = 'thisNeedsToChange';
 const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/bingo';
@@ -110,6 +158,16 @@ server.post('/card/create', (req, res) => {
 
 server.post('/card/edit', (req, res) => {
   res.json({});
+});
+
+server.get('/cards/download', (req, res) => {
+  const doc = new PDFDocument();
+  doc.pipe(res);
+  for(let i = 0; i < Math.floor(Math.random() * 20); i++) {
+    SVGtoPDF(doc, generateCard(5, 5), 0, 0);
+    doc.addPage();
+  }
+  doc.end();
 });
 
 server.get('*', (req, res) => {

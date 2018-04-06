@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { updateUser } from '../actions';
 import SideNav from './sidenav';
+import './protectedComponent.css';
 
 class Settings extends Component {
   handleFormSubmit({ username, password, confirmPassword, newPassword, confirmNewPassword }) {
@@ -21,30 +22,33 @@ class Settings extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <div>
+      <div className="protectedComponent">
         <SideNav />
-        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-          <fieldset>
-            <label>Email:</label>
-            <Field name="username" component="input" type="text" />
-          </fieldset>
-          <fieldset>
-            <label>Old Password:</label>
-            <Field name="password" component="input" type="password" />
-          </fieldset>
-          <fieldset>
-            <label>Confirm Old Password:</label>
-            <Field name="confirmPassword" component="input" type="password" />
-          </fieldset>
-          <fieldset>
-            <label>New Password:</label>
-            <Field name="newPassword" component="input" type="password" />
-          </fieldset>
-          <fieldset>
-            <label>Confirm New Password:</label>
-            <Field name="confirmNewPassword" component="input" type="password" />
-          </fieldset>
-          <button action="submit">Save</button>
+        <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} className="reduxForm">
+          <h3 className="formTitle">Update Password</h3>
+          <div className="formInput">
+            <div className="formInput__item">
+              <label>Email:</label>
+              <Field name="username" component="input" type="text" className="inputField" />
+            </div>
+            <div className="formInput__item">
+              <label>Old Password:</label>
+              <Field name="password" component="input" type="password" className="inputField" />
+            </div>
+            <div className="formInput__item">
+              <label>Confirm Old Password:</label>
+              <Field name="confirmPassword" component="input" type="password" className="inputField" />
+            </div>
+            <div className="formInput__item">
+              <label>New Password:</label>
+              <Field name="newPassword" component="input" type="password" className="inputField" />
+            </div>
+            <div className="formInput__item">
+              <label>Confirm New Password:</label>
+              <Field name="confirmNewPassword" component="input" type="password" className="inputField" />
+            </div>
+          </div>
+          <button action="submit" className="formButton">Save</button>
           {this.renderAlert()}
         </form>
       </div>

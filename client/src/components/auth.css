@@ -1,0 +1,70 @@
+.authForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-self: center;
+    width: 80%;
+    padding: 10px;
+}
+
+.formTitle {
+    align-self: center;
+}
+
+.redirect {
+    align-self: center;
+    padding: 15px;
+}
+
+.return {
+    align-self: center;
+    padding: 10px;
+    background-color: #239999;
+    color: white;
+    margin: 15px;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.reduxForm {
+    display: flex;
+    flex-direction: column;
+    background-color: #c2c2c2;
+    margin: 10px;
+    padding: 5px;
+    width: 70%;
+}
+
+.formInput {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.formInput__item {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    margin: 5px;
+}
+
+.inputField {
+    flex: 1;
+}
+
+.formButton {
+    background-color: #239999;
+    color: white;
+    padding: 10px 10px;
+    margin: 0px 5px 0px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}

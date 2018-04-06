@@ -6,17 +6,25 @@ import Header from '../header';
 
 function ComposedComponent(WrappedComponent) {
   class RequireAuthentication extends Component {
-    componentWillMount() {
-      if (!this.props.authenticated) {
-        this.props.history.push('/signin');
+    constructor() {
+      super();
+      this.state = {
+        token: '',
+        user: {}
       }
+    }
+    componentWillMount() {
+      this.setState({
+        token: localStorage.getItem('token'),
+        user: localStorage.getItem('user'),
+      });
     }
 
     render() {
-      if (!this.props.authenticated) return <div><p>No Auth</p></div>;
+      if (!this.state.token && !this.state.user) return <div><p>No Auth</p></div>;
       return (
         <div>
-          <Header />
+          <Header authenticated={!!this.state.token && !!this.state.user}/>
           <WrappedComponent history={this.props.history}/>
         </div>
       );

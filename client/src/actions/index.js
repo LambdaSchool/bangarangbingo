@@ -63,7 +63,11 @@ export const updateUser = (username, password, confirmPassword, newPassword, con
       });
   };
 };
-
+export const downloadCards = () => {
+  return dispatch => {
+    window.location.href = `${ROOT_URL}/cards/download`;
+  }
+}
 export const login = (username, password, history) => {
   return dispatch => {
     axios

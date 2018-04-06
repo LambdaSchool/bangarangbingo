@@ -24,19 +24,21 @@ class SignUp extends Component {
       <div className="authForm">
         <div className="formContainer">
           <h3 className="formTitle">Sign Up</h3>
-          <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-            <fieldset>
-              <label>Email:</label>
-              <Field name="username" component="input" type="text" />
-            </fieldset>
-            <fieldset>
-              <label>Password:</label>
-              <Field name="password" component="input" type="password" />
-            </fieldset>
-            <fieldset>
-              <label>Confirm Password:</label>
-              <Field name="confirmPassword" component="input" type="password" />
-            </fieldset>
+          <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} className="reduxForm">
+            <div>
+              <div className="formInput__item">
+                <label>Email:</label>
+                <Field name="username" component="input" type="text" className="inputField" />
+              </div>
+              <div className="formInput__item">
+                <label>Password:</label>
+                <Field name="password" component="input" type="password" className="inputField" />
+              </div>
+              <div className="formInput__item">
+                <label>Confirm Password:</label>
+                <Field name="confirmPassword" component="input" type="password" className="inputField" />
+              </div>
+            </div>
             <button action="submit" className="formButton">Sign Up</button>
             {this.renderAlert()}
           </form>

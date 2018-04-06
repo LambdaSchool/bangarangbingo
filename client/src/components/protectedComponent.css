@@ -1,45 +1,29 @@
-.authForm {
+.protectedComponent {
+    display: flex;
+    flex-direction: row;
+    height: 100%
+}
+
+.sidenav {
     display: flex;
     flex-direction: column;
-}
-
-.formContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-self: center;
-    width: 80%;
     padding: 10px;
+    margin: 10px;
+    border: 1.5px solid black;
+    height: 100%;
 }
 
-.formTitle {
-    align-self: center;
-}
-
-.redirect {
-    align-self: center;
-    padding: 15px;
-}
-
-.return {
-    align-self: center;
-    padding: 10px;
-    background-color: #239999;
-    color: white;
-    margin: 15px;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
+.sidenav__item {
+    margin: 5px;
 }
 
 .reduxForm {
     display: flex;
     flex-direction: column;
     background-color: #c2c2c2;
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
-    width: 70%;
+    width: 100%;
 }
 
 .formInput {

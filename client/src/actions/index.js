@@ -1,7 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-const ROOT_URL = process.env.MONGODB_URI ? 'http://bangarangbingo.herokuapp.com' : 'http://localhost:8080';
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'http://bangarangbingo.herokuapp.com' : 'http://localhost:8080';
 
 export const USER_REGISTERED = 'USER_REGISTERED';
 export const USER_AUTHENTICATED = 'USER_AUTHENTICATED';

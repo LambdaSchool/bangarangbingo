@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../actions';
 import './header.css';
 
 class Header extends Component {
@@ -11,7 +10,7 @@ class Header extends Component {
     if (this.props.authenticated) {
       return (
         <div className="navlinks">
-          <Link to="/" onClick={this.props.logout} className="navlinks__button">Sign Out</Link>
+          <Link to="/signout" className="navlinks__button">Sign Out</Link>
         </div>
       );
     }
@@ -32,5 +31,10 @@ class Header extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.auth.authenticated,
+  };
+};
 
-export default connect(null, { logout })(Header);
+export default connect(mapStateToProps)(Header);

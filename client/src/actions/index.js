@@ -1,7 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:8080';
+const ROOT_URL = 'http://localhost:8080';
 
 export const USER_REGISTERED = 'USER_REGISTERED';
 export const USER_AUTHENTICATED = 'USER_AUTHENTICATED';
@@ -31,7 +31,6 @@ export const register = (username, password, confirmPassword, history) => {
         dispatch({
           type: USER_REGISTERED
         });
-        dispatch(authError('')); //hack to clear error from prvious failed user auth.
         history.push('/signin');
       })
       .catch(() => {
@@ -69,7 +68,6 @@ export const downloadCards = () => {
     window.location.href = `${ROOT_URL}/cards/download`;
   }
 }
-
 export const login = (username, password, history) => {
   return dispatch => {
     axios
@@ -91,11 +89,16 @@ export const login = (username, password, history) => {
 
 export const logout = () => {
   return dispatch => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    dispatch({
-      type: USER_UNAUTHENTICATED
-    });
+    axios
+      .post(`${ROOT_URL}/logout`)
+      .then(() => {
+        dispatch({
+          type: USER_UNAUTHENTICATED
+        });
+      })
+      .catch(() => {
+        dispatch(authError('Failed to log you out'));
+      });
   };
 };
 

@@ -2,7 +2,7 @@
   background-color: #239999;
   color: white;
   padding: 10px 20px;
-  margin: 0px 5px 0px 5px;
+  margin: 10px 5px 0px 5px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -10,4 +10,18 @@
   border-radius: 29px;
   font-size: 18px;
 
+  top: -78px;
+  left: -74x;
+  position: relative;
+}
+
+.generateButtonSpace {
+  width: 100px;
+  height: 20px;
+}
+
+.preview {
+  top: -92px;
+  left: -74x;
+  position: relative;
 }

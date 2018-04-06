@@ -4,17 +4,24 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node backend/index.js",
-    "heroku-postbuild": "cd client && yarn --production=false && yarn run build"
+    "start": "node index.js",
+    "test": "jest"
   },
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
-    "mongoose": "^5.0.11"
+    "jsonwebtoken": "^8.2.0",
+    "mongoose": "^5.0.11",
+    "pdfkit": "^0.8.3",
+    "supertest": "^3.0.0",
+    "svg-to-pdfkit": "^0.1.7"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.9.0"
+    "eslint-plugin-import": "^2.9.0",
+    "jest": "^22.4.3"
   }
 }

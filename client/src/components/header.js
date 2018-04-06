@@ -1,7 +1,9 @@
 /* eslint-disable */
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logout } from '../actions';
 import './header.css';
 
 class Header extends Component {
@@ -9,7 +11,7 @@ class Header extends Component {
     if (this.props.authenticated) {
       return (
         <div className="navlinks">
-          <Link to="/signout" className="navlinks__button">Sign Out</Link>
+          <Link to="/" onClick={this.props.logout} className="navlinks__button">Sign Out</Link>
         </div>
       );
     }
@@ -30,4 +32,5 @@ class Header extends Component {
   }
 }
 
-export default Header;
+
+export default connect(null, { logout })(Header);

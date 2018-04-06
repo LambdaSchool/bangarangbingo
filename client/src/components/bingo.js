@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { downloadCards } from '../actions';
-
+import './bingo.css';
 
 function generateCell(x, y, content, cell) {
   return (
@@ -59,7 +59,7 @@ class Bingo extends Component {
     return (
       <section>
         {generateCard(this.grid, this.grid)}
-        <button onClick={e => this.handleClick(e)}>Generate Cards</button>
+        <button className="generateButton" onClick={e => this.handleClick(e)}>Generate Cards</button>
       </section>
     );
   }

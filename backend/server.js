@@ -89,7 +89,7 @@ server.post('/auth/register', async (req, res) => {
     }
 
     if (await User.exists(username)) {
-      res.json({
+      res.status(422).json({
         isValid: false,
         error: {
           message: 'Username already exists.',

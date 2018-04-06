@@ -1,9 +1,10 @@
 import React from 'react';
 import SideNav from './sidenav';
 import Bingo from './bingo';
+import './protectedComponent.css';
 
 const CardCreate = () => (
-  <div>
+  <div className="protectedComponent">
     <SideNav />
     <div className="cardCreate">
       <h3>CARD CREATE PAGE</h3>

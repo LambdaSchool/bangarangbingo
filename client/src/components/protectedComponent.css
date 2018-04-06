@@ -3,7 +3,12 @@
     flex-direction: row;
     height: 100%
 }
-
+.cardCreate {
+    width: 65%;
+}
+.card-preview {
+    text-align: center;
+}
 .sidenav {
     display: flex;
     flex-direction: column;

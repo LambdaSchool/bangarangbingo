@@ -1,7 +1,6 @@
 /* eslint-disable */
 
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './header.css';
 
@@ -31,10 +30,4 @@ class Header extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    authenticated: state.auth.authenticated,
-  };
-};
-
-export default connect(mapStateToProps)(Header);
+export default Header;

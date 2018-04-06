@@ -68,6 +68,7 @@ export const downloadCards = () => {
     window.location.href = `${ROOT_URL}/cards/download`;
   }
 }
+
 export const login = (username, password, history) => {
   return dispatch => {
     axios

@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { downloadCards } from '../actions';
 
 
-function generateCell(x, y, content) {
+function generateCell(x, y, content, cell) {
   return (
-    <g>
+    <g key={cell}>
       <rect
         x={x}
         y={y}
@@ -40,7 +40,7 @@ function generateCard(w, h) {
       const x = ((j + 1) * 200);
       const y = 200 * (i + 1);
       const content = cell === freeSpace ? 'free' : Math.floor(Math.random() * 100);
-      cells.push(generateCell(x, y, content));
+      cells.push(generateCell(x, y, content, cell));
     }
   }
   return <svg id="preview" viewBox="0 0 1400 1400">{cells}</svg>;

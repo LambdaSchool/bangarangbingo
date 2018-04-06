@@ -1,22 +1,29 @@
 import React from 'react';
 import SideNav from './sidenav';
+import './protectedComponent.css';
 
 const Billing = () => (
-  <div>
+  <div className="protectedComponent">
     <SideNav />
-    <div className="billing">
-      <h1>BILLING</h1>
+    <div className="reduxForm">
+      <h3 className="formTitle">BILLING</h3>
       <div className="paymentbox">
-        <p>Payment Info</p>
+        <h4 className="formTitle">Payment Info</h4>
         <input placeholder="CC#" />
         <input placeholder="EXP#" />
         <input placeholder="CVV" />
       </div>
       <div>
-        <p>1 Year Subscriptiohn</p>
-        <p>1 Year Subscriptiohn</p>
+        <div className="checkbox">
+          <input type="checkbox" value="option1" />
+          1 card $0.99
+        </div>
+        <div className="checkbox">
+          <input type="checkbox" value="option2" />
+          1 Year Subscription $9.99
+        </div>
       </div>
-      <button>Buy Now</button>
+      <button className="formButton">Buy Now</button>
     </div>
   </div>
 );

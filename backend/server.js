@@ -62,7 +62,7 @@ function generateCard(w, h) {
       cell++;
     }
   }
-  return `<svg id="preview" className="preview" viewBox="0 0 1400 1400">${cells.join('')}</svg>`;
+  return `<svg id="preview" viewBox="0 0 1400 1400">${cells.join('')}</svg>`;
 }
 
 const SECRET = 'thisNeedsToChange';
@@ -71,7 +71,7 @@ const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/bingo';
 const server = express();
 
 server.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.MONGODB_URI ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:3000', 
   credentials: true,
 }));
 

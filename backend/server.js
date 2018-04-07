@@ -28,9 +28,9 @@ function generateCell(x, y, content, cell) {
       <text
         x="${x + 96}"
         y="${y + 124}"
-        fontSize="64"
-        textAnchor="middle"
-        alignmentBaseline="central"
+        font-size="64"
+        text-anchor="middle"
+        alignment-baseline="central"
       >
         ${content}
       </text>
@@ -71,7 +71,7 @@ const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/bingo';
 const server = express();
 
 server.use(cors({
-  origin: process.env.MONGODB_URI ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:3000', 
+  origin: process.env.MONGODB_URI ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:3000',
   credentials: true,
 }));
 
@@ -181,7 +181,7 @@ server.get('/cards/download', (req, res) => {
 });
 
 server.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../bingo/build/index.html'));
+  res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
 module.exports = server;

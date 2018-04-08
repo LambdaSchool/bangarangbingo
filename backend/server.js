@@ -13,22 +13,22 @@ PDFDocument.prototype.addSVG = function addSVG(svg, x, y, options) {
   return SVGtoPDF(this, svg, x, y, options);
 };
 
-function generateCell(x, y, content) {
+function generateCell(x, y, content, cell) {
   return `
-    <g>
+    <g key={cell}>
       <rect
         x="${x}"
         y="${y}"
-        width="200"
-        height="200"
+        width="194"
+        height="194"
         fill="#fff"
         stroke="#000"
         strokeWidth="3"
       />
       <text
-        x="${x + 100}"
-        y="${y + 100}"
-        font-size="32"
+        x="${x + 96}"
+        y="${y + 124}"
+        font-size="64"
         text-anchor="middle"
         alignment-baseline="central"
       >
@@ -36,20 +36,30 @@ function generateCell(x, y, content) {
       </text>
     </g>`;
 }
-
 function generateCard(w, h) {
+  const freeSpace = Math.round((w * h) / 2 + h - 1);
+  h += h;
   const cells = [];
   const totalCells = w * h;
-  const freeSpace = Math.round(totalCells / 2);
-
+  let data;
+  let x = 0;
+  let y = 0;
+  let bingoStr = 'BINGO';
   let cell = 0;
-  for (let i = 0; i < w; i++) {
-    for (let j = 0; j < h; j++) {
+  for (let i = 0; i < h; i++) {
+    for (let j = 0; j < w; j++) {
+      if (cell < 5) {
+        data = bingoStr[cell];
+      } else {
+        data = cell === freeSpace ? 'FREE' : Math.floor(Math.random() * 100);
+      }
+      if (data < 10) {
+        data = '0' + data;
+      }
+      x = ((j + 1) * 200);
+      y = 200 * (i + 1);
+      cells.push(generateCell(x, y, data, cell));
       cell++;
-      const x = ((j + 1) * 200);
-      const y = 200 * (i + 1);
-      const content = cell === freeSpace ? 'free' : Math.floor(Math.random() * 100);
-      cells.push(generateCell(x, y, content));
     }
   }
   return `<svg id="preview" viewBox="0 0 1400 1400">${cells.join('')}</svg>`;
@@ -175,3 +185,4 @@ server.get('*', (req, res) => {
 });
 
 module.exports = server;
+

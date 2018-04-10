@@ -70,8 +70,8 @@ class Bingo extends Component {
     return (
       <section>
         {generateCard(this.grid, this.grid)}
-        <button className="generateButton" onMouseDown={e => this.handleClick(e)}>Generate Cards</button>
-        <div className="generateButtonSpace"></div>
+        <button className="generateButton" 
+                onClick={e => this.handleClick(e)}>Generate Cards</button>
       </section>
     );
   }

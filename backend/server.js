@@ -15,7 +15,7 @@ PDFDocument.prototype.addSVG = function addSVG(svg, x, y, options) {
 
 function generateCell(x, y, content, cell) {
   return `
-    <g key={cell}>
+    <g key="${cell}">
       <rect
         x="${x}"
         y="${y}"

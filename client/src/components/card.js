@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getCard } from '../actions';
 import SideNav from './sidenav';
+import Breadcrumbs from './breadcrumbs';
 
 class Card extends Component {
   componentDidMount() {

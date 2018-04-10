@@ -1,10 +1,12 @@
 /* eslint-disable */
 
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getCards } from '../actions';
 import SideNav from './sidenav';
+import Breadcrumbs from './breadcrumbs';
 import './protectedComponent.css';
 
 
@@ -25,10 +27,14 @@ class Cards extends Component {
 
   render() {
     console.log('in cards.js this.props.cards', this.props.cards);
+    console.log('this.props.match.url', this.props.match.url);
     return (
       <div className="protectedComponent">
-        <div><SideNav /></div>
+        <div>
+          <SideNav />
+        </div>
         <div className="cards">
+          <Breadcrumbs props={this.props.match.url} />
           <h3>USER CARD PAGE</h3>
           <p>Welcome, {this.state.user.username}!</p>
           <ul className="cardsList">
@@ -54,4 +60,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { getCards })(Cards);
+export default withRouter(connect(mapStateToProps, { getCards })(Cards));

@@ -24,6 +24,7 @@ class Header extends Component {
   }
 
   render() {
+    console.log('this.props.match.url', this.props);
     return (
       <div>
         {this.getLinks()}

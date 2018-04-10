@@ -11,7 +11,7 @@ const CardCreate = (props) => {
         <SideNav />
       </div>
       <div className="cardCreate">
-        <Breadcrumbs props={props.history.location.pathname} />
+        <Breadcrumbs location={props.history.location.pathname} />
         <h3>CARD CREATE PAGE</h3>
         <label>Card name:
           <input id="cardname" name="cardname" type="text" />

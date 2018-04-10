@@ -34,7 +34,7 @@ class Cards extends Component {
           <SideNav />
         </div>
         <div className="cards">
-          <Breadcrumbs props={this.props.match.url} />
+          <Breadcrumbs location={this.props.match.url} />
           <h3>USER CARD PAGE</h3>
           <p>Welcome, {this.state.user.username}!</p>
           <ul className="cardsList">

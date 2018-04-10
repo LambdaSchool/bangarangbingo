@@ -2,20 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './protectedComponent.css';
 
-const Breadcrumbs = (props) => {
-  if (props.props === '/cards') {
-    return (
-      <ul className="breadcrumbs">
-        <li>Cards</li>
-      </ul>
-    );
-  }
+const Breadcrumbs = ({ location }) => {
+  const crumbs = location.replace('/', '').split('/');
+
   return (
     <ul className="breadcrumbs">
-      <li><Link to="/cards">Cards</Link></li>
-      <li>{props.props}</li>
-    </ul>
-  );
+      {crumbs.map((crumb, i) => <li key={i}>{crumb}</li>)}
+    </ul>);
 };
 
 export default Breadcrumbs;

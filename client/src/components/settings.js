@@ -27,7 +27,7 @@ class Settings extends Component {
       <div className="protectedComponent">
         <SideNav />
         <div className="component">
-          <Breadcrumbs props={this.props.match.url} />
+          <Breadcrumbs location={this.props.match.url} />
           <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} className="reduxForm">
             <h3 className="formTitle">Update Password</h3>
             <div className="formInput">

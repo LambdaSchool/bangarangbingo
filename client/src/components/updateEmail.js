@@ -31,7 +31,7 @@ class UpdateEmail extends Component {
             </div>
             <div className="formInput__item">
               <label>New Email:</label>
-              <Field name="username" component="input" type="text" className="inputField" />
+              <Field name="newUsername" component="input" type="text" className="inputField" />
             </div>
             <div className="formInput__item">
               <label>Password:</label>

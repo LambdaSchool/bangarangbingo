@@ -8,7 +8,7 @@ import ReduxThunk from 'redux-thunk';
 import { BrowserRouter, Route } from 'react-router-dom';
 import './index.css';
 import App from './App';
-import { SignIn, SignUp, Cards, Card, CardCreate, Settings, Billing } from './components';
+import { SignIn, SignUp, Cards, Card, CardCreate, CardEdit, Settings, Billing } from './components';
 import RequireAuth from './components/HOC/RequireAuth';
 import reducers from './reducers';
 // import registerServiceWorker from './registerServiceWorker';
@@ -28,6 +28,7 @@ ReactDOM.render(
         <Route path="/Cards" component={RequireAuth(Cards)} />
         <Route path="/Cards/:id" component={RequireAuth(Card)} />
         <Route path="/Card/Create" component={RequireAuth(CardCreate)} />
+        <Route path="/Card/Edit/:id" component={RequireAuth(CardEdit)} />
         <Route path="/Settings" component={RequireAuth(Settings)} />
         <Route path="/Billing" component={RequireAuth(Billing)} />
       </div>

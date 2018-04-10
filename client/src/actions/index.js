@@ -10,6 +10,7 @@ export const AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR';
 export const GET_CARDS = 'GET_CARDS';
 export const GET_CARD = 'GET_CARD';
 export const ADD_CARD = 'ADD_CARD';
+export const EDIT_CARD = 'EDIT_CARD';
 // export const CHECK_IF_AUTHENTICATED = 'CHECK_IF_AUTHENTICATED';
 
 export const authError = error => {
@@ -143,6 +144,22 @@ export const addCard = (card) => {
       })
       .catch(() => {
         dispatch(authError('Failed to add new card'));
+      });
+  };
+};
+
+export const editCard = (id, card) => {
+  return dispatch => {
+    axios
+      .post(`${ROOT_URL}/card/edit/{$id}`, card)
+      .then((res) => {
+        dispatch({
+          type: EDIT_CARD,
+          payload: res
+        });
+      })
+      .catch(() => {
+        dispatch(authError('Failed to edit card'));
       });
   };
 };

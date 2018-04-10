@@ -4,6 +4,7 @@ import SignUp from './signup';
 import Cards from './cards';
 import Card from './card';
 import CardCreate from './cardCreate';
+import CardEdit from './cardEdit';
 import Settings from './settings';
 import Billing from './billing';
 import Header from './header';
@@ -16,6 +17,7 @@ export {
   Cards,
   Card,
   CardCreate,
+  CardEdit,
   Settings,
   Billing,
   Header,

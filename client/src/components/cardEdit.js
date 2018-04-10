@@ -3,11 +3,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
-import { getCard } from '../actions';
+import { getCard, editCard } from '../actions';
 import SideNav from './sidenav';
 import Breadcrumbs from './breadcrumbs';
 
-class Card extends Component {
+class CardEdit extends Component {
   componentDidMount() {
     this.props.getCard(this.props.match.params.id);
   }
@@ -36,4 +36,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { getCard })(Card));
+export default withRouter(connect(mapStateToProps, { getCard, editCard })(CardEdit));

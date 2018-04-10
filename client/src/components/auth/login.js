@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
-import { login } from '../actions';
+import { login } from '../../actions';
 import './auth.css';
 
 class SignIn extends Component {
@@ -37,7 +37,7 @@ class SignIn extends Component {
             {this.renderAlert()}
           </form>
         </div>
-        <div className="redirect">If you do not already have an account, <Link to="/SignUp">Sign Up</Link>!</div>
+        <div className="redirect">If you do not already have an account, <Link to="/register">Sign Up</Link>!</div>
         <Link to="/" className="return">LANDING PAGE</Link>
       </div>
     );

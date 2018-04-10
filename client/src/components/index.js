@@ -1,6 +1,6 @@
 import Landing from './landing';
-import SignIn from './signin';
-import SignUp from './signup';
+import Login from './auth/login';
+import Register from './auth/register';
 import Cards from './cards';
 import Card from './card';
 import CardCreate from './cardCreate';
@@ -11,8 +11,8 @@ import Header from './header';
 export {
   // eslint-disable-next-line import/prefer-default-export
   Landing,
-  SignIn,
-  SignUp,
+  Login,
+  Register,
   Cards,
   Card,
   CardCreate,

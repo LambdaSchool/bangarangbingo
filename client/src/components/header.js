@@ -17,8 +17,8 @@ class Header extends Component {
     }
     return (
       <div className="navlinks">
-        <Link to="/signin" className="navlinks__button">Sign In</Link>
-        <Link to="/signup" className="navlinks__button">Sign Up</Link>
+        <Link to="/login" className="navlinks__button">Sign In</Link>
+        <Link to="/register" className="navlinks__button">Sign Up</Link>
       </div>
     );
   }

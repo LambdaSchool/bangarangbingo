@@ -47,7 +47,7 @@ class Cards extends Component {
             })
             }
           </ul>
-          <Link to="/Card/Create" className="formButton">Create New Bingo Card</Link>
+          <Link to="/card/create" className="formButton">Create New Bingo Card</Link>
         </div>
       </div>
     );

@@ -22,7 +22,7 @@ const Landing = () => (
         </p>
         <p>Simply input your words, choose some styling options, and we do the rest!</p>
       </div>
-      <div><Link to="/SignUp" className="links__button">Make Your Bingo Card Now!</Link></div>
+      <div><Link to="/login" className="links__button">Make Your Bingo Card Now!</Link></div>
     </div>
   </div>
 );

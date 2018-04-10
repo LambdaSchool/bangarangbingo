@@ -5,8 +5,8 @@ import './protectedComponent.css';
 const SideNav = () => (
   <div className="sidenav">
     <Link to="/cards" className="sidenav__item">Cards</Link>
-    <Link to="/Billing" className="sidenav__item">Billing</Link>
-    <Link to="/Settings" className="sidenav__item">Settings</Link>
+    <Link to="/billing" className="sidenav__item">Billing</Link>
+    <Link to="/settings" className="sidenav__item">Settings</Link>
   </div>
 );
 

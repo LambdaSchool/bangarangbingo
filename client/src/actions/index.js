@@ -45,26 +45,6 @@ export const register = (username, password, confirmPassword, history) => {
 export const updateUserPassword = (username, password, confirmPassword, newPassword, confirmNewPassword, history) => {
   return dispatch => {
     if (password !== confirmPassword) {
-      dispatch(authError('Passwords do not match'));
-      return;
-    }
-    axios
-      .post(`${ROOT_URL}/auth/resetEmail`, { username, newUsername, password, confirmPassword })
-      .then(() => {
-        dispatch({
-          type: USER_REGISTERED
-        });
-        history.push('/cards');
-      })
-      .catch(() => {
-        dispatch(authError('Failed to update user email'));
-      });
-  };
-};
-
-export const updateUserEmail = (username, newUsername, password, confirmPassword, history) => {
-  return dispatch => {
-    if (password !== confirmPassword) {
       dispatch(authError('Old passwords do not match'));
       return;
     }
@@ -82,6 +62,26 @@ export const updateUserEmail = (username, newUsername, password, confirmPassword
       })
       .catch(() => {
         dispatch(authError('Failed to update user password'));
+      });
+  };
+};
+
+export const updateUserEmail = (username, newUsername, password, confirmPassword, history) => {
+  return dispatch => {
+    if (password !== confirmPassword) {
+      dispatch(authError('Passwords do not match'));
+      return;
+    }
+    axios
+      .post(`${ROOT_URL}/auth/update`, { username, newUsername, password, confirmPassword })
+      .then(() => {
+        dispatch({
+          type: USER_REGISTERED
+        });
+        history.push('/cards');
+      })
+      .catch(() => {
+        dispatch(authError('Failed to update user email'));
       });
   };
 };

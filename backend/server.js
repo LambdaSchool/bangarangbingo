@@ -26,6 +26,7 @@ server.use(express.static(path.join(__dirname, '../client/build')));
 server.post('/auth/register', auth.register);
 server.post('/auth/login', auth.login);
 server.post('/auth/reset', auth.reset);
+server.post('/auth/update', auth.update);
 server.get('/cards', card.getAll);
 server.get('/card/:id', card.get);
 server.post('/card/create', card.create);

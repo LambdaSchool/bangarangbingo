@@ -42,7 +42,7 @@ export const register = (username, password, confirmPassword, history) => {
 };
 
 // updateUser needs work
-export const updateUser = (username, password, confirmPassword, newPassword, confirmNewPassword, history) => {
+export const updateUserPassword = (username, password, confirmPassword, newPassword, confirmNewPassword, history) => {
   return dispatch => {
     if (password !== confirmPassword) {
       dispatch(authError('Old passwords do not match'));
@@ -65,6 +65,27 @@ export const updateUser = (username, password, confirmPassword, newPassword, con
       });
   };
 };
+
+export const updateUserEmail = (username, newUsername, password, confirmPassword, history) => {
+  return dispatch => {
+    if (password !== confirmPassword) {
+      dispatch(authError('Passwords do not match'));
+      return;
+    }
+    axios
+      .post(`${ROOT_URL}/auth/update`, { username, newUsername, password, confirmPassword })
+      .then(() => {
+        dispatch({
+          type: USER_REGISTERED
+        });
+        history.push('/cards');
+      })
+      .catch(() => {
+        dispatch(authError('Failed to update user email'));
+      });
+  };
+};
+
 export const downloadCards = () => {
   return dispatch => {
     window.location.href = `${ROOT_URL}/cards/download`;

@@ -10,7 +10,8 @@ class Header extends Component {
   getLinks() {
     if (this.props.authenticated) {
       return (
-        <div className="navlinks">
+        <div className="navlinks__auth">
+          <Link to="/cards"><img src="/images/logo-teal.gif" alt="Bangarang Bingo"/></Link>
           <Link to="/" onClick={this.props.logout} className="navlinks__button">Sign Out</Link>
         </div>
       );

@@ -5,7 +5,7 @@ import './landing.css';
 const Landing = () => (
   <div className="landing">
     <div className="landing__content">
-      <div className="header">Bangarang Bingo</div>
+      <div className="header"><img src="/images/logo-teal.gif" alt="Bangarang Bingo" /></div>
       <div className="carousel">
         <div className="icon-cards">
           <div className="icon-cards__content">

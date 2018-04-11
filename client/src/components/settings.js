@@ -12,7 +12,7 @@ const Settings = (props) => {
         <SideNav />
       </div>
       <div className="cardCreate">
-        <Breadcrumbs props={props.history.location.pathname} />
+        <Breadcrumbs location={props.history.location.pathname} />
         <h3>USER SETTINGS</h3>
         <UpdatePassword />
         <UpdateEmail />

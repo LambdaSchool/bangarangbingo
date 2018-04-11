@@ -34,7 +34,7 @@ class Cards extends Component {
           <SideNav />
         </div>
         <div className="cards">
-          <Breadcrumbs props={this.props.match.url} />
+          <Breadcrumbs location={this.props.match.url} />
           <h3>USER CARD PAGE</h3>
           <p>Welcome, {this.state.user.username}!</p>
           <ul className="cardsList">
@@ -47,7 +47,7 @@ class Cards extends Component {
             })
             }
           </ul>
-          <Link to="/Card/Create" className="formButton">Create New Bingo Card</Link>
+          <Link to="/card/create" className="formButton">Create New Bingo Card</Link>
         </div>
       </div>
     );

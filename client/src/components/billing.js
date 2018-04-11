@@ -7,7 +7,7 @@ const Billing = props => (
   <div className="protectedComponent">
     <SideNav />
     <div className="component">
-      <Breadcrumbs props={props.history.location.pathname} />
+      <Breadcrumbs location={props.history.location.pathname} />
       <div className="reduxForm">
         <h3 className="formTitle">BILLING</h3>
         <div className="paymentbox">

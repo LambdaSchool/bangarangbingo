@@ -184,3 +184,17 @@ export const editCard = (id, card) => {
       });
   };
 };
+
+export const processPayment = (token, options) => {
+  const authToken = window.localStorage.getItem('token');
+  return dispatch => {
+    axios.post(`${ROOT_URL}/payments`, { options, token }, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      }
+    }).then(res => {
+      console.log(res);
+    });
+    console.log('send to server', token, options);
+  }
+}

@@ -6,7 +6,7 @@ import Card from './card';
 import CardCreate from './cardCreate';
 import CardEdit from './cardEdit';
 import Settings from './settings';
-import Billing from './billing';
+import Billing from './billing/index';
 import Header from './header';
 
 export {

@@ -166,7 +166,6 @@ let len = arr.length;
 for(; i < len; i++) {
   str += '/*'+ pad(i, (len +'').length) +'*/ docArr.push(`' + arr[i] + '`);\n';
 }
-alert(str);
 }
 
 //let ddx = JSON5.stringify(dd);
@@ -229,7 +228,6 @@ function update(color, updateText) {
     curCard = genCells(curCard);
       if(!curCard.isNum) {
         document.getElementById('editArea').value = curCard.deckStr;
-        alert('');
       }
     }
     

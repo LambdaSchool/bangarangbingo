@@ -5,10 +5,12 @@
     justify-content: center;
 }
 
-.header {
-    font-family: Impact;
-    font-size: 4em;
-    margin: 5px;
+.header img{
+    width: 80%;
+    max-width: 300px;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
 }
 
 .text {

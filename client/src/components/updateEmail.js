@@ -9,7 +9,7 @@ import './protectedComponent.css';
 
 class UpdateEmail extends Component {
   handleFormSubmit({ username, newUsername, password, confirmPassword }) {
-    this.props.updateUserPassword(username, newUsername, password, confirmPassword, this.props.history);
+    this.props.updateUserEmail(username, newUsername, password, confirmPassword, this.props.history);
   }
 
   renderAlert() {
@@ -42,7 +42,7 @@ class UpdateEmail extends Component {
               <Field name="confirmPassword" component="input" type="password" className="inputField" />
             </div>
           </div>
-          <button action="submit" className="formButton">Save</button>
+          <button type="submit" className="formButton">Save</button>
           {this.renderAlert()}
         </form>
       </div>

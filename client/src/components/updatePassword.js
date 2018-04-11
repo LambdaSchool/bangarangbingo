@@ -46,7 +46,7 @@ class UpdatePassword extends Component {
               <Field name="confirmNewPassword" component="input" type="password" className="inputField" />
             </div>
           </div>
-          <button action="submit" className="formButton">Save</button>
+          <button type="submit" className="formButton">Save</button>
           {this.renderAlert()}
         </form>
       </div>

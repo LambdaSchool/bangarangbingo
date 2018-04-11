@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const auth = require('./controllers/Auth');
 const card = require('./controllers/Card');
+const payments = require('./controllers/Payment');
 
 const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/bingo';
 const server = express();
@@ -32,6 +33,7 @@ server.get('/card/:id', card.get);
 server.post('/card/create', card.create);
 server.post('/card/edit', card.edit);
 server.get('/cards/download', card.download);
+server.post('/payments', payments.process);
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });

@@ -1,20 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Carousel from './carousel';
 import './landing.css';
 
 const Landing = () => (
   <div className="landing">
     <div className="landing__content">
       <div className="header">Bangarang Bingo</div>
-      <div className="carousel">
-        <div className="icon-cards">
-          <div className="icon-cards__content">
-            <div className="icon-cards__item">BINGO</div>
-            <div className="icon-cards__item">BINGO</div>
-            <div className="icon-cards__item">BINGO</div>
-          </div>
-        </div>
-      </div>
+      <Carousel />
       <div className="text">
         <p>Making your own bingo cards is time consuming and difficult.</p>
         <p>Finally, an easy way to make beautiful,

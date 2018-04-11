@@ -8,43 +8,52 @@ import { register } from '../../actions';
 import './auth.css';
 
 class SignUp extends Component {
-  handleFormSubmit({ username, password, confirmPassword }) {
-    this.props.register(username, password, confirmPassword, this.props.history);
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    }
   }
-
+  handleSubmit(event) {
+    event.preventDefault();
+    if(this.state.email && this.state.password && this.state.confirmPassword) {
+      this.props.register(this.state.email, this.state.password, this.state.confirmPassword, this.props.history);
+    }
+  }
+  handleChange(event, field) {
+    this.setState({
+      [field]: event.target.value
+    });
+  }
   renderAlert() {
     if (!this.props.error) return null;
     return <h3>{this.props.error}</h3>;
   };
 
   render() {
-    const { handleSubmit } = this.props;
-
     return (
-      <div className="authForm">
-        <div className="formContainer">
-          <h3 className="formTitle">Sign Up</h3>
-          <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} className="reduxForm">
-            <div>
-              <div className="formInput__item">
-                <label>Email:</label>
-                <Field name="username" component="input" type="text" className="inputField" />
-              </div>
-              <div className="formInput__item">
-                <label>Password:</label>
-                <Field name="password" component="input" type="password" className="inputField" />
-              </div>
-              <div className="formInput__item">
-                <label>Confirm Password:</label>
-                <Field name="confirmPassword" component="input" type="password" className="inputField" />
-              </div>
-            </div>
-            <button action="submit" className="formButton">Sign Up</button>
-            {this.renderAlert()}
-          </form>
-        </div>
-        <div className="redirect">Already have an account? <Link to="/SignIn">Sign In</Link>!</div>
-        <Link to="/" className="return">LANDING PAGE</Link>
+      <div className="auth">
+        <header>
+        <Link to="/"><img src="/images/logo.gif" alt="Bangarang Bingo"/></Link>        
+          <ul classSName="errors">
+            { this.renderAlert() }
+          </ul>
+        </header>
+        <form onSubmit={e => this.handleSubmit(e)}>
+          <label>Email:</label>
+          <input type="email" name="email" placeholder="email" onChange={e => this.handleChange(e, 'email')} value={this.state.email}/>
+          <label>Password:</label>
+          <input type="password" name="password" placeholder="password" onChange={e => this.handleChange(e, 'password')} value={this.state.password}/>
+          <label>Confirm Password:</label>
+          <input type="password" name="confirmPassword" placeholder="confirm password" onChange={e => this.handleChange(e, 'confirmPassword')} value={this.state.confirmPassword}/>
+          
+          <button type="submit">Sign up!</button>
+        </form>
+        <section class="alternativeActions">
+          <span>Already have an account, <Link to="/login">Login!</Link></span>
+        </section>
       </div>
     );
   }
@@ -56,9 +65,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-SignUp = connect(mapStateToProps, { register })(SignUp);
+export default connect(mapStateToProps, { register })(SignUp);
 
-export default reduxForm({
-  form: 'signup',
-  fields: ['username', 'password', 'confirmPassword']
-})(SignUp);

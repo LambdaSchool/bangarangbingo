@@ -1,44 +1,54 @@
 /* eslint-disable */
-
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { login } from '../../actions';
 import './auth.css';
 
 class SignIn extends Component {
-  handleFormSubmit({ username, password }) {
-    this.props.login(username, password, this.props.history);
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    }
   }
-
+  handleSubmit(event) {
+    event.preventDefault();
+    if(this.state.email && this.state.password) {
+      this.props.login(this.state.email, this.state.password, this.props.history);
+    }
+  }
+  handleChange(event, field) {
+    this.setState({
+      [field]: event.target.value
+    });
+  }
   renderAlert() {
     if (!this.props.error) return null;
     return <h3>{this.props.error}</h3>;
   }
 
   render() {
-    const { handleSubmit } = this.props;
-
     return (
-      <div className="authForm">
-        <div className="formContainer">
-          <h3 className="formTitle">Sign In</h3>
-          <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} className="reduxForm">
-            <div className="formInput__item">
-              <label>Email:</label>
-              <Field name="username" component="input" type="text" className="inputField" />
-            </div>
-            <div className="formInput__item">
-              <label>Password:</label>
-              <Field name="password" component="input" type="password" className="inputField" />
-            </div>
-            <button action="submit" className="formButton">Sign In</button>
-            {this.renderAlert()}
-          </form>
-        </div>
-        <div className="redirect">If you do not already have an account, <Link to="/register">Sign Up</Link>!</div>
-        <Link to="/" className="return">LANDING PAGE</Link>
+      <div className="auth">
+        <header>
+          <Link to="/"><img src="/images/logo.gif" alt="Bangarang Bingo"/></Link>
+          <ul classSName="errors">
+            { this.renderAlert() }
+          </ul>
+        </header>
+        <form onSubmit={e => this.handleSubmit(e)}>
+          <label>Email:</label>
+          <input type="email" name="email" placeholder="email" value={this.state.email} onChange={e => this.handleChange(e, 'email')}/>
+          <label>Password:</label>
+          <input type="password" name="password" placeholder="password" value={this.state.password} onChange={e => this.handleChange(e, 'password')}/>
+          <button type="submit">Login</button>
+        </form>
+        <section class="alternativeActions">
+          <span>If you do not already have an account, <Link to="/register">Sign up!</Link></span>
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </section>
       </div>
     );
   }
@@ -51,10 +61,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-SignIn = connect(mapStateToProps, { login })(SignIn);
-
-export default reduxForm({
-  form: 'signin',
-  fields: ['username', 'password']
-})(SignIn);
-
+export default connect(mapStateToProps, { login })(SignIn);

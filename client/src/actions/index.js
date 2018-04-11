@@ -33,7 +33,7 @@ export const register = (username, password, confirmPassword, history) => {
           type: USER_REGISTERED
         });
         dispatch(authError('')); //hack to clear error from prvious failed user auth.
-        history.push('/signin');
+        history.push('/login');
       })
       .catch(() => {
         dispatch(authError('Failed to register user'));

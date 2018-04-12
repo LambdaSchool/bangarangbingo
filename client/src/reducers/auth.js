@@ -1,21 +1,32 @@
 import {
-  USER_AUTHENTICATED,
-  USER_UNAUTHENTICATED,
-  AUTHENTICATION_ERROR,
-  // CHECK_IF_AUTHENTICATED,
-} from '../actions';
+  AUTHENTICATE_USER,
+  UNAUTHENTICATE_USER,
+} from '../actions/auth';
 
-export default (auth = {}, action) => {
+const defaultState = {
+  authenticated: false,
+  user: {
+    id: '',
+    email: '',
+  },
+  token: '',
+};
+
+export default (state = defaultState, action) => {
   switch (action.type) {
-    case USER_AUTHENTICATED:
-      return { ...auth, authenticated: true };
-    case USER_UNAUTHENTICATED:
-      return { ...auth, authenticated: false };
-    case AUTHENTICATION_ERROR:
-      return { ...auth, error: action.payload };
-    // case CHECK_IF_AUTHENTICATED:
-    //   return { ...auth };
+    case AUTHENTICATE_USER: {
+      const { user, token } = action.payload;
+      return {
+        ...state,
+        authenticated: true,
+        user,
+        token,
+      };
+    }
+    case UNAUTHENTICATE_USER: {
+      return { ...defaultState };
+    }
     default:
-      return auth;
+      return { ...state };
   }
 };

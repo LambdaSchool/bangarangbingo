@@ -11,31 +11,22 @@ const AuthController = {
       let { password } = req.body;
 
       if (!username || !password) {
-        res.json({
-          isValid: false,
-          errors: [
-            { message: 'Both username and password required' },
-          ],
-        });
+        res.status(422).json({ error: 'Both username and password required' });
         return;
       }
 
       if (await User.exists(username)) {
-        res.status(422).json({
-          isValid: false,
-          error: {
-            message: 'Username already exists.',
-          },
-        });
+        res.status(409).json({ error: 'User already exists.' });
         return;
       }
       password = await bcrypt.hash(password, 12);
       const user = await User.create({ username, password });
       const payload = { id: user._id, username: user.username };
-      const token = jwt.sign(payload, SECRET, { expiresInMinutes: '1h' });
+      const token = jwt.sign(payload, SECRET, { expiresIn: '1h' });
       res.json({ user, token });
     } catch (e) {
-      res.json({ error: 'Failed to register' });
+      console.log(e);
+      res.status(422).json({ error: 'Failed to register' });
     }
   },
   async login(req, res) {

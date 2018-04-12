@@ -1,25 +1,29 @@
 /* eslint-disable */
-
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
-import { register } from '../../actions';
+import { registerUser } from '../../actions/auth.js';
 import './auth.css';
 
 class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: '',
       email: '',
       password: '',
       confirmPassword: '',
     }
   }
+  handleError(message) {
+    this.setState({
+      error: message
+    });
+  }
   handleSubmit(event) {
     event.preventDefault();
     if(this.state.email && this.state.password && this.state.confirmPassword) {
-      this.props.register(this.state.email, this.state.password, this.state.confirmPassword, this.props.history);
+      this.props.registerUser(this.state.email, this.state.password, this.state.confirmPassword, this.props.history, (message) => this.handleError(message));
     }
   }
   handleChange(event, field) {
@@ -27,19 +31,16 @@ class SignUp extends Component {
       [field]: event.target.value
     });
   }
-  renderAlert() {
-    if (!this.props.error) return null;
-    return <h3>{this.props.error}</h3>;
-  };
-
   render() {
+    const { error } = this.state;
     return (
       <div className="auth">
         <header>
         <Link to="/"><img src="/images/logo.gif" alt="Bangarang Bingo"/></Link>        
-          <ul classSName="errors">
-            { this.renderAlert() }
-          </ul>
+          { error ? 
+          <ul className="errors">
+            <li>{error}</li>
+          </ul> : null }
         </header>
         <form onSubmit={e => this.handleSubmit(e)}>
           <label>Email:</label>
@@ -51,7 +52,7 @@ class SignUp extends Component {
           
           <button type="submit">Sign up!</button>
         </form>
-        <section class="alternativeActions">
+        <section className="alternativeActions">
           <span>Already have an account, <Link to="/login">Login!</Link></span>
         </section>
       </div>
@@ -61,9 +62,9 @@ class SignUp extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    error: state.auth.error,
+    auth: state.auth,
   };
 };
 
-export default connect(mapStateToProps, { register })(SignUp);
+export default connect(mapStateToProps, { registerUser })(SignUp);
 

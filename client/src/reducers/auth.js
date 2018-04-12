@@ -12,12 +12,12 @@ const defaultState = {
   token: '',
 };
 
-export default (auth = defaultState, action) => {
+export default (state = defaultState, action) => {
   switch (action.type) {
     case AUTHENTICATE_USER: {
       const { user, token } = action.payload;
       return {
-        ...auth,
+        ...state,
         authenticated: true,
         user,
         token,
@@ -27,6 +27,6 @@ export default (auth = defaultState, action) => {
       return { ...defaultState };
     }
     default:
-      return { ...defaultState };
+      return { ...state };
   }
 };

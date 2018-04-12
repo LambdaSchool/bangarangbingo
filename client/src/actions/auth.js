@@ -5,13 +5,16 @@ export const UNAUTHENTICATE_USER = 'UNAUTHENTICATE_USER';
 
 const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:8080';
 
-const authenticate = (user, token) => ({
-  type: AUTHENTICATE_USER,
-  payload: {
-    user,
-    token,
-  },
-});
+export const authenticate = (user, token) => {
+  console.log('called');
+  return {
+    type: AUTHENTICATE_USER,
+    payload: {
+      user,
+      token,
+    },
+  };
+};
 
 const unauthenticate = () => ({
   type: UNAUTHENTICATE_USER,

@@ -3,50 +3,38 @@
 let init = false;
 let curCard = new BingoCard();
 
-function cssBgColor(id, color) {
-  document.getElementById(id).style.backgroundColor = color;
-}
-
-function pad(num, len) {
-  let str = num + "";
-  for (; str.length < len; ) {
-      str = "0" + str;
-  }
-  return str;
-}
-
-function toggleDisplay(id) {
-  if(document.getElementById(id).style.display !== 'none') {
-    document.getElementById(id).style.display = 'none';
-  } else {
-    document.getElementById(id).style.display = 'inline';
-  }
-}
-
-function toggleVal(val, alt0, alt1) {
-  if(val === alt0) {
-    return alt1;
-  } else {
-    return alt0;
-  }
-}
-
 function toggleEdit() {
   toggleDisplay('editArea'); 
   document.getElementById('editPDF_btn').value = toggleVal(document.getElementById('editPDF_btn').value, 'Text', 'View'); 
 }
 
 function checkText(id, old, delay) {
-  if(document.getElementById(id).value !== old) {
-    update(null, true);
-    console.log(document.getElementById(id).value);
+  if(
+      document.getElementById(id).value !== old && 
+      document.getElementById(id).value !== curCard.view_str
+  ) {
+    //update(null, true);
+    //console.log(document.getElementById(id).value);
+    curCard.randMode = 'none';
     old = document.getElementById(id).value;
+    parseTextVal(old);
     delay = 0;
   } else {
     delay = 500;
   }
   setTimeout(function () { checkText(id, old, delay); }, delay);
 }
+
+function parseTextVal(str) {
+  //.split('/\r\n|\n|\r/')
+  str = unEscQuote(str);
+  arrDat = str.split('\n');
+  curCard.valMax = arrDat.length;
+  curCard.valMin = 0;
+  curCard.isNum = false;
+  update(null, true);
+}
+
 
 setTimeout(function () { checkText('editArea', document.getElementById('editArea').value, 50); }, 200);
 
@@ -57,6 +45,7 @@ function parseNumVal(cmdStr) {
     curCard.valMin = parseInt(arrCmd[0]);
     curCard.valMax = parseInt(arrCmd[1]);
     curCard.isNum = true;
+    curCard.topWord = `BINGO`;
     update(null, true);
   //}
 }
@@ -73,6 +62,7 @@ function parseStrVal(cmdStr) {
 function dropDown(cmdStr) {
   let arrCmd = cmdStr.split('_');
   if(arrCmd[1] !== 'MAIN') {
+    curCard.randMode = 'norm';
     // hide the selection clicked
     toggleDisplay(`${arrCmd[0]}_${arrCmd[1]}`);
     // activate (display) MAIN label below
@@ -199,6 +189,9 @@ let width = '100%';
 let height = '1920';
 let imgWidth = '';
 let imgHeight = '';
+let view_topWord = '';
+let view_cellDat = [''];
+let view_pageBreak = 'pageBreak: "after"';
 
 function setTextColor(picker) {
   document.getElementsByTagName('body')[0].style.color = '#' + picker.toString();
@@ -210,7 +203,6 @@ function update(color, updateText) {
     
   if(!init) {
     //document.getElementById('jscolor_btn').style.backgroundColor = '#000000';
-    //document.getElementById('editArea').value = '';
     init = true;
   }
 
@@ -223,21 +215,28 @@ function update(color, updateText) {
     //let val = document.getElementById('editArea').value.split['\n'];
     //val = val[0].split(`-`);
 
-    document.getElementById('editArea').value = '';
-
+    	if(	curCard.randMode !== 'none') {
+        document.getElementById('editArea').value = '';
+	  }
+    
     curCard = genCells(curCard);
       if(!curCard.isNum) {
-        document.getElementById('editArea').value = curCard.deckStr;
+        if(	curCard.randMode !== 'none') {
+          document.getElementById('editArea').value = curCard.view_str;
+        }
       }
     }
     
+    if(!curCard.topWord.match(/\\/i) && !curCard.topWord.match(/\'/i)) {
+      view_topWord = fillBlanks(curCard.topWord, 5);
+    }
 
   //pageMargins:[8,8,10.5,10.5],
   dx00 = `{info:{title:'Bingo Cards',author:'Bangarang Bingo',subject:'',keywords:''},pageOrientation:'portrait',pageSize:'A4',content:[`;
 
-  dx01 = `{alignment:'center',background:'',content:[],table:{headerRows:1,widths:['*','*','*','*','*'],margin:[0,0,0,0],heights:[64,16,124,124,124,124,124],body:[[{text:'B',bold:true,style:'top',fontSize:64},{text:'I',bold:true,style:'top',fontSize:64},{text:'N',bold:true,style:'top',fontSize:64},{text:'G',bold:true,style:'top',fontSize:64},{text:'O',bold:true,style:'top',fontSize:64}],[{text:' ',colSpan:5,fillColor:'${curCard.fillColor}'}],['${curCard.cellDat[0]}','${curCard.cellDat[1]}','${curCard.cellDat[2]}','${curCard.cellDat[3]}','${curCard.cellDat[4]}'],['${curCard.cellDat[5]}','${curCard.cellDat[6]}','${curCard.cellDat[7]}','${curCard.cellDat[8]}','${curCard.cellDat[9]}'],['${curCard.cellDat[10]}','${curCard.cellDat[11]}',{text:'\\n\\n${curCard.freeStr}',bold:true,fontSize:${curCard.freeFontSize},color:'${curCard.freeFontColor}'},'${curCard.cellDat[13]}','${curCard.cellDat[14]}'],['${curCard.cellDat[15]}','${curCard.cellDat[16]}','${curCard.cellDat[17]}','${curCard.cellDat[18]}','${curCard.cellDat[19]}'],['${curCard.cellDat[20]}','${curCard.cellDat[21]}','${curCard.cellDat[22]}','${curCard.cellDat[23]}','${curCard.cellDat[24]}',]]}`;
+  dx01 = `{alignment:'center',background:'',content:[],table:{headerRows:1,widths:[94,94,94,94,94],margin:[0,0,0,0,],heights:[64,16,124,124,124,124,124],body:[[{text:'${view_topWord[0]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[1]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[2]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[3]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[4]}',bold:true,style:'top',fontSize:64}],[{text:' ',colSpan:5,fillColor:'${curCard.fillColor}'}],['${curCard.cellDat[0]}','${curCard.cellDat[1]}','${curCard.cellDat[2]}','${curCard.cellDat[3]}','${curCard.cellDat[4]}'],['${curCard.cellDat[5]}','${curCard.cellDat[6]}','${curCard.cellDat[7]}','${curCard.cellDat[8]}','${curCard.cellDat[9]}'],['${curCard.cellDat[10]}','${curCard.cellDat[11]}',{text:'\\n\\n${curCard.freeStr}',bold:true,fontSize:${curCard.freeFontSize},color:'${curCard.freeFontColor}'},'${curCard.cellDat[13]}','${curCard.cellDat[14]}'],['${curCard.cellDat[15]}','${curCard.cellDat[16]}','${curCard.cellDat[17]}','${curCard.cellDat[18]}','${curCard.cellDat[19]}'],['${curCard.cellDat[20]}','${curCard.cellDat[21]}','${curCard.cellDat[22]}','${curCard.cellDat[23]}','${curCard.cellDat[24]}',]]}`;
 
-  dx02 = `,pageBreak: "after",layout:{hLineColor:'${curCard.fillColor}', vLineColor:'${curCard.fillColor}'}}],styles:{top:{alignment:'center',color:'#ffffff',fillColor:'${curCard.fillColor}'},sub:{fontSize:32,bold:true},fill:{fillColor:'${curCard.fillColor}'},quote:{italics:true},small:{fontSize:8}}}`;
+  dx02 = `,${view_pageBreak},layout:{hLineColor:'${curCard.fillColor}', vLineColor:'${curCard.fillColor}'}}],styles:{top:{alignment:'center',color:'#ffffff',fillColor:'${curCard.fillColor}'},sub:{fontSize:32,bold:true},fill:{fillColor:'${curCard.fillColor}'},quote:{italics:true},small:{fontSize:8}}}`;
 
   dx = `${dx00}${dx01}${dx02}`;
 

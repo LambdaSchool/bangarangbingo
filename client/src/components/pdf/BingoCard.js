@@ -2,7 +2,8 @@ const BingoCard = function(tmpValMin,tmpValMax,tmpNumRows,tmpNumCols) {
 	this.valMax = 99;
 	this.valMin = 0;
 	
-	this.init = false;
+	this.init = true;
+	this.hasDuplicates = true;
 	this.isPad0 = true;
 	this.isNum = true;
 	this.isCenterImg = false;
@@ -11,15 +12,19 @@ const BingoCard = function(tmpValMin,tmpValMax,tmpNumRows,tmpNumCols) {
 	
 	//this.fontW = 100;
 	this.topFontSize = 64;
+	this.topWord = 'BINGO';
 	this.cellFontSize = 32;
 	this.freeFontSize = 22;
-
+	
 	this.topFontColor = '#000000';	// black
 	this.cellFontColor = '#000000';	// black
 	this.freeFontColor = '#800000'; //dark red
 	this.fillColor = '#000000';	// black
 
-	this.charMax = 12;
+	this.charMax = 24;
+	this.charMaxLine = 12;
+	this.marginLines = 3; 
+	this.freeMarginLines = 2;
 
 	/*
 	this.cellH = 458.0;
@@ -37,12 +42,15 @@ const BingoCard = function(tmpValMin,tmpValMax,tmpNumRows,tmpNumCols) {
 	this.numCols = 5;
 	this.numRows = 5;
 	this.deckStr = '';
+	this.view_str = '';
 	this.cellDat = [];
+	this.cellMarginDat = [];
 	this.numCards = 1;
 	this.deck = [];
 	this.font = '';
 	this.color = 'Black';
 	this.cellStr = '';
+	this.randMode = 'norm';
 	
 	!!tmpNumCols ? tmpNumCols : tmpNumCols = this.numCols;
 	!!tmpNumRows ? tmpNumRows : tmpNumRows = this.numRows;
@@ -55,58 +63,56 @@ const BingoCard = function(tmpValMin,tmpValMax,tmpNumRows,tmpNumCols) {
 	
 };
 
-	function initVals() {
-	}
+function fixTopMargin() {
+	
+}
 
 function genCells(tmpCurCard) {
 	if(!this.init) {
 		this.init = true;
 	}
- // tmpCurCard.deckStr += tmpCurCard.numCards;
- // tmpCurCard.deckStr += "~" + tmpCurCard.numCells;
- // tmpCurCard.deckStr += "~" + tmpCurCard.valMin;
- // tmpCurCard.deckStr += "~" + tmpCurCard.valMax;
- 
-	tmpCurCard.deckStr = '';
+	
+	if(!tmpCurCard.isNum) {
+		tmpCurCard.topWord = arrDat[0];
+	}
+	tmpCurCard.view_str = `${tmpCurCard.topWord}`;
+
+	if(tmpCurCard.randMode !== 'none') {
+		tmpCurCard.view_str += '\n';
+	}
+
 	let curW = 1;
 	let curH = 1;
 	let cardMax = 0;
 	let cycles = 0;
-	let finish = tmpCurCard.numCells * tmpCurCard.numCards;
+	let finish = (tmpCurCard.numCells + 1) * tmpCurCard.numCards;
 		
 	for(; cycles < finish ;) {		
-		if(cardMax != tmpCurCard.numCenter - 1) {
+		if(cardMax != tmpCurCard.numCenter - 1 && tmpCurCard.isCenterFree) {
 			if(tmpCurCard.isNum) {
 				tmpCurCard.cellStr = Math.round(Math.random() * tmpCurCard.valMax);			
 			if(tmpCurCard.isPad0) {
-					tmpCurCard.cellStr = pad(tmpCurCard.cellStr, cardMax.len);
+					tmpCurCard.cellStr = pad(tmpCurCard.cellStr, `${tmpCurCard.valMax}`.length);
 				}
-				tmpCurCard.deckStr += tmpCurCard.cellStr;
+				tmpCurCard.view_str += tmpCurCard.cellStr;
 			} else {
-				tmpCurCard.cellStr = arrDat[Math.floor(Math.random() * tmpCurCard.valMax)];
-				tmpCurCard.deckStr += tmpCurCard.cellStr;
+				if(tmpCurCard.randMode === 'norm') {
+					tmpCurCard.cellStr = fillBlank(arrDat[Math.floor(Math.random() * (tmpCurCard.valMax - 1) + 1)]);
+				} else {
+					
+					tmpCurCard.cellStr = fillBlank(arrDat[cycles+1]);
+				}
+				tmpCurCard.view_str += tmpCurCard.cellStr;
 				if(cycles !== cardMax - 1) {
-					tmpCurCard.deckStr += '\n';
+					tmpCurCard.view_str += '\n';
 				}
-				if(tmpCurCard.cellStr.match(/'/i)) {
-					tmpCurCard.cellStr = tmpCurCard.cellStr.replace(/'/g, "\\'");
-					console.log(`#############: ${tmpCurCard.cellStr}`);
-				}
-				if(tmpCurCard.cellStr.match(/`/i)) {
-					tmpCurCard.cellStr = tmpCurCard.cellStr.replace(/`/g, "\\`");
-					console.log(`#############: ${tmpCurCard.cellStr}`);
-				}
-				if(tmpCurCard.cellStr.match(/\n/i)) {
-					tmpCurCard.cellStr = tmpCurCard.cellStr.replace(/\n/g, "\\n");
-					console.log(`#############: ${tmpCurCard.cellStr}`);
-				}
-
+				tmpCurCard.cellStr = escQuote(tmpCurCard.cellStr);
 			}
 		} else {
 			tmpCurCard.cellStr = tmpCurCard.freeStr;
 		}
 		if(!this.init)	{
-		tmpCurCard.cellDat.push(tmpCurCard.cellStr);
+			tmpCurCard.cellDat.push(tmpCurCard.cellStr);
 		} else {
 			tmpCurCard.cellDat[cycles] = tmpCurCard.cellStr;
 		}
@@ -122,6 +128,7 @@ function genCells(tmpCurCard) {
 		}
 		cycles++;
 	}
+	tmpCurCard.init = false;
 	return tmpCurCard;
 }
 

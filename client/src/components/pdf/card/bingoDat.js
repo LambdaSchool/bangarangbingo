@@ -1,6 +1,7 @@
 let arrDat = [];
 
-let dat_Bridal = `Cork-screw
+let dat_Bride = `BRIDE
+Cork-screw
 Canisters
 Basting Brush
 Signed Check
@@ -31,7 +32,8 @@ Toaster
 Knife Set
 Cash`;
 
-let dat_Horror = `\Wrongly accused killer
+let dat_Scare = `SCARE
+Wrongly accused
 Night
 Comes back to life
 Improvised weapon

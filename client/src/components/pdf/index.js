@@ -3,50 +3,38 @@
 let init = false;
 let curCard = new BingoCard();
 
-function cssBgColor(id, color) {
-  document.getElementById(id).style.backgroundColor = color;
-}
-
-function pad(num, len) {
-  let str = num + "";
-  for (; str.length < len; ) {
-      str = "0" + str;
-  }
-  return str;
-}
-
-function toggleDisplay(id) {
-  if(document.getElementById(id).style.display !== 'none') {
-    document.getElementById(id).style.display = 'none';
-  } else {
-    document.getElementById(id).style.display = 'inline';
-  }
-}
-
-function toggleVal(val, alt0, alt1) {
-  if(val === alt0) {
-    return alt1;
-  } else {
-    return alt0;
-  }
-}
-
 function toggleEdit() {
   toggleDisplay('editArea'); 
   document.getElementById('editPDF_btn').value = toggleVal(document.getElementById('editPDF_btn').value, 'Text', 'View'); 
 }
 
 function checkText(id, old, delay) {
-  if(document.getElementById(id).value !== old) {
-    update(null, true);
-    console.log(document.getElementById(id).value);
+  if(
+      document.getElementById(id).value !== old && 
+      document.getElementById(id).value !== curCard.deckStr
+  ) {
+    //update(null, true);
+    //console.log(document.getElementById(id).value);
+    curCard.randMode = '0';
     old = document.getElementById(id).value;
+    parseTextVal(old);
     delay = 0;
   } else {
     delay = 500;
   }
   setTimeout(function () { checkText(id, old, delay); }, delay);
 }
+
+function parseTextVal(str) {
+  //.split('/\r\n|\n|\r/')
+  str = unEscQuote(str);
+  arrDat = str.split('\n');
+  curCard.valMax = arrDat.length;
+  curCard.valMin = 0;
+  curCard.isNum = false;
+  update(null, true);
+}
+
 
 setTimeout(function () { checkText('editArea', document.getElementById('editArea').value, 50); }, 200);
 
@@ -73,6 +61,7 @@ function parseStrVal(cmdStr) {
 function dropDown(cmdStr) {
   let arrCmd = cmdStr.split('_');
   if(arrCmd[1] !== 'MAIN') {
+    curCard.randMode = 'norm';
     // hide the selection clicked
     toggleDisplay(`${arrCmd[0]}_${arrCmd[1]}`);
     // activate (display) MAIN label below
@@ -210,7 +199,6 @@ function update(color, updateText) {
     
   if(!init) {
     //document.getElementById('jscolor_btn').style.backgroundColor = '#000000';
-    //document.getElementById('editArea').value = '';
     init = true;
   }
 
@@ -223,11 +211,15 @@ function update(color, updateText) {
     //let val = document.getElementById('editArea').value.split['\n'];
     //val = val[0].split(`-`);
 
-    document.getElementById('editArea').value = '';
-
+    	if(	curCard.randMode !== '0') {
+        document.getElementById('editArea').value = '';
+	  }
+    
     curCard = genCells(curCard);
       if(!curCard.isNum) {
-        document.getElementById('editArea').value = curCard.deckStr;
+        if(	curCard.randMode !== '0') {
+          document.getElementById('editArea').value = curCard.deckStr;
+        }
       }
     }
     

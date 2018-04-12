@@ -3,6 +3,7 @@ const BingoCard = function(tmpValMin,tmpValMax,tmpNumRows,tmpNumCols) {
 	this.valMin = 0;
 	
 	this.init = false;
+	this.hasDuplicates = true;
 	this.isPad0 = true;
 	this.isNum = true;
 	this.isCenterImg = false;
@@ -43,6 +44,7 @@ const BingoCard = function(tmpValMin,tmpValMax,tmpNumRows,tmpNumCols) {
 	this.font = '';
 	this.color = 'Black';
 	this.cellStr = '';
+	this.randMode = 'norm';
 	
 	!!tmpNumCols ? tmpNumCols : tmpNumCols = this.numCols;
 	!!tmpNumRows ? tmpNumRows : tmpNumRows = this.numRows;
@@ -79,28 +81,20 @@ function genCells(tmpCurCard) {
 			if(tmpCurCard.isNum) {
 				tmpCurCard.cellStr = Math.round(Math.random() * tmpCurCard.valMax);			
 			if(tmpCurCard.isPad0) {
-					tmpCurCard.cellStr = pad(tmpCurCard.cellStr, cardMax.len);
+					tmpCurCard.cellStr = pad(tmpCurCard.cellStr, `${tmpCurCard.valMax}`.length);
 				}
 				tmpCurCard.deckStr += tmpCurCard.cellStr;
 			} else {
-				tmpCurCard.cellStr = arrDat[Math.floor(Math.random() * tmpCurCard.valMax)];
+				if(tmpCurCard.randMode === 'norm') {
+					tmpCurCard.cellStr = arrDat[Math.floor(Math.random() * tmpCurCard.valMax)];
+				} else {
+					tmpCurCard.cellStr = arrDat[cycles];
+				}
 				tmpCurCard.deckStr += tmpCurCard.cellStr;
 				if(cycles !== cardMax - 1) {
 					tmpCurCard.deckStr += '\n';
 				}
-				if(tmpCurCard.cellStr.match(/'/i)) {
-					tmpCurCard.cellStr = tmpCurCard.cellStr.replace(/'/g, "\\'");
-					console.log(`#############: ${tmpCurCard.cellStr}`);
-				}
-				if(tmpCurCard.cellStr.match(/`/i)) {
-					tmpCurCard.cellStr = tmpCurCard.cellStr.replace(/`/g, "\\`");
-					console.log(`#############: ${tmpCurCard.cellStr}`);
-				}
-				if(tmpCurCard.cellStr.match(/\n/i)) {
-					tmpCurCard.cellStr = tmpCurCard.cellStr.replace(/\n/g, "\\n");
-					console.log(`#############: ${tmpCurCard.cellStr}`);
-				}
-
+				tmpCurCard.cellStr = escQuote(tmpCurCard.cellStr);
 			}
 		} else {
 			tmpCurCard.cellStr = tmpCurCard.freeStr;
@@ -122,6 +116,7 @@ function genCells(tmpCurCard) {
 		}
 		cycles++;
 	}
+
 	return tmpCurCard;
 }
 

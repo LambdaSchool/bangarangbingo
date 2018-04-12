@@ -14,7 +14,7 @@ const Settings = (props) => {
       <div className="cardCreate">
         <Breadcrumbs location={props.history.location.pathname} />
         <h3>USER SETTINGS</h3>
-        <UpdatePassword />
+        <UpdatePassword history={props.history} />
         <UpdateEmail />
       </div>
     </div>

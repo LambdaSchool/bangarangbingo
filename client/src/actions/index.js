@@ -22,6 +22,7 @@ export const authError = error => {
 
 // updateUser needs work
 export const updateUserPassword = (username, password, confirmPassword, newPassword, confirmNewPassword, history) => {
+  const authToken = window.localStorage.getItem('token');
   return dispatch => {
     if (password !== confirmPassword) {
       dispatch(authError('Old passwords do not match'));
@@ -32,7 +33,11 @@ export const updateUserPassword = (username, password, confirmPassword, newPassw
       return;
     }
     axios
-      .post(`${ROOT_URL}/auth/reset`, { username, password, confirmPassword, newPassword, confirmNewPassword })
+      .post(`${ROOT_URL}/auth/reset`, { username, password, confirmPassword, newPassword, confirmNewPassword }, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        }
+      })
       .then(() => {
         dispatch({
           type: USER_REGISTERED
@@ -46,13 +51,18 @@ export const updateUserPassword = (username, password, confirmPassword, newPassw
 };
 
 export const updateUserEmail = (username, newUsername, password, confirmPassword, history) => {
+  const authToken = window.localStorage.getItem('token');
   return dispatch => {
     if (password !== confirmPassword) {
       dispatch(authError('Passwords do not match'));
       return;
     }
     axios
-      .post(`${ROOT_URL}/auth/update`, { username, newUsername, password, confirmPassword })
+      .post(`${ROOT_URL}/auth/update`, { username, newUsername, password, confirmPassword }, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        }
+      })
       .then(() => {
         dispatch({
           type: USER_REGISTERED
@@ -72,9 +82,14 @@ export const downloadCards = () => {
 }
 
 export const getCards = () => {
+  const authToken = window.localStorage.getItem('token');
   return dispatch => {
     axios
-      .get(`${ROOT_URL}/cards`)
+      .get(`${ROOT_URL}/cards`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        }
+      })
       .then((res) => {
         dispatch({
           type: GET_CARDS,
@@ -88,9 +103,14 @@ export const getCards = () => {
 };
 
 export const getCard = (id) => {
+  const authToken = window.localStorage.getItem('token');
   return dispatch => {
     axios
-      .get(`${ROOT_URL}/cards/${id}`)
+      .get(`${ROOT_URL}/cards/${id}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        }
+      })
       .then((res) => {
         dispatch({
           type: GET_CARD,
@@ -104,9 +124,14 @@ export const getCard = (id) => {
 };
 
 export const addCard = (card) => {
+  const authToken = window.localStorage.getItem('token');
   return dispatch => {
     axios
-      .post(`${ROOT_URL}/card/create`, card)
+      .post(`${ROOT_URL}/card/create`, card, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        }
+      })
       .then((res) => {
         dispatch({
           type: ADD_CARD,
@@ -120,9 +145,14 @@ export const addCard = (card) => {
 };
 
 export const editCard = (id, card) => {
+  const authToken = window.localStorage.getItem('token');
   return dispatch => {
     axios
-      .post(`${ROOT_URL}/card/edit/{$id}`, card)
+      .post(`${ROOT_URL}/card/edit/{$id}`, card, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        }
+      })
       .then((res) => {
         dispatch({
           type: EDIT_CARD,

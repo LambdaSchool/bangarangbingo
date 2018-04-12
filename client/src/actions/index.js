@@ -20,27 +20,6 @@ export const authError = error => {
   };
 };
 
-export const register = (username, password, confirmPassword, history) => {
-  return dispatch => {
-    if (password !== confirmPassword) {
-      dispatch(authError('Passwords do not match'));
-      return;
-    }
-    axios
-      .post(`${ROOT_URL}/auth/register`, { username, password })
-      .then(() => {
-        dispatch({
-          type: USER_REGISTERED
-        });
-        dispatch(authError('')); //hack to clear error from prvious failed user auth.
-        history.push('/login');
-      })
-      .catch(() => {
-        dispatch(authError('Failed to register user'));
-      });
-  };
-};
-
 // updateUser needs work
 export const updateUserPassword = (username, password, confirmPassword, newPassword, confirmNewPassword, history) => {
   return dispatch => {
@@ -91,35 +70,6 @@ export const downloadCards = () => {
     window.location.href = `${ROOT_URL}/cards/download`;
   }
 }
-
-export const login = (username, password, history) => {
-  return dispatch => {
-    axios
-      .post(`${ROOT_URL}/auth/login`, { username, password })
-      .then((res) => {
-        dispatch({
-          type: USER_AUTHENTICATED
-        });
-        localStorage.setItem('token', res.data.token);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
-        console.log(res.data);
-        history.push('/cards');
-      })
-      .catch(() => {
-        dispatch(authError('Incorrect email/password combo'));
-      });
-  };
-};
-
-export const logout = () => {
-  return dispatch => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    dispatch({
-      type: USER_UNAUTHENTICATED
-    });
-  };
-};
 
 export const getCards = () => {
   return dispatch => {

@@ -2,21 +2,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login } from '../../actions';
+import { login } from '../../actions/auth';
 import './auth.css';
 
 class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: '',      
       email: '',
       password: ''
     }
   }
+  handleError(message) {
+    this.setState({
+      error: message
+    });
+  }
   handleSubmit(event) {
     event.preventDefault();
     if(this.state.email && this.state.password) {
-      this.props.login(this.state.email, this.state.password, this.props.history);
+      this.props.login(this.state.email, this.state.password, this.props.history, (message) => this.handleError(message));
     }
   }
   handleChange(event, field) {
@@ -30,13 +36,15 @@ class SignIn extends Component {
   }
 
   render() {
+    const { error } = this.state;
     return (
       <div className="auth">
         <header>
-          <Link to="/"><img src="/images/logo.gif" alt="Bangarang Bingo"/></Link>
-          <ul classSName="errors">
-            { this.renderAlert() }
-          </ul>
+        <Link to="/"><img src="/images/logo.gif" alt="Bangarang Bingo"/></Link>        
+          { error ? 
+          <ul className="errors">
+            <li>{error}</li>
+          </ul> : null }
         </header>
         <form onSubmit={e => this.handleSubmit(e)}>
           <label>Email:</label>
@@ -45,7 +53,7 @@ class SignIn extends Component {
           <input type="password" name="password" placeholder="password" value={this.state.password} onChange={e => this.handleChange(e, 'password')}/>
           <button type="submit">Login</button>
         </form>
-        <section class="alternativeActions">
+        <section className="alternativeActions">
           <span>If you do not already have an account, <Link to="/register">Sign up!</Link></span>
           <Link to="/forgot-password">Forgot Password?</Link>
         </section>
@@ -56,8 +64,7 @@ class SignIn extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    error: state.auth.error,
-    authenticated: state.auth.authenticated,
+    auth: state.auth,
   };
 };
 

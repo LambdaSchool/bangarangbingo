@@ -10,12 +10,13 @@
 .auth header {
     color: #fff;
     font-size: 24px;
-    margin-bottom: 40px;
     text-align: center;
 }
 .auth header a {
     color: #fff;
     text-decoration: none;
+    display: block;
+    margin-bottom: 40px;
 }
 .auth header img {
     width: 80%;
@@ -64,4 +65,11 @@
 .auth .alternativeActions a {
     color: #16807F;
     margin: 5px 0;
+}
+.auth ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    color: #ff6f6f;
+    font-size: 20px;
 }

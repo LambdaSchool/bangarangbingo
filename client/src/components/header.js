@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../actions';
+import { logout } from '../actions/auth';
 import './header.css';
 
 class Header extends Component {

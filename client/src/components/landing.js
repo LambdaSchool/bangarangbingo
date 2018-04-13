@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './landing.css';
 
 const Landing = () => (
   <div className="landing">
@@ -22,6 +21,84 @@ const Landing = () => (
       </div>
       <div className="content__button"><Link to="/login" className="links__button">Make Your Bingo Card Now!</Link></div>
     </div>
+    <style jsx scoped>
+    {`
+    .landing {
+      min-height: 100%;
+      
+    }
+    .background {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: 0;
+      min-height: 100vh;
+  }
+  .background__video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -100;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    background: url(polina.jpg) no-repeat;
+    background-size: cover; 
+  }
+  
+  .content {
+      position: fixed;
+      bottom: 0%;
+      width: 100%;
+  }
+  
+  .content__textbox {
+      background: rgba(0, 0, 0, 0.7);
+      color: #f1f1f1;
+      min-width: 100%;
+      padding: 5px 0px 5px 0px;
+  }
+  
+  .content__textbox p {
+      font-family: 'Quicksand', Verdana, Geneva, Tahoma, sans-serif;
+      font-weight: 500;
+      margin: 20px;
+  }
+  
+  .content__header img{
+      width: 80%;
+      max-width: 350px;
+      display: block;
+      text-align: center;
+      margin: 0 auto;
+  }
+  
+  .content__button {
+      margin: 15px 0px 15px 0px;
+  }
+  
+  .content :global(a.links__button) {
+      text-decoration: none;
+      border: none;
+      background: #239999;
+      padding: 10px;
+      margin: 10px;
+      border-radius: 30px;
+      font-size: 18px;
+      color: #fff;
+      cursor: pointer;
+  }
+
+    `}
+    </style>
   </div>
 );
 

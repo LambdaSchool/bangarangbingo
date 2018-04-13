@@ -1,15 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Layout from '../layout';
-import Checkout from './checkout';
+import UpdatePassword from './updatePassword';
+import UpdateEmail from './updateEmail';
 
-const Billing = props => (
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:3000';
+
+const Settings = props => (
   <Layout logout={props.logout}>
     <div className="root">
       <header>
-        <h1>Subscribe for unlimited Bingo Cards!</h1>
+        <h1>Update Your Account</h1>
       </header>
       <section className="content">
-        <Checkout />
+        <UpdatePassword />
+        <UpdateEmail />
       </section>
     </div>
     <style jsx scoped>
@@ -28,9 +33,9 @@ const Billing = props => (
         align-items: center;
         margin-bottom: 20px;        
       }
-      `}
+    `}
     </style>
   </Layout>
 );
 
-export default Billing;
+export default Settings;

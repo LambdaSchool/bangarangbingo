@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { updateUserEmail } from '../actions';
+import { updateUserEmail } from '../../actions';
 import './protectedComponent.css';
 
 class UpdateEmail extends Component {
@@ -21,7 +21,7 @@ class UpdateEmail extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <div className="component">
+      <div>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} className="reduxForm">
           <h3 className="formTitle">Update Email</h3>
           <div className="formInput">

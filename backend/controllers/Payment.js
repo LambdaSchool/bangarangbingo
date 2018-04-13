@@ -1,13 +1,15 @@
 const jwt = require('jsonwebtoken');
-const stripe = require('stripe')('sk_test_2MZzxTPxq2ocV97FqxsD7N2S');
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 const User = require('../models/user');
+
+const SECRET = process.env.APP_SECRET;
 
 const PaymentController = {
   async process(req, res) {
     try {
       const { token, options } = req.body;
       const authToken = req.headers.authorization.replace('Bearer ', '');
-      const decodedToken = await jwt.verify(authToken, 'thisNeedsToChange');
+      const decodedToken = await jwt.verify(authToken, SECRET);
       const username = decodedToken.username;
       const user = await User.findOne({ username }).exec();
       const { customerID } = user;

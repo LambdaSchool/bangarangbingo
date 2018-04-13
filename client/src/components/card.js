@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { getCard } from '../actions';
-import SideNav from './sidenav';
 import Breadcrumbs from './breadcrumbs';
 
 class Card extends Component {
@@ -20,7 +19,6 @@ class Card extends Component {
     }
     return (
       <div>
-        <SideNav />
         <div className="card">
           <Breadcrumbs props={this.props.match.url} />
           <h3>Details for {this.props.card.title}</h3>

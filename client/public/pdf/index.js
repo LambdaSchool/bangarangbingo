@@ -66,7 +66,7 @@ function dropDown(cmdStr) {
     // ***CRASH STOP: set pages to 1 for customize
     //if(curCard.numCards !== 1) { eval("document.getElementById('inputField').value = 1;"); }
     /**********************/
-    
+
     curCard.randMode = 'norm';
     // hide the selection clicked
     toggleDisplay(`${arrCmd[0]}_${arrCmd[1]}`);
@@ -228,6 +228,10 @@ function update(color, updateText) {
    view_pageBreak = '';
   //pageMargins:[8,8,10.5,10.5],
   dx00 = `{info:{title:'Bingo Cards',author:'Bangarang Bingo',subject:'',keywords:''},pageOrientation:'portrait',pageSize:'A4',content:[`;
+
+  /*
+
+  */
 
   dx01 = `{alignment:'center',background:'',content:[],table:{headerRows:1,widths:[94,94,94,94,94],margin:[0,0,0,0],heights:[64,16,124,124,124,124,124],body:[[{text:'${view_topWord[0]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[1]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[2]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[3]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[4]}',bold:true,style:'top',fontSize:64}],[{text:' ',colSpan:5,fillColor:'${curCard.fillColor}'}],['${curCard.cellDat[0]}','${curCard.cellDat[1]}','${curCard.cellDat[2]}','${curCard.cellDat[3]}','${curCard.cellDat[4]}'],['${curCard.cellDat[5]}','${curCard.cellDat[6]}','${curCard.cellDat[7]}','${curCard.cellDat[8]}','${curCard.cellDat[9]}'],['${curCard.cellDat[10]}','${curCard.cellDat[11]}',{text:'\\n\\n${curCard.freeStr}',bold:true,fontSize:${curCard.freeFontSize},color:'${curCard.freeFontColor}'},'${curCard.cellDat[13]}','${curCard.cellDat[14]}'],['${curCard.cellDat[15]}','${curCard.cellDat[16]}','${curCard.cellDat[17]}','${curCard.cellDat[18]}','${curCard.cellDat[19]}'],['${curCard.cellDat[20]}','${curCard.cellDat[21]}','${curCard.cellDat[22]}','${curCard.cellDat[23]}','${curCard.cellDat[24]}',]]}`;
 

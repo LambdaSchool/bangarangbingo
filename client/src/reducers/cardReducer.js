@@ -1,10 +1,16 @@
 import { GET_CARD } from '../actions';
 
-export default (card = null, action) => {
+const defaultState = {
+  card: {},
+};
+
+export default (state = defaultState, action) => {
   switch (action.type) {
+    case 'SET_CARD':
+      return { ...state, ...action.payload };
     case GET_CARD:
       return action.payload.data;
     default:
-      return card;
+      return state;
   }
 };

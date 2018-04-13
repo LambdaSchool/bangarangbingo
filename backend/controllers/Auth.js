@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const SECRET = 'thisNeedsToChange';
+const SECRET = process.env.APP_SECRET;
 
 const AuthController = {
   async register(req, res) {

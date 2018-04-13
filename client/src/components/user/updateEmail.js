@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { updateUserEmail } from '../../actions';
-// import './protectedComponent.css';
+import './protectedComponent.css';
 
 class UpdateEmail extends Component {
   handleFormSubmit({ username, newUsername, password, confirmPassword }) {

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './App.css';
 import { Landing, Header } from './components';
 
 // eslint-disable-next-line react/prefer-stateless-function

@@ -43,6 +43,7 @@ const Layout = props => (
           max-width: 1440px;
           margin: 0 auto;
           width: 100%;
+          height: 80px;
         }
         header nav {
           align-self: center;

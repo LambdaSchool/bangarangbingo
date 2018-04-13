@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const SECRET = process.env.APP_SECRET;
-
 const AuthController = {
   async register(req, res) {
     try {

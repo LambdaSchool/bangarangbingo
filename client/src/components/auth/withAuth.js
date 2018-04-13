@@ -40,7 +40,7 @@ const WithAuth = ProtectedComponent => {
       this.props.push('/login'); 
     }
     render() {
-      return this.props.authenticated ? <ProtectedComponent logout={this.props.unauthenticate} /> : null;
+      return this.props.authenticated ? <ProtectedComponent user={this.props.auth.user.username} logout={this.props.unauthenticate} /> : null;
       // return this.props.authenticated ? <ProtectedComponent logout={this.props.unauthenticate}/> : <Redirect to="/login" />;
     }
   }

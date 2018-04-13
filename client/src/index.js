@@ -14,7 +14,7 @@ import { StripeProvider } from 'react-stripe-elements';
 
 import './index.css';
 import App from './App';
-import { Login, Register, Cards, Card, CardCreate } from './components';
+import { Login, Register, Card } from './components';
 import Billing from './components/billing/index';
 import RequireAuth from './components/HOC/RequireAuth';
 import reducers from './reducers';

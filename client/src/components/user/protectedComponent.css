@@ -11,18 +11,7 @@
     font-size: 36px;
     min-width: 400px;
 }
-.sidenav {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    margin: 10px;
-    border: 1.5px solid black;
-    height: 100%;
-}
 
-.sidenav__item {
-    margin: 5px;
-}
 
 .component {
     width: 80%;
@@ -62,30 +51,4 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-}
-
-.breadcrumbs {
-    padding: 10px 16px;
-    list-style: none;
-}
-
-.breadcrumbs li {
-    display: inline;
-    font-size: 18px;
-}
-
-.breadcrumbs li+li:before {
-    padding: 0 8px;
-    color: 249999;
-    content: ">\00a0";
-}
-
-.breadcrumbs li a {
-    color: #0275d8;
-    text-decoration: none;
-}
-
-.breadcrumbs li a:hover {
-    color: #249999;
-    cursor: pointer;
 }

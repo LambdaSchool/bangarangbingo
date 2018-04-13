@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import './protectedComponent.css';
-
 const Breadcrumbs = ({ location }) => {
   const crumbs = location.pathname.split('/').slice(1).filter(crumb => !!crumb).map((crumb, i, loaf) => {
     const text = crumb.toLowerCase() === 'cards' || crumb.toLowerCase() === 'card' ? 'Dashboard' : (crumb.charAt(0).toUpperCase() + crumb.slice(1));

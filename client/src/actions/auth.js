@@ -16,9 +16,13 @@ export const authenticate = (user, token) => {
   };
 };
 
-const unauthenticate = () => ({
-  type: UNAUTHENTICATE_USER,
-});
+export const unauthenticate = () => {
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
+  return ({
+    type: UNAUTHENTICATE_USER,
+  });
+};
 
 export const registerUser = (username, password, confirmPassword, history, handleError) => (dispatch) => {
   if (password !== confirmPassword) {
@@ -56,6 +60,7 @@ export const login = (username, password, history, handleError) => (dispatch) =>
 };
 
 export const logout = () => (dispatch) => {
+  console.log('called to logout');
   localStorage.removeItem('user');
   localStorage.removeItem('token');
   dispatch(unauthenticate());

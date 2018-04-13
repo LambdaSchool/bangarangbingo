@@ -75,8 +75,8 @@
 }
 
 .breadcrumbs li+li:before {
-    padding: 8px;
-    color: black;
+    padding: 0 8px;
+    color: 249999;
     content: ">\00a0";
 }
 
@@ -86,6 +86,6 @@
 }
 
 .breadcrumbs li a:hover {
-    color: #01447e;
-    text-decoration: underline;
+    color: #249999;
+    cursor: pointer;
 }

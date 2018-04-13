@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
 import { reducer as FormReducer } from 'redux-form';
 import AuthReducer from './auth';
 import CardsReducer from './cardsReducer';
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   form: FormReducer,
   cards: CardsReducer,
   card: CardReducer,
+  router: routerReducer,
 });
 
 export default rootReducer;

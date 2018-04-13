@@ -22,7 +22,7 @@ class Form extends Component {
     e.preventDefault();
     if (this.state.name && this.state.email) {
       const createToken = this.props.stripe.createToken({ name: this.state.name });
-      createToken.then(({ error, token}) => {
+      createToken.then(({ error, token }) => {
         if (token) {
           this.props.processPayment(token, {
             name: this.state.name,
@@ -43,6 +43,7 @@ class Form extends Component {
           name="name"
           type="text"
           value={this.state.name}
+          placeholder="John Smith"
           onChange={e => this.handleChange(e, 'name')}
         />
         <label>Email:</label>
@@ -50,10 +51,43 @@ class Form extends Component {
           name="email"
           type="email"
           value={this.state.email}
+          placeholder="email@example.com"
           onChange={e => this.handleChange(e, 'email')}
         />
         <CardElement />
-        <button type="submit">Confirm order</button>
+        <button type="submit">Confirm Subscription</button>
+        <style jsx scoped>
+          {`
+          form button {
+            text-decoration: none;
+            background: #239999;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            margin-top: 20px;
+          }
+          label {
+            display: none;
+          }
+          input {
+            background-color: white;
+            height: 40px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            box-shadow: 0 1px 3px 0 #0000003b;
+            transition: box-shadow 150ms ease;
+            margin-bottom: 20px;
+            margin-right: 20px;
+            outline: none;
+            font-size: 14px;
+            padding: 0 15px 0 10px;
+          }
+          input:focus {
+            box-shadow: 0 1px 3px 0 #cfd7df;
+          }
+
+        `}
+        </style>
       </form>
     );
   }

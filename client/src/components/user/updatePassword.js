@@ -4,12 +4,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
-import { updateUserPassword } from '../actions';
-import './protectedComponent.css';
+import { updateUserPassword } from '../../actions';
+// import './protectedComponent.css';
 
 class UpdatePassword extends Component {
   handleFormSubmit({ username, password, confirmPassword, newPassword, confirmNewPassword }) {
-    this.props.updateUserPassword(username, password, confirmPassword, newPassword, confirmNewPassword, this.props.history);
+    this.props.updateUserPassword(username, password, confirmPassword, newPassword, confirmNewPassword);
   }
 
   renderAlert() {
@@ -21,7 +21,7 @@ class UpdatePassword extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <div className="component">
+      <div>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))} className="reduxForm">
           <h3 className="formTitle">Update Password</h3>
           <div className="formInput">

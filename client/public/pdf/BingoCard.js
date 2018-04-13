@@ -85,10 +85,10 @@ function genCells(tmpCurCard) {
 	let curH = 1;
 	let cardMax = 0;
 	let cycles = 0;
-	let finish = (tmpCurCard.numCells + 1) * tmpCurCard.numCards;
+	let finish = (tmpCurCard.numCells * tmpCurCard.numCards) + 1;
 		
 	for(; cycles < finish ;) {		
-		if(cardMax != tmpCurCard.numCenter - 1 && tmpCurCard.isCenterFree) {
+		if(cardMax != tmpCurCard.numCenter - 20 && tmpCurCard.isCenterFree) {
 			if(tmpCurCard.isNum) {
 				tmpCurCard.cellStr = Math.round(Math.random() * tmpCurCard.valMax);			
 			if(tmpCurCard.isPad0) {

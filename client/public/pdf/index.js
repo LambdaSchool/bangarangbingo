@@ -62,6 +62,11 @@ function parseStrVal(cmdStr) {
 function dropDown(cmdStr) {
   let arrCmd = cmdStr.split('_');
   if(arrCmd[1] !== 'MAIN') {
+    /**********************/
+    // ***CRASH STOP: set pages to 1 for customize
+    //if(curCard.numCards !== 1) { eval("document.getElementById('inputField').value = 1;"); }
+    /**********************/
+    
     curCard.randMode = 'norm';
     // hide the selection clicked
     toggleDisplay(`${arrCmd[0]}_${arrCmd[1]}`);
@@ -148,15 +153,7 @@ small: {
 };
 */
 
-function arrJSON(arr) {
-let i = 0;
-let str = '';
-arr = arr.split('\n');
-let len = arr.length;
-for(; i < len; i++) {
-  str += '/*'+ pad(i, (len +'').length) +'*/ docArr.push(`' + arr[i] + '`);\n';
-}
-}
+
 
 //let ddx = JSON5.stringify(dd);
 //alert(ddx);
@@ -186,12 +183,12 @@ let pdf00;
 let data = '';
 let preData = 'data:application/pdf;base64,';
 let width = '100%';
-let height = '1920';
+let height = window.innerHeight - 32;
 let imgWidth = '';
 let imgHeight = '';
 let view_topWord = '';
 let view_cellDat = [''];
-let view_pageBreak = 'pageBreak: "after"';
+let view_pageBreak = ',pageBreak: "after"';
 
 function setTextColor(picker) {
   document.getElementsByTagName('body')[0].style.color = '#' + picker.toString();
@@ -199,44 +196,42 @@ function setTextColor(picker) {
   
 function update(color, updateText) {
   //console.log('color: ' + color);
-  
+  if(curCard.numCards > 1) {
+    eval(`update2(color, updateText)`);
+    return;
+  }
     
   if(!init) {
-    //document.getElementById('jscolor_btn').style.backgroundColor = '#000000';
     init = true;
   }
 
   if(color !== curCard.fillColor && color !== null) {
-    curCard.fillColor = '#' + color;
-  //  setTimeout(toggleDisplay());
+    curCard.fillColor = `#${color}`;
   }
 
   if(updateText) {
-    //let val = document.getElementById('editArea').value.split['\n'];
-    //val = val[0].split(`-`);
-
-    	if(	curCard.randMode !== 'none') {
+    if(curCard.randMode !== 'none') {
         document.getElementById('editArea').value = '';
-	  }
+    }
     
     curCard = genCells(curCard);
-      if(!curCard.isNum) {
-        if(	curCard.randMode !== 'none') {
-          document.getElementById('editArea').value = curCard.view_str;
-        }
+    if(!curCard.isNum) {
+      if(curCard.randMode !== 'none') {
+        document.getElementById('editArea').value = curCard.view_str;
       }
     }
-    
-    if(!curCard.topWord.match(/\\/i) && !curCard.topWord.match(/\'/i)) {
-      view_topWord = fillBlanks(curCard.topWord, 5);
-    }
-
+  }
+  
+  if(!curCard.topWord.match(/\\/i) && !curCard.topWord.match(/\'/i)) {
+    view_topWord = fillBlanks(curCard.topWord, 5);
+  }
+   view_pageBreak = '';
   //pageMargins:[8,8,10.5,10.5],
   dx00 = `{info:{title:'Bingo Cards',author:'Bangarang Bingo',subject:'',keywords:''},pageOrientation:'portrait',pageSize:'A4',content:[`;
 
-  dx01 = `{alignment:'center',background:'',content:[],table:{headerRows:1,widths:[94,94,94,94,94],margin:[0,0,0,0,],heights:[64,16,124,124,124,124,124],body:[[{text:'${view_topWord[0]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[1]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[2]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[3]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[4]}',bold:true,style:'top',fontSize:64}],[{text:' ',colSpan:5,fillColor:'${curCard.fillColor}'}],['${curCard.cellDat[0]}','${curCard.cellDat[1]}','${curCard.cellDat[2]}','${curCard.cellDat[3]}','${curCard.cellDat[4]}'],['${curCard.cellDat[5]}','${curCard.cellDat[6]}','${curCard.cellDat[7]}','${curCard.cellDat[8]}','${curCard.cellDat[9]}'],['${curCard.cellDat[10]}','${curCard.cellDat[11]}',{text:'\\n\\n${curCard.freeStr}',bold:true,fontSize:${curCard.freeFontSize},color:'${curCard.freeFontColor}'},'${curCard.cellDat[13]}','${curCard.cellDat[14]}'],['${curCard.cellDat[15]}','${curCard.cellDat[16]}','${curCard.cellDat[17]}','${curCard.cellDat[18]}','${curCard.cellDat[19]}'],['${curCard.cellDat[20]}','${curCard.cellDat[21]}','${curCard.cellDat[22]}','${curCard.cellDat[23]}','${curCard.cellDat[24]}',]]}`;
+  dx01 = `{alignment:'center',background:'',content:[],table:{headerRows:1,widths:[94,94,94,94,94],margin:[0,0,0,0],heights:[64,16,124,124,124,124,124],body:[[{text:'${view_topWord[0]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[1]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[2]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[3]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[4]}',bold:true,style:'top',fontSize:64}],[{text:' ',colSpan:5,fillColor:'${curCard.fillColor}'}],['${curCard.cellDat[0]}','${curCard.cellDat[1]}','${curCard.cellDat[2]}','${curCard.cellDat[3]}','${curCard.cellDat[4]}'],['${curCard.cellDat[5]}','${curCard.cellDat[6]}','${curCard.cellDat[7]}','${curCard.cellDat[8]}','${curCard.cellDat[9]}'],['${curCard.cellDat[10]}','${curCard.cellDat[11]}',{text:'\\n\\n${curCard.freeStr}',bold:true,fontSize:${curCard.freeFontSize},color:'${curCard.freeFontColor}'},'${curCard.cellDat[13]}','${curCard.cellDat[14]}'],['${curCard.cellDat[15]}','${curCard.cellDat[16]}','${curCard.cellDat[17]}','${curCard.cellDat[18]}','${curCard.cellDat[19]}'],['${curCard.cellDat[20]}','${curCard.cellDat[21]}','${curCard.cellDat[22]}','${curCard.cellDat[23]}','${curCard.cellDat[24]}',]]}`;
 
-  dx02 = `,${view_pageBreak},layout:{hLineColor:'${curCard.fillColor}', vLineColor:'${curCard.fillColor}'}}],styles:{top:{alignment:'center',color:'#ffffff',fillColor:'${curCard.fillColor}'},sub:{fontSize:32,bold:true},fill:{fillColor:'${curCard.fillColor}'},quote:{italics:true},small:{fontSize:8}}}`;
+  dx02 = `${view_pageBreak},layout:{hLineColor:'${curCard.fillColor}', vLineColor:'${curCard.fillColor}'}}],styles:{top:{alignment:'center',color:'#ffffff',fillColor:'${curCard.fillColor}'},sub:{fontSize:32,bold:true},fill:{fillColor:'${curCard.fillColor}'},quote:{italics:true},small:{fontSize:8}}}`;
 
   dx = `${dx00}${dx01}${dx02}`;
 
@@ -244,15 +239,22 @@ function update(color, updateText) {
 
   pdf00 = pdfMake.createPdf(dd2, pdfMake.fonts, pdfMake.vfs);
 
+  height = window.innerHeight - 32;
   pdf00.getBase64((data) => { 
     //data = preData + data;
     //document.getElementById('PDFobj').data = `data:application/pdf;base64, ${data}`;
-    //document.getElementById('PDFobj').data = preData + data;
+    //docment.getElementById('PDFobj').data = preData + data;
     document.getElementById('PDFdiv').innerHTML = `<object id="PDFobj" width="${width}" height="${height}" data="data:application/pdf;base64, ${data}"></object>`;
   });
 }
 
-update(null, true);
+window.addEventListener('resize', function(height){ height = window.innerHeight - 32; document.getElementById('PDFobj').height = height;}, true);
+
+if(!init) {
+  picker = '#000000';
+  update(null, true);
+}
+
 
 /////////////////////////////////////////////////////////////////////
 //File loading:

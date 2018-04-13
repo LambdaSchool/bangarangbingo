@@ -92,3 +92,13 @@ function toggleVal(val, alt0, alt1) {
   }
 }
 
+function arrJSON(arr) {
+  let i = 0;
+  let str = '';
+  arr = arr.split('\n');
+  let len = arr.length;
+  for(; i < len; i++) {
+    str += '/*'+ pad(i, (len +'').length) +'*/ docArr.push(`' + arr[i] + '`);\n';
+  }
+}
+

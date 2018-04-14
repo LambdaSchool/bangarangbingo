@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Layout from '../layout';
+import PDFViewer from '../bingo/pdf';
 
-const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:3000';
 
 const CreateCard = props => (
   <Layout logout={props.logout}>
@@ -12,8 +12,8 @@ const CreateCard = props => (
       </header>
       <section className="content">
         <section className="card-area">
-            <iframe src={`${ROOT_URL}/pdf.html`} title="card" width="100%" height="1000px" />
-          </section>
+          <PDFViewer />    
+        </section>
       </section>
     </div>
     <style jsx scoped>

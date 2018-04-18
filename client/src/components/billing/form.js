@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { connect } from 'react-redux';
+import { RadioGroup, Radio } from 'react-radio-group';
 import { processPayment } from '../../actions';
 
 import './style.css';
@@ -11,8 +12,14 @@ class Form extends Component {
     this.state = {
       name: '',
       email: '',
+      selectedValue: 'subscription',
     };
   }
+
+  handleRadioChange(value) {
+    this.setState({ selectedValue: value });
+  }
+
   handleChange(e, field) {
     this.setState({
       [field]: e.target.value,
@@ -36,8 +43,24 @@ class Form extends Component {
 
   }
   render() {
+    let numOrdered = 0;
+    if (this.props.card.card.content) {
+      numOrdered = this.props.card.card.content.length;
+    }
+    const cost = (numOrdered * .99).toFixed(2);
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
+        { this.props.card.card.content
+          ? <RadioGroup name="buyOption" selectedValue={this.state.selectedValue} onChange={this.handleRadioChange}>
+            <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
+            <br />
+            <Radio value="oneTime" />One-Time Purchase - {numOrdered} Cards at $.99 a piece - ${cost}
+          </RadioGroup>
+          : <RadioGroup name="buyOption" selectedValue={this.state.selectedValue} onChange={this.handleRadioChange}>
+            <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
+          </RadioGroup>
+        }
+        <br />
         <label>Name:</label>
         <input
           name="name"
@@ -93,4 +116,10 @@ class Form extends Component {
   }
 }
 
-export default connect(null, { processPayment })(injectStripe(Form));
+const mapStateToProps = (state) => {
+  return {
+    card: state.card,
+  };
+};
+
+export default connect(mapStateToProps, { processPayment })(injectStripe(Form));

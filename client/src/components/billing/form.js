@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { connect } from 'react-redux';
+import { RadioGroup, Radio } from 'react-radio-group';
 import { processPayment } from '../../actions';
 
 import './style.css';
@@ -11,8 +12,22 @@ class Form extends Component {
     this.state = {
       name: '',
       email: '',
+      purchaseType: 'subscription',
+      numCardsOrdered: null,
+      amtCharged: 999,
     };
   }
+
+  handleRadioChange(value) {
+    let charge;
+    if (this.props.card.card.content) {
+      const numOrdered = this.props.card.card.content.length;
+      charge = (numOrdered * .99).toFixed(2) * 100;
+    }
+    this.setState({ purchaseType: value });
+    value === 'oneTime' ? this.setState({ amtCharged: charge }) : this.setState({ amtCharged: 999 });
+  }
+
   handleChange(e, field) {
     this.setState({
       [field]: e.target.value,
@@ -27,6 +42,9 @@ class Form extends Component {
           this.props.processPayment(token, {
             name: this.state.name,
             email: this.state.email,
+            purchaseType: this.state.purchaseType,
+            numCardsOrdered: this.state.numCardsOrdered,
+            amtCharged: this.state.amtCharged,
           });
         }
       }).catch((err) => {
@@ -36,8 +54,24 @@ class Form extends Component {
 
   }
   render() {
+    let charge;
+    if (this.props.card.card.content) {
+      this.state.numCardsOrdered = this.props.card.card.content.length;
+      charge = (this.state.numCardsOrdered * .99).toFixed(2);
+    }
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
+        { this.props.card.card.content
+          ? <RadioGroup name="buyOption" selectedValue={this.state.purchaseType} onChange={event => this.handleRadioChange(event)}>
+            <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
+            <br />
+            <Radio value="oneTime" />One-Time Purchase - {this.state.numCardsOrdered} Cards at $.99 a piece - ${charge}
+          </RadioGroup>
+          : <RadioGroup name="buyOption" selectedValue={this.state.purchaseType} onChange={event => this.handleRadioChange(event)}>
+            <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
+          </RadioGroup>
+        }
+        <br />
         <label>Name:</label>
         <input
           name="name"
@@ -93,4 +127,10 @@ class Form extends Component {
   }
 }
 
-export default connect(null, { processPayment })(injectStripe(Form));
+const mapStateToProps = (state) => {
+  return {
+    card: state.card,
+  };
+};
+
+export default connect(mapStateToProps, { processPayment })(injectStripe(Form));

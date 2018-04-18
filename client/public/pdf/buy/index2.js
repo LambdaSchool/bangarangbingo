@@ -1,13 +1,18 @@
 
 //import { BingoCard } from "./BingoCard.js";
 
+const exportCard = function() {
+  curCard.dateModified = new Date();
+  return JSON.parse(JSON.stringify(curCard));
+}
+
 function checkText2(delay) {
-  if(document.getElementById('inputField').value !== `${curCard.numCards}` && 
-	!(isNaN(parseInt(document.getElementById('inputField').value))) &&
-	parseInt(document.getElementById('inputField').value) > 0
+  if(document.getElementById('input_field').value !== `${curCard.numCards}` && 
+	!(isNaN(parseInt(document.getElementById('input_field').value))) &&
+	parseInt(document.getElementById('input_field').value) > 0
 	) {
-    //console.log(`NO MATCH: ${document.getElementById('inputField').value} ${curCard.numCards}`)  
-    curCard.numCards = document.getElementById('inputField').value;
+    //console.log(`NO MATCH: ${document.getElementById('input_field').value} ${curCard.numCards}`)  
+    curCard.numCards = document.getElementById('input_field').value;
     curCard.randMode = 'none';
     curCard = genCells(curCard);
     update2(null, false);
@@ -29,20 +34,26 @@ function update2(color, updateText) {
     init = true;
   }
 
+  if(loadCard !== '') {
+    curCard = JSON.parse(loadCard);
+    loadCard = '';
+  }
+
   if(color !== curCard.fillColor && color !== null) {
     curCard.fillColor = `#${color}`;
   }
 
   if(updateText) {
     	if(curCard.randMode !== 'none') {
-        document.getElementById('editArea').value = '';
+        document.getElementById('Cells_area').value = '';
+        document.getElementById('List_area').value = '';
 	  }
     
   curCard = genCells(curCard);
   
     if(!curCard.isNum) {
       if(	curCard.randMode !== 'none') {
-        document.getElementById('editArea').value = curCard.view_str;
+        document.getElementById('Cells_area').value = curCard.cell_viewStr;
       }
     }
   }

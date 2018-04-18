@@ -53,15 +53,16 @@ class Form extends Component {
     }
 
   }
+
   render() {
     let charge;
-    if (this.props.card.card.content) {
-      this.state.numCardsOrdered = this.props.card.card.content.length;
+    if (this.props.card.card.numCards) {
+      this.state.numCardsOrdered = this.props.card.card.numCards;
       charge = (this.state.numCardsOrdered * .99).toFixed(2);
     }
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
-        { this.props.card.card.content
+        { this.props.card.card.numCards
           ? <RadioGroup name="buyOption" selectedValue={this.state.purchaseType} onChange={event => this.handleRadioChange(event)}>
             <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
             <br />

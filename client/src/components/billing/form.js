@@ -17,6 +17,7 @@ class Form extends Component {
   }
 
   handleRadioChange(value) {
+    console.log('inside handleRadioChange', value);
     this.setState({ selectedValue: value });
   }
 
@@ -51,12 +52,12 @@ class Form extends Component {
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
         { this.props.card.card.content
-          ? <RadioGroup name="buyOption" selectedValue={this.state.selectedValue} onChange={this.handleRadioChange}>
+          ? <RadioGroup name="buyOption" selectedValue={this.state.selectedValue} onChange={event => this.handleRadioChange(event)}>
             <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
             <br />
             <Radio value="oneTime" />One-Time Purchase - {numOrdered} Cards at $.99 a piece - ${cost}
           </RadioGroup>
-          : <RadioGroup name="buyOption" selectedValue={this.state.selectedValue} onChange={this.handleRadioChange}>
+          : <RadioGroup name="buyOption" selectedValue={this.state.selectedValue} onChange={event => this.handleRadioChange(event)}>
             <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
           </RadioGroup>
         }

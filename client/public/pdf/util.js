@@ -33,6 +33,7 @@ function fillBlank(str) {
 }
 
 function escQuote(str) {
+  if(typeof(str) === 'undefined') { return '';}
   if(str.match(/'/i)) {
     str = str.replace(/'/g, "\\'");
     //console.log(`#############: ${str}`);

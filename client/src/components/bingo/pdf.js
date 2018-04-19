@@ -7,6 +7,9 @@ const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo
 
 class PDFViewer extends Component {
   componentDidMount() {
+    if (this.props.cardToEdit) {
+      iframeEl.contentWindow.postMessage(this.props.card, '*');
+    }
     window.addEventListener('message', message => this.handleMessage(message));
   }
   handleMessage(e) {
@@ -23,9 +26,13 @@ class PDFViewer extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  bingoCard: card;
+})
+
 const mapDispatchToProps = dispatch => ({
   setCard: card => dispatch(setCard(card)),
   push: to => dispatch(push(to)),
 });
 
-export default connect(null, mapDispatchToProps)(PDFViewer);
+export default connect(mapStateToProps, mapDispatchToProps)(PDFViewer);

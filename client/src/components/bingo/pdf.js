@@ -8,7 +8,8 @@ const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo
 class PDFViewer extends Component {
   componentDidMount() {
     if (this.props.cardToEdit) {
-      iframeEl.contentWindow.postMessage(this.props.card, '*');
+      const iframe = document.getElementById("PDFViewer");
+      iframe.contentWindow.postMessage(this.props.card, '*');
     }
     window.addEventListener('message', message => this.handleMessage(message));
   }
@@ -22,13 +23,13 @@ class PDFViewer extends Component {
     }
   }
   render() {
-    return <iframe src={`${ROOT_URL}/pdf/buy/pdf.html`} title="card" width="100%" height="1000px" />;
+    return <iframe id="PDFViewer" src={`${ROOT_URL}/pdf/buy/pdf.html`} title="card" width="100%" height="1000px" />;
   }
 }
 
 const mapStateToProps = state => ({
-  bingoCard: card;
-})
+  bingoCard: state.card,
+});
 
 const mapDispatchToProps = dispatch => ({
   setCard: card => dispatch(setCard(card)),

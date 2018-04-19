@@ -10,6 +10,8 @@ class Dash extends Component {
   }
 
   render() {
+    const { props } = this;
+    
     return (
       <Layout logout={props.logout}>
         <div className="root">

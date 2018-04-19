@@ -15,14 +15,15 @@ class Form extends Component {
       purchaseType: 'subscription',
       numCardsOrdered: null,
       amtCharged: 999,
+      bingoCard: {},
     };
   }
 
   handleRadioChange(value) {
     let charge;
-    if (this.props.card.card.content) {
-      const numOrdered = this.props.card.card.content.length;
-      charge = (numOrdered * .99).toFixed(2) * 100;
+    if (this.props.card.card.numCards) {
+      const numOrdered = this.props.card.card.numCards;
+      charge = Math.round((numOrdered * .99).toFixed(2) * 100);
     }
     this.setState({ purchaseType: value });
     value === 'oneTime' ? this.setState({ amtCharged: charge }) : this.setState({ amtCharged: 999 });
@@ -45,6 +46,7 @@ class Form extends Component {
             purchaseType: this.state.purchaseType,
             numCardsOrdered: this.state.numCardsOrdered,
             amtCharged: this.state.amtCharged,
+            bingoCard: this.state.bingoCard,
           });
         }
       }).catch((err) => {
@@ -57,9 +59,11 @@ class Form extends Component {
   render() {
     let charge;
     if (this.props.card.card.numCards) {
+      this.state.bingoCard = this.props.card;
       this.state.numCardsOrdered = this.props.card.card.numCards;
       charge = (this.state.numCardsOrdered * .99).toFixed(2);
     }
+    console.log(this.props.card);
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
         { this.props.card.card.numCards

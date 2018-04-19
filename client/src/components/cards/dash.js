@@ -21,7 +21,7 @@ class Dash extends Component {
             { console.log(props, props.cards)}
             {props.cards && props.cards.map((card) => {
               return (
-                <Link to={`/edit/${card.id}`} key={card.id}>{card.id}</Link>
+                <Link to={`card/edit/${card.id}`} key={card.id}>{card.id}</Link>
               )
             })}
             {!props.cards &&

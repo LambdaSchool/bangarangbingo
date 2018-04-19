@@ -21,6 +21,7 @@ import reducers from './reducers';
 import WithAuth from './components/auth/withAuth';
 import Dash from './components/cards/dash';
 import CreateCard from './components/cards/create';
+import EditCard from './components/cards/edit';
 import Settings from './components/user/settings';
 
 // import registerServiceWorker from './registerServiceWorker';
@@ -42,7 +43,7 @@ ReactDOM.render(
           <Route path="/register" component={Register} />
           <Route path="/cards" component={WithAuth(Dash)} />
           <Route path="/card/create" component={WithAuth(CreateCard)} />
-          <Route path="/card/:id" component={RequireAuth(Card)} />
+          <Route path="/card/edit/:id" component={WithAuth(EditCard)} />
           <Route path="/settings" component={WithAuth(Settings)} />
           <Route path="/billing" component={WithAuth(Billing)} />
         </Switch>

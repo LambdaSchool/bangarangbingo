@@ -2,29 +2,58 @@
 
 let init = false;
 let curCard = new BingoCard();
-let loadCard = '';
+let loadCard = {};
 
 function toggleEdit(str) {
   toggleDisplay(`${str}_area`); 
   document.getElementById(`${str}_PDF_btn`).value = toggleVal(document.getElementById(`${str}_PDF_btn`).value, str, `Hide ${str}`); 
 }
 
+function bindEvent(element, eventName, eventHandler) {
+  if (element.addEventListener) {
+      element.addEventListener(eventName, eventHandler, false);
+  } else if (element.attachEvent) {
+      element.attachEvent('on' + eventName, eventHandler);
+  }
+}
+
+bindEvent(window, 'message', function (e) {
+  loadCard = e.data;
+});
+
 function checkText(id, old, delay) {
-  if(
-      document.getElementById(id).value !== old && 
-      document.getElementById(id).value !== curCard.cell_viewStr
-    ) {
-    //update(null, true);
-    //console.log(document.getElementById(id).value);
+  if(loadCard.dateModified) {
+    curCard = loadCard;
+    //alert(`checkText00: loadCard: ${loadCard}`);
+    loadCard = {};
+    //document.getElementById(id).value = curCard.cell_viewStr;
     curCard.randMode = 'none';
-    old = document.getElementById(id).value;
-    parseTextVal(old);
-    delay = 0;
+    update(null, true);
+    old = curCard.cell_viewStr;
+    document.getElementById(id).value = old;
+    document.getElementById('input_field').value = `${curCard.numCards}`;
   } else {
-    delay = 500;
+    let val = document.getElementById(id).value; 
+    if(
+        val !== old && 
+        val !== curCard.cell_viewStr &&
+        !val.match(/\\/i) 
+      ) {
+      //update(null, true);
+      //console.log(document.getElementById(id).value);
+      curCard.randMode = 'none';
+      old = val;
+      parseTextVal(old);
+      delay = 0;
+    } else {
+      delay = 500;
+    }
   }
   setTimeout(function () { checkText(id, old, delay); }, delay);
 }
+
+setTimeout(function () { checkText('Cells_area', document.getElementById('Cells_area').value, 50); }, 200);
+
 
 function parseTextVal(str) {
   //.split('/\r\n|\n|\r/')
@@ -37,8 +66,6 @@ function parseTextVal(str) {
   update(null, true);
 }
 
-
-setTimeout(function () { checkText('Cells_area', document.getElementById('Cells_area').value, 50); }, 200);
 
 function parseNumVal(cmdStr) {
   cmdStr = cmdStr.slice(1, cmdStr.len);
@@ -195,15 +222,6 @@ function setTextColor(picker) {
   
 function update(color, updateText) {
   //console.log('color: ' + color);
- if(loadCard !== '') {
-    curCard = JSON.parse(loadCard);
-    loadCard = '';
-  }
-
-  if(curCard.numCards > 1) {
-    eval(`update2(color, updateText)`);
-    return;
-  }
 
   if(!init) {
     init = true;
@@ -237,7 +255,7 @@ function update(color, updateText) {
 
   */
 
-  dx01 = `{alignment:'center',background:'',content:[],table:{headerRows:1,widths:[94,94,94,94,94],margin:[0,0,0,0],heights:[64,16,124,124,124,124,124],body:[[{text:'${view_topWord[0]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[1]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[2]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[3]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[4]}',bold:true,style:'top',fontSize:64}],[{text:' ',colSpan:5,fillColor:'${curCard.fillColor}'}],['${curCard.cellDat[0]}','${curCard.cellDat[1]}','${curCard.cellDat[2]}','${curCard.cellDat[3]}','${curCard.cellDat[4]}'],['${curCard.cellDat[5]}','${curCard.cellDat[6]}','${curCard.cellDat[7]}','${curCard.cellDat[8]}','${curCard.cellDat[9]}'],['${curCard.cellDat[10]}','${curCard.cellDat[11]}',{text:'\\n\\n${curCard.freeStr}',bold:true,fontSize:${curCard.freeFontSize},color:'${curCard.freeFontColor}'},'${curCard.cellDat[13]}','${curCard.cellDat[14]}'],['${curCard.cellDat[15]}','${curCard.cellDat[16]}','${curCard.cellDat[17]}','${curCard.cellDat[18]}','${curCard.cellDat[19]}'],['${curCard.cellDat[20]}','${curCard.cellDat[21]}','${curCard.cellDat[22]}','${curCard.cellDat[23]}','${curCard.cellDat[24]}',]]}`;
+  dx01 = `{alignment:'center',background:'',content:[],table:{headerRows:1,widths:[94,94,94,94,94],margin:[22,0,22,0],heights:[64,16,124,124,124,124,124],body:[[{text:'${view_topWord[0]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[1]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[2]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[3]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[4]}',bold:true,style:'top',fontSize:64}],[{text:' ',colSpan:5,fillColor:'${curCard.fillColor}'}],['${curCard.cellDat[0]}','${curCard.cellDat[1]}','${curCard.cellDat[2]}','${curCard.cellDat[3]}','${curCard.cellDat[4]}'],['${curCard.cellDat[5]}','${curCard.cellDat[6]}','${curCard.cellDat[7]}','${curCard.cellDat[8]}','${curCard.cellDat[9]}'],['${curCard.cellDat[10]}','${curCard.cellDat[11]}',{text:'\\n\\n${curCard.freeStr}',bold:true,fontSize:${curCard.freeFontSize},color:'${curCard.freeFontColor}'},'${curCard.cellDat[13]}','${curCard.cellDat[14]}'],['${curCard.cellDat[15]}','${curCard.cellDat[16]}','${curCard.cellDat[17]}','${curCard.cellDat[18]}','${curCard.cellDat[19]}'],['${curCard.cellDat[20]}','${curCard.cellDat[21]}','${curCard.cellDat[22]}','${curCard.cellDat[23]}','${curCard.cellDat[24]}',]]}`;
 
   dx02 = `${view_pageBreak},layout:{hLineColor:'${curCard.fillColor}', vLineColor:'${curCard.fillColor}'}}],styles:{top:{alignment:'center',color:'#ffffff',fillColor:'${curCard.fillColor}'},sub:{fontSize:32,bold:true},fill:{fillColor:'${curCard.fillColor}'},quote:{italics:true},small:{fontSize:8}}}`;
 
@@ -316,7 +334,7 @@ function genCells(tmp_curCard) {
 	if(!tmp_curCard.init) {
 		tmp_curCard.init = true;
 	}
-	
+  
 	if(!tmp_curCard.isNum) {
 		tmp_curCard.topWord = tmp_curCard.arrList[0];
 	}
@@ -357,13 +375,7 @@ function genCells(tmp_curCard) {
 		} else {
 			tmp_curCard.cellStr = tmp_curCard.freeStr;
 		}
-		if(!this.init)	{
-			//tmp_curCard.cellDat.push(tmp_curCard.cellStr);
-			//trmpCurCard.cellMarginDat;
-		} else {
-			//tmp_curCard.cellDat[i] = tmp_curCard.cellStr;
-			//tmp_curCard = fixCellDat(tmp_curCard, i);
-		}
+	
 		//console.log(`0000000000000000002: ${tmp_curCard.cellDat[i]}`);	
   
     //console.log(`00: ${tmp_curCard.cellStr}`);
@@ -426,26 +438,26 @@ pdf01.getDataUrl(function (outDoc) {
 */
 /////////////////////////////////////////////////////////////////////
 
-
-function goPDF(str = 'open', dd = docDefinition, PDFname = 'doc.pdf') { 
-  switch(str) {
-    case 'open':
-      try { //pdfMake.createPdf(dd, pdfMake.fonts, pdfMake.vfs).open({}, window); 
-      pdf00.open({}, window);}
-      catch(err){ console.log('PDF failed to open.') };
-      break;
-    case 'download':
-      try { pdfMake.createPdf(dd).download(PDFname); }
-      catch(err){ console.log('PDF failed to download.') };
-      break;
-    case 'print':
-      try { pdf00.print({}, window); }
-      catch(err){ console.log('PDF failed to print.') };
-      break;
-    case 'preview':
-      try { console.log(data); }
-      catch(err){ console.log('PDF failed to preview.') };
-      break;
-  }
+const exportCard = function() {
+  curCard.dateModified = new Date();
+  return JSON.parse(JSON.stringify(curCard));
 }
 
+function checkText2(delay) {
+  if(document.getElementById('input_field').value !== `${curCard.numCards}` && 
+	!(isNaN(parseInt(document.getElementById('input_field').value))) &&
+	parseInt(document.getElementById('input_field').value) > 0
+	) {
+    //console.log(`NO MATCH: ${document.getElementById('input_field').value} ${curCard.numCards}`)  
+    curCard.numCards = document.getElementById('input_field').value;
+    curCard.randMode = 'none';
+    curCard = genCells(curCard);
+    //update(null, false);
+    delay = 200;
+    console.log(curCard.numCards);
+  } else {
+    delay = 500;
+  }
+  setTimeout(function () { checkText2(delay); }, delay);
+}
+setTimeout(function () { checkText2(200); }, 200);

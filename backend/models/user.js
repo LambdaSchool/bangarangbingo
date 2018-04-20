@@ -16,6 +16,9 @@ const UserSchema = new mongoose.Schema({
     required: false,
     unique: false,
   },
+  subscriber: {
+    type: Boolean,
+  },
 });
 UserSchema.static('authenticate', async function authenticate(username, password) {
   const user = await this.findOne({ username }).exec();

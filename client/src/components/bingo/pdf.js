@@ -22,7 +22,7 @@ class PDFViewer extends Component {
     }
   }
   render() {
-    return <iframe id="PDFViewer" src={`${ROOT_URL}/pdf/buy/pdf.html`} title="card" width="100%" height="1000px" />;
+    return <iframe id="PDFViewer" src={`${ROOT_URL}/pdf/pdf-design.html`} title="card" width="100%" height="1000px" />;
   }
 }
 

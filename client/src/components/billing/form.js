@@ -23,7 +23,7 @@ class Form extends Component {
     let charge;
     if (this.props.card.card.numCards) {
       const numOrdered = this.props.card.card.numCards;
-      charge = Math.round((numOrdered * .99).toFixed(2) * 100);
+      charge = Math.round((numOrdered * 0.99).toFixed(2) * 100);
     }
     this.setState({ purchaseType: value });
     value === 'oneTime' ? this.setState({ amtCharged: charge }) : this.setState({ amtCharged: 999 });
@@ -53,7 +53,6 @@ class Form extends Component {
         console.log(err);
       });
     }
-
   }
 
   render() {
@@ -61,12 +60,12 @@ class Form extends Component {
     if (this.props.card.card.numCards) {
       this.state.bingoCard = this.props.card;
       this.state.numCardsOrdered = this.props.card.card.numCards;
-      charge = (this.state.numCardsOrdered * .99).toFixed(2);
+      charge = (this.state.numCardsOrdered * 0.99).toFixed(2);
     }
     console.log(this.props.card);
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
-        { this.props.card.card.numCards
+        {this.props.card.card.numCards
           ? <RadioGroup name="buyOption" selectedValue={this.state.purchaseType} onChange={event => this.handleRadioChange(event)}>
             <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
             <br />
@@ -132,10 +131,8 @@ class Form extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    card: state.card,
-  };
-};
+const mapStateToProps = state => ({
+  card: state.card,
+});
 
 export default connect(mapStateToProps, { processPayment })(injectStripe(Form));

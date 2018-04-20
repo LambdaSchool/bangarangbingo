@@ -18,7 +18,6 @@ class PDFViewer extends Component {
     if (origin === ROOT_URL) {
       const card = e.data;
       const test = this.props.setCard(card);
-      console.log(test);
       this.props.push('/billing');
     }
   }

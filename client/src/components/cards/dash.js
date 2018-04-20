@@ -11,7 +11,7 @@ class Dash extends Component {
 
   render() {
     const { props } = this;
-    
+
     return (
       <Layout logout={props.logout}>
         <div className="root">
@@ -20,13 +20,10 @@ class Dash extends Component {
             <Link to="/card/create">Create Cards</Link>
           </header>
           <section className="content">
-            { console.log(props, props.cards)}
-            {props.cards && props.cards.map((card) => {
-              return (
-                <Link to={`card/edit/${card.id}`} key={card.id}>{card.id}</Link>
-              )
-            })}
-            {!props.cards &&
+            {!!props.cards.length && props.cards.map(card => (
+              <Link to={`card/edit/${card.id}`} key={card.id}>{card.id}</Link>
+              ))}
+            {!props.cards.length &&
               <Link to="/card/create" className="empty">
                 <span>You don't have any bingo cards!</span>
                 <span>Click to get started!</span>
@@ -75,10 +72,8 @@ class Dash extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    cards: state.cards,
-  };
-};
+const mapStateToProps = state => ({
+  cards: state.cards,
+});
 
-export default connect(mapStateToProps, { getCards})(Dash);
+export default connect(mapStateToProps, { getCards })(Dash);

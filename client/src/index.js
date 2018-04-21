@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import ReduxThunk from 'redux-thunk';
 
 import createHistory from 'history/createBrowserHistory'
-import { Route, Switch } from 'react-router'
+import { Route, Switch, withRouter } from 'react-router'
 import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux'
 
 import { StripeProvider } from 'react-stripe-elements';
@@ -45,7 +45,7 @@ ReactDOM.render(
           <Route path="/card/:id" component={RequireAuth(Card)} />
           <Route path="/settings" component={WithAuth(Settings)} />
           <Route path="/billing" component={WithAuth(Billing)} />
-          <Route path="/aboutUs" component={AboutUs} />
+          <Route path="/aboutUs" component={withRouter(AboutUs)} />
         </Switch>
       </ConnectedRouter>
     </Provider>

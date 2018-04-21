@@ -19,6 +19,7 @@ const Dash = props => (
           </Link>
         }
       </section>
+      <div><Link to="/aboutUs">About Us</Link></div>
       <style jsx scoped>
         {`
       .root {

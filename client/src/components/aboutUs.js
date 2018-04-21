@@ -3,7 +3,7 @@ import React from 'react';
 import 'font-awesome/css/font-awesome.min.css';
 import './aboutUs.css';
 
-const AboutUs = () => (
+const AboutUs = props => (
   <div className="aboutUs">
     <header>
       <img src="/images/logo.gif" alt="Bangarang Bingo" />
@@ -60,7 +60,7 @@ const AboutUs = () => (
       </div>
     </div>
     <section className="return">
-      <button onClick="history.goBack()">Close About Us</button>
+      <button onClick={props.history.goBack}>Close About Us</button>
     </section>
   </div>
 );

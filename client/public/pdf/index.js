@@ -34,15 +34,18 @@ function checkText(id, old, delay) {
     old = curCard.cell_viewStr;
     document.getElementById(id).value = old;
     document.getElementById('input_field').value = `${curCard.numCards}`;
+    delay = 200;
   } else {
-    const val = document.getElementById(id).value;
-    if (
-      val !== old &&
-      val !== curCard.cell_viewStr &&
-      !val.match(/\\/i)
-    ) {
-      // update(null, true);
-      // console.log(document.getElementById(id).value);
+    let val = document.getElementById(id).value; 
+    
+    if(
+        !curCard.isNum &&
+        val !== old && 
+        val !== curCard.cell_viewStr &&
+        !val.match(/\\/i)
+      ) {
+      //update(null, true);
+      //console.log(document.getElementById(id).value);
       curCard.randMode = 'none';
       old = val;
       parseTextVal(old);

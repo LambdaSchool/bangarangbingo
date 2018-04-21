@@ -32,12 +32,15 @@ function checkText(id, old, delay) {
     old = curCard.cell_viewStr;
     document.getElementById(id).value = old;
     document.getElementById('input_field').value = `${curCard.numCards}`;
+    delay = 200;
   } else {
     let val = document.getElementById(id).value; 
+    
     if(
+        !curCard.isNum &&
         val !== old && 
         val !== curCard.cell_viewStr &&
-        !val.match(/\\/i) 
+        !val.match(/\\/i)
       ) {
       //update(null, true);
       //console.log(document.getElementById(id).value);
@@ -108,9 +111,6 @@ function dropDown(cmdStr) {
   // toggle dropdown
   toggleDisplay(`${arrCmd[0]}_div`);
 }
-
-
-let docArr = [];
 
 //\\n\\n   
 //\\n\\n\\n\\n

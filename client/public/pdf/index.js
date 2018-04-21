@@ -18,8 +18,10 @@ function bindEvent(element, eventName, eventHandler) {
 }
 
 bindEvent(window, 'message', (e) => {
+  console.log('this was calling in iframe', e);
   loadCard = e.data;
 });
+
 
 function checkText(id, old, delay) {
   if (loadCard.dateModified) {

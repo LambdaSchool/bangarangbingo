@@ -3,6 +3,7 @@ const User = require('../models/user');
 const Card = require('../models/card');
 const PDFDocument = require('pdfkit');
 const SVGtoPDF = require('svg-to-pdfkit');
+
 const SECRET = process.env.APP_SECRET;
 
 PDFDocument.prototype.addSVG = function addSVG(svg, x, y, options) {
@@ -40,7 +41,7 @@ function generateCard(w, h) {
   let data;
   let x = 0;
   let y = 0;
-  let bingoStr = 'BINGO';
+  const bingoStr = 'BINGO';
   let cell = 0;
   for (let i = 0; i < h; i++) {
     for (let j = 0; j < w; j++) {
@@ -50,7 +51,7 @@ function generateCard(w, h) {
         data = cell === freeSpace ? 'FREE' : Math.floor(Math.random() * 100);
       }
       if (data < 10) {
-        data = '0' + data;
+        data = `0${data}`;
       }
       x = ((j + 1) * 200);
       y = 200 * (i + 1);
@@ -62,11 +63,37 @@ function generateCard(w, h) {
 }
 
 const CardController = {
-  get(req, res) {
-    res.json({});
+  async get(req, res) {
+    try {
+      const authToken = req.headers.authorization.replace('Bearer ', '');
+      const { id } = req.params;
+
+      const decodedToken = await jwt.verify(authToken, SECRET);
+      const { username } = decodedToken;
+      const user = await User.findOne({ username }).exec();
+      const { content: card } = await Card.findOne({ _id: id }).exec();
+      console.log(card);
+      res.json({
+        card,
+      });
+    } catch (e) {
+      console.log('get card: ', e);
+      res.status(422).json({ error: 'Failed to get card' });
+    }
   },
-  getAll(req, res) {
-    res.json([]);
+  async getAll(req, res) {
+    try {
+      const authToken = req.headers.authorization.replace('Bearer ', '');
+      const decodedToken = await jwt.verify(authToken, SECRET);
+      const { username } = decodedToken;
+      const user = await User.findOne({ username }).exec();
+      const id = user._id;
+
+      const cards = await Card.find({ author: id }).exec();
+      res.json(cards);
+    } catch (e) {
+      res.status(422).json({ cards: [] });
+    }
   },
   async create(req, res) {
     try {
@@ -98,14 +125,21 @@ const CardController = {
   edit(req, res) {
     res.json({});
   },
-  download(req, res) {
-    const doc = new PDFDocument();
-    doc.pipe(res);
-    for(let i = 0; i < Math.floor(Math.random() * 20); i++) {
-      SVGtoPDF(doc, generateCard(5, 5), 0, 0);
-      doc.addPage();
+  async download(req, res) {
+    try {
+      const { id } = req.params;
+      const authToken = req.headers.authorization.replace('Bearer ', '');
+      const decodedToken = await jwt.verify(authToken, SECRET);
+      const { username } = decodedToken;
+      const user = await User.findOne({ username }).exec();
+      const { content } = await Card.findOne({ _id: id }).exec();
+
+      const card = content;
+      console.log(card);
+    } catch (e) {
+      console.log(e)
+      res.status(422).json({ error: 'Unable to provide download.' });
     }
-    doc.end();
   },
 };
 

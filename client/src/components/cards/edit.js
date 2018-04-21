@@ -1,18 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import { getCard } from '../../actions';
 import Layout from '../layout';
 import PDFViewer from '../bingo/pdf';
-
+import axios from 'axios';
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:8080';
 
 class EditCard extends Component {
-  componentDidMount() {
-    this.props.getCard(this.props.match.params.id);
+  constructor(props) {
+    super(props);
+    this.state = {
+      card: {},
+    };
   }
-
+  componentDidMount() {
+    this.setCard(this.props.match.params.id);
+    console.log('this got called');    
+  }
+  async setCard(id) {
+    try {
+      const authToken = window.localStorage.getItem('token');
+      const { data } = await axios.get(`${ROOT_URL}/card/${id}`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      });
+      const { card } = data;
+      // we have card, now we have to set the card to edit;
+      console.log('set card: ', data);
+      this.setState({ card }, (test) => {
+        console.log('after', test);
+      });
+    } catch (e) {
+      console.log('set card: ', e);
+    }
+  }
   render() {
     const { props } = this;
+    const { card } = this.state;
+    console.log('render with: ', card);
     return (
       <Layout logout={props.logout}>
         <div className="root">
@@ -21,7 +49,7 @@ class EditCard extends Component {
           </header>
           <section className="content">
             <section className="card-area">
-              <PDFViewer cardToEdit={this.props.cardToEdit} />
+              <PDFViewer cardToEdit={this.state.card} />
             </section>
           </section>
         </div>
@@ -35,14 +63,12 @@ class EditCard extends Component {
         `}
         </style>
       </Layout>
-    )
+    );
   }
-};
+}
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => ({
     cardToEdit: state.card,
-  };
-};
+  });
 
-export default connect(mapStateToProps, { getCard })(EditCard);
+export default withRouter(connect(mapStateToProps, { getCard })(EditCard));

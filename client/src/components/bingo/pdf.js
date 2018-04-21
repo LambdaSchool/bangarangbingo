@@ -7,18 +7,23 @@ const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo
 
 class PDFViewer extends Component {
   componentDidMount() {
-    if (this.props.cardToEdit) {
-      const iframe = document.getElementById("PDFViewer");
-      iframe.contentWindow.postMessage(this.props.card, '*');
-    }
+    console.log('PDF mounting');
     window.addEventListener('message', message => this.handleMessage(message));
   }
+  componentDidUpdate() {
+    console.log("BUT IT UPDATED", this.props.cardToEdit);    
+    if (this.props.cardToEdit) {
+      const iframe = document.getElementById("PDFViewer");
+      console.log('SENDING MESSAGE', this.props.cardToEdit);
+      iframe.contentWindow.postMessage("THIS IS MY MESSAGE", '*');
+    }
+  }
   handleMessage(e) {
-    console.log('message arrived: ', e);
     const origin = e.origin;
     const message = e.data;
     const { source } = message;
     if (source === 'pdf-design' && origin === ROOT_URL) {
+      console.log('message arrived: ', e);
       const { card } = message;
       this.props.initOrder(card);
     }
@@ -31,7 +36,5 @@ class PDFViewer extends Component {
 const mapStateToProps = state => ({
   bingoCard: state.card,
 });
-
-
 
 export default connect(mapStateToProps, { initOrder })(PDFViewer);

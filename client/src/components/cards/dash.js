@@ -21,7 +21,7 @@ class Dash extends Component {
           </header>
           <section className="content">
             {!!props.cards.length && props.cards.map(card => (
-              <Link to={`card/edit/${card.id}`} key={card.id}>{card.id}</Link>
+              <Link to={`card/edit/${card._id}`} key={card._id} className="card-link">{card._id}</Link>
               ))}
             {!props.cards.length &&
               <Link to="/card/create" className="empty">
@@ -63,6 +63,9 @@ class Dash extends Component {
           .content :global(.empty span) {
             display: block;
             padding: 5px;
+          }
+          .content :global(.card-link) {
+            display: block;
           }
           `}
           </style>

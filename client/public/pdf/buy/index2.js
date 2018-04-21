@@ -49,7 +49,10 @@ function checkText(id, old, delay) {
       delay = 500;
     }
   }
-  setTimeout(function () { checkText(id, old, delay); }, delay);  if(loadCard.dateModified) {
+  setTimeout(function () {
+    
+  checkText(id, old, delay); }, delay);
+  if(loadCard.dateModified) {
     curCard = loadCard;
     //alert(`checkText00: loadCard: ${loadCard}`);
     loadCard = {};

@@ -23,7 +23,21 @@ export const initOrder = card => async (dispatch, getState) => {
     },
   });
 
-  console.log('request data: ', data); return;
+  console.log('request data: ', data); 
+  
+  const { id } = data;
+  if (id) {
+    const createdCard = data.card;
+    if (user.subscriber) {
+      dispatch(push(`/card/download/${id}`));
+    } else {
+      dispatch(setCard(card));
+      dispatch(push('/billing'));
+    }
+  }
+  return;
+
+
   if (user.subscriber) {
     dispatch(push('/card/download'));
   } else {

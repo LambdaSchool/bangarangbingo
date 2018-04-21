@@ -102,26 +102,44 @@ export const getCards = () => {
   };
 };
 
-export const getCard = (id) => {
-  const authToken = window.localStorage.getItem('token');
-  return dispatch => {
-    axios
-      .get(`${ROOT_URL}/cards/${id}`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        }
-      })
-      .then((res) => {
-        dispatch({
-          type: GET_CARD,
-          payload: res
-        });
-      })
-      .catch(() => {
-        dispatch(authError('Failed to get card by that id'));
-      });
-  };
-};
+
+export const getCard = id => async (dispatch) => {
+  try {
+    const authToken = window.localStorage.getItem('token');
+    const { data } = await axios.get(`${ROOT_URL}/card/${id}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      }
+    });
+    const { card } = data;
+    //we have card, now we have to set the card to edit;
+    console.log('get card: ', data);
+  } catch (e) {
+    console.log('get card: ', e);
+  }
+}
+
+
+// export const getCard = (id) => {
+//   const authToken = window.localStorage.getItem('token');
+//   return dispatch => {
+//     axios
+//       .get(`${ROOT_URL}/card/${id}`, {
+//         headers: {
+//           Authorization: `Bearer ${authToken}`,
+//         }
+//       })
+//       .then((res) => {
+//         dispatch({
+//           type: GET_CARD,
+//           payload: res
+//         });
+//       })
+//       .catch(() => {
+//         dispatch(authError('Failed to get card by that id'));
+//       });
+//   };
+// };
 
 export const addCard = (card) => {
   const authToken = window.localStorage.getItem('token');

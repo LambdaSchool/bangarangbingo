@@ -40,6 +40,7 @@ const PaymentController = {
       if (success) {
         if (purchaseType === 'subscription') {
           user.set('subscriber', true);
+          await user.save();
         }
         res.json({ sucess: 200 });
       } else {

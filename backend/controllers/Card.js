@@ -1,5 +1,9 @@
+const jwt = require('jsonwebtoken');
+const User = require('../models/user');
+const Card = require('../models/card');
 const PDFDocument = require('pdfkit');
 const SVGtoPDF = require('svg-to-pdfkit');
+const SECRET = process.env.APP_SECRET;
 
 PDFDocument.prototype.addSVG = function addSVG(svg, x, y, options) {
   return SVGtoPDF(this, svg, x, y, options);
@@ -64,8 +68,32 @@ const CardController = {
   getAll(req, res) {
     res.json([]);
   },
-  create(req, res) {
-    res.json({});
+  async create(req, res) {
+    try {
+      const authToken = req.headers.authorization.replace('Bearer ', '');
+      const decodedToken = await jwt.verify(authToken, SECRET);
+      const { username } = decodedToken;
+      const user = await User.findOne({ username }).exec();
+      const id = user._id;
+
+      const { card } = req.body;
+
+      const newCard = await Card.create({
+        author: id,
+        title: 'Bingo Card',
+        content: JSON.stringify(card),
+      });
+
+      user.cards.push(newCard._id);
+      const updateUser = await user.save();
+      res.json({
+        id: newCard._id,
+        card: newCard,
+      });
+    } catch (e) {
+      console.log('/card/create', e);
+      res.status(422).json({ error: 'Failed to create card' });
+    }
   },
   edit(req, res) {
     res.json({});

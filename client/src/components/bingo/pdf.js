@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setCard } from '../../actions/billing';
+import { initOrder } from '../../actions/billing';
 import { push } from 'react-router-redux';
 
 const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:3000';
@@ -14,15 +14,17 @@ class PDFViewer extends Component {
     window.addEventListener('message', message => this.handleMessage(message));
   }
   handleMessage(e) {
-    const { origin } = e;
-    if (origin === ROOT_URL) {
-      const card = e.data;
-      const test = this.props.setCard(card);
-      this.props.push('/billing');
+    console.log('message arrived: ', e);
+    const origin = e.origin;
+    const message = e.data;
+    const { source } = message;
+    if (source === 'pdf-design' && origin === ROOT_URL) {
+      const { card } = message;
+      this.props.initOrder(card);
     }
   }
   render() {
-    return <iframe id="PDFViewer" src={`${ROOT_URL}/pdf/pdf-design.html`} title="card" width="100%" height="1000px" />;
+    return <iframe id="PDFViewer" src={`${ROOT_URL}/pdf-design.html`} title="card" width="100%" height="1000px" />;
   }
 }
 
@@ -30,9 +32,6 @@ const mapStateToProps = state => ({
   bingoCard: state.card,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCard: card => dispatch(setCard(card)),
-  push: to => dispatch(push(to)),
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(PDFViewer);
+
+export default connect(mapStateToProps, { initOrder })(PDFViewer);

@@ -57,24 +57,23 @@ class Form extends Component {
 
   render() {
     let charge;
-    if (this.props.card.card.numCards) {
+    const hasCard = !!this.props.card.card;
+    const card = hasCard ? this.props.card.card : null;
+    const { auth } = this.props;
+    const { user } = auth;
+
+    if (hasCard) {
       this.state.bingoCard = this.props.card;
       this.state.numCardsOrdered = this.props.card.card.numCards;
       charge = (this.state.numCardsOrdered * 0.99).toFixed(2);
     }
-    console.log(this.props.card);
     return (
       <form onSubmit={e => this.handleSubmit(e)}>
-        {this.props.card.card.numCards
-          ? <RadioGroup name="buyOption" selectedValue={this.state.purchaseType} onChange={event => this.handleRadioChange(event)}>
-            <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
+        <RadioGroup name="buyOption" selectedValue={this.state.purchaseType} onChange={event => this.handleRadioChange(event)}>
+          <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
             <br />
-            <Radio value="oneTime" />One-Time Purchase - {this.state.numCardsOrdered} Cards at $.99 a piece - ${charge}
-          </RadioGroup>
-          : <RadioGroup name="buyOption" selectedValue={this.state.purchaseType} onChange={event => this.handleRadioChange(event)}>
-            <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
-          </RadioGroup>
-        }
+          <Radio value="oneTime" />One-Time Purchase - {this.state.numCardsOrdered} Cards at $.99 a piece - ${charge}
+        </RadioGroup>
         <br />
         <label>Name:</label>
         <input
@@ -132,6 +131,7 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => ({
+  auth: state.auth,
   card: state.card,
 });
 

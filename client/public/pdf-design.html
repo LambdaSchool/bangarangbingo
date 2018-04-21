@@ -27,7 +27,7 @@
         <input type="button" id = "jscolor_btn" class="jscolor {valueElement:'000000', onFineChange:'update(this, false)'}" value="Color" style="width:100px"></button>
         <input id="List_PDF_btn" type="button" onMouseDown="toggleEdit('List');" value="List" style="display:none;width:100px; background-color:white;"></input>
         <input id="Cells_PDF_btn" type="button" onMouseDown="toggleEdit('Cells')"  value="Cells" style="width:100px; background-color:white;"></input>
-        <input type="button" onMouseDown="window.parent.postMessage(exportCard(), '*')" value="$$$ Order" style="width:100px; background-color:white"></input>
+        <button type="button" onClick="window.parent.postMessage(exportCard(), '*')" style="width:100px; background-color:white">Order</button>
     <input type="text" id="input_field" size="3" minlength="1" maxlength="3" value="1"></input>
       <div style="width:100px; height:8px;"></div>
       <textarea id="List_area" cols="108" rows="32" style="resize:vertical; word-break:break-all; overflow-y:scroll; position:absolute; z-index:100; top:78px; left:20px; opacity:0.75; filter:alpha(opacity=75); display:none;">#0-99</textarea>

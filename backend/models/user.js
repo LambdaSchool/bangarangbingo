@@ -18,6 +18,12 @@ const UserSchema = new mongoose.Schema({
   },
   subscriber: {
     type: Boolean,
+    required: true,
+    default: false,
+  },
+  cards: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Card',
   },
 });
 UserSchema.static('authenticate', async function authenticate(username, password) {

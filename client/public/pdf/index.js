@@ -140,6 +140,17 @@ function setTextColor(picker) {
   document.getElementsByTagName('body')[0].style.color = '#' + picker.toString();
 }
 */
+function order(e) {
+
+}
+
+const orderButton = document.getElementById('order');
+orderButton.addEventListener('click', (e) => {
+  console.log("this was called, how many times", e);
+  e.preventDefault();
+  window.parent.postMessage(exportCard(), '*');
+  return false;
+});
 
 function update(color, updateText) {
   // console.log('color: ' + color);

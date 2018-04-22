@@ -6,7 +6,7 @@
  </head>
  <body style ="overflow-y:hidden; margin:0px; padding:4px; background-color:#484848;">
     <div id="holdDiv" style="height:100%; background-color:#484848;" >
-        <input type="button" onMouseDown="PDFiframe.contentWindow.postMessage(data, '*')" value="To iframe" style="width:100px; background-color:white"></input>
+        <input type="button" onClick="PDFiframe.contentWindow.postMessage(data, '*')" value="To iframe" style="width:100px; background-color:white"></input>
 	<iframe id="PDFiframe" width="100%" height="1000" frameborder="0" src="./pdf-design.html"> </iframe>
     </div>
 </body>

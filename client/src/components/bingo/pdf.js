@@ -6,26 +6,30 @@ import { push } from 'react-router-redux';
 const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:3000';
 
 class PDFViewer extends Component {
+  constructor(props) {
+    super(props);
+    this.handleMessage = this.handleMessage.bind(this);
+  }
+
   componentDidMount() {
-    console.log('PDF mounting');
-    window.addEventListener('message', message => this.handleMessage(message));
+    window.addEventListener('message', this.handleMessage);
   }
   componentDidUpdate() {
-    console.log("BUT IT UPDATED", this.props.cardToEdit);    
     if (this.props.cardToEdit) {
       const iframe = document.getElementById("PDFViewer");
-
-      iframe.onload = event => {
+      iframe.onload = (event) => {
         iframe.contentWindow.postMessage(this.props.cardToEdit, '*');
       }
     }
+  }
+  componentWillUnmount() {
+    window.removeEventListener('message', this.handleMessage);
   }
   handleMessage(e) {
     const origin = e.origin;
     const message = e.data;
     const { source } = message;
     if (source === 'pdf-design' && origin === ROOT_URL) {
-      console.log('message arrived: ', e);
       const { card } = message;
       this.props.initOrder(card);
     }

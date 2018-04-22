@@ -134,6 +134,9 @@ const CardController = {
     try {
       const { id } = req.params;
       res.download(`./pdfs/${id}.pdf`, (err) => {
+        if (err) {
+          res.status(422).json({ error: 'failed to download ' });
+        }
         fs.unlink(`./pdfs/${id}.pdf`, (e) => {
           console.log('had some error', e);
         });
@@ -155,8 +158,11 @@ const CardController = {
       console.log(card);
       const pdf = generatePDF(card);
       pdf.pipe(fs.createWriteStream(`./pdfs/${id}.pdf`));
+      pdf.on('end', () => {
+        res.json({ success: 200 });
+      });
       pdf.end();
-      res.json({ success: 200 });
+    
     } catch (e) {
       console.log(e);
       res.status(422).json({ error: 'Unable to provide download.' });

@@ -34,6 +34,7 @@ server.post('/card/edit', card.edit);
 server.get('/card/download/:id', card.download);
 server.get('/card/:id', card.get);
 server.post('/payments', payments.process);
+server.get('/pdf/download/:id', card.pdfdownload);
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });

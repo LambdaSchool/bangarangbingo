@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { CardElement, injectStripe } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import { RadioGroup, Radio } from 'react-radio-group';
-import { processPayment } from '../../actions';
+import { processPayment, removeCard } from '../../actions';
 
 import './style.css';
 
@@ -18,7 +18,9 @@ class Form extends Component {
       bingoCard: {},
     };
   }
-
+  componentWillUnmount() {
+    this.props.removeCard();
+  }
   handleRadioChange(value) {
     let charge;
     if (this.props.card.card.numCards) {
@@ -47,6 +49,7 @@ class Form extends Component {
             numCardsOrdered: this.state.numCardsOrdered,
             amtCharged: this.state.amtCharged,
             bingoCard: this.state.bingoCard,
+            id: this.props.card ? this.props.card.id || null : null,
           });
         }
       }).catch((err) => {
@@ -61,18 +64,23 @@ class Form extends Component {
     const card = hasCard ? this.props.card.card : null;
     const { auth } = this.props;
     const { user } = auth;
-
+    console.log(user);
     if (hasCard) {
       this.state.bingoCard = this.props.card;
       this.state.numCardsOrdered = this.props.card.card.numCards;
       charge = (this.state.numCardsOrdered * 0.99).toFixed(2);
     }
-    return (
+    return user.subscriber ? <span>You already subscribed go download cards</span> : (
       <form onSubmit={e => this.handleSubmit(e)}>
         <RadioGroup name="buyOption" selectedValue={this.state.purchaseType} onChange={event => this.handleRadioChange(event)}>
           <Radio value="subscription" />One-Year Subscription - Unlimited Cards - $9.99
-            <br />
-          <Radio value="oneTime" />One-Time Purchase - {this.state.numCardsOrdered} Cards at $.99 a piece - ${charge}
+          <br />
+          { this.state.numCardsOrdered ?
+            <span>
+              <Radio value="oneTime" />
+            One-Time Purchase - {this.state.numCardsOrdered} Cards at $.99 a piece - ${charge}
+            </span>
+            : null }
         </RadioGroup>
         <br />
         <label>Name:</label>
@@ -135,4 +143,4 @@ const mapStateToProps = state => ({
   card: state.card,
 });
 
-export default connect(mapStateToProps, { processPayment })(injectStripe(Form));
+export default connect(mapStateToProps, { processPayment, removeCard })(injectStripe(Form));

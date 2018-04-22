@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const User = require('../models/user');
+const Card = require('../models/card');
 
 const { handleSubscription, handleCharge } = require('../actions/payments');
 
@@ -15,34 +16,40 @@ const PaymentController = {
       const { username } = decodedToken;
       const user = await User.findOne({ username }).exec();
       let { customerID, subscriber } = user;
-      const { email, purchaseType, numCardsOrdered } = options;
+      const { email, purchaseType, numCardsOrdered, id } = options;
 
       if (!customerID) {
         const customer = await stripe.customers.create({
           source: token.id,
           email,
         });
-        const { id } = customer;
-        customerID = id;
-        user.set('customerID', id);
+        customerID = customer.id;
+        user.set('customerID', customer.id);
         await user.save();
       }
 
       let success = false;
       if (purchaseType === 'subscription') {
-        success = await handleSubscription({ customerID }, token);
+        success = await handleSubscription({ customerID, id }, token);
       }
 
       if (purchaseType === 'oneTime') {
-        success = await handleCharge({ customerID, numCardsOrdered }, token);
+        success = await handleCharge({ customerID, numCardsOrdered, id }, token);
       }
 
+      let newUser;
       if (success) {
         if (purchaseType === 'subscription') {
           user.set('subscriber', true);
-          await user.save();
+          newUser = await user.save();
         }
-        res.json({ sucess: 200 });
+        if (id) {
+          await Card.findByIdAndUpdate(id, { paid: true }, { new: true }).exec();
+        }
+        if (newUser) {
+          res.json({ success: 200, user: newUser });
+        }
+        res.json({ success: 200 });
       } else {
         res.status(422).json({ error: 'Payment could not be processed' });
       }

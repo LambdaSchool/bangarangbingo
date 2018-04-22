@@ -1,8 +1,13 @@
+const fs = require('fs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Card = require('../models/card');
 const PDFDocument = require('pdfkit');
 const SVGtoPDF = require('svg-to-pdfkit');
+const pdfmake = require('pdfmake');
+const { createPdf } = require('pdfmake');
+console.log("pdfmake", createPdf)
+const JSON5 = require('json5');
 
 const SECRET = process.env.APP_SECRET;
 
@@ -125,6 +130,18 @@ const CardController = {
   edit(req, res) {
     res.json({});
   },
+  async pdfdownload(req, res) {
+    try {
+      const { id } = req.params;
+      res.download(`./pdfs/${id}.pdf`, (err) => {
+        fs.unlink(`./pdfs/${id}.pdf`, (e) => {
+          console.log('had some error', e);
+        });
+      });
+    } catch (e) {
+      res.status(422).json({ error: 'failed to download ' });
+    }
+  },
   async download(req, res) {
     try {
       const { id } = req.params;
@@ -136,11 +153,50 @@ const CardController = {
 
       const card = content;
       console.log(card);
+      const pdf = generatePDF(card);
+      pdf.pipe(fs.createWriteStream(`./pdfs/${id}.pdf`));
+      pdf.end();
+      res.json({ success: 200 });
     } catch (e) {
-      console.log(e)
+      console.log(e);
       res.status(422).json({ error: 'Unable to provide download.' });
     }
   },
 };
 
 module.exports = CardController;
+
+
+function generatePDF(card) {
+  const curCard = JSON.parse(card);
+  console.log('generating');
+
+  const pdfHeader = '{info:{title:\'Bingo Cards\',author:\'Bangarang Bingo\',subject:\'\',keywords:\'\'},pageOrientation:\'portrait\',pageSize:\'A4\',content:[';
+  let i = 0;
+  let pdfBody = '';
+  let pdfBody_oneCard = '';
+  let view_topWord = ['B', 'I', 'N', 'G', 'O'];
+  let view_pageBreak = '';
+  console.log('card', curCard.numCards);
+  for (; i < curCard.numCards; i++) {
+    console.log('generating');
+    pdfBody += `{alignment:'center',background:'',content:[],table:{headerRows:1,widths:[94,94,94,94,94],margin:[22,0,22,0,],heights:[64,16,124,124,124,124,124],body:[[{text:'${view_topWord[0]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[1]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[2]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[3]}',bold:true,style:'top',fontSize:64},{text:'${view_topWord[4]}',bold:true,style:'top',fontSize:64}],[{text:' ',colSpan:5,fillColor:'${curCard.fillColor}'}],['${curCard.cellDat[i + 0]}','${curCard.cellDat[i + 1]}','${curCard.cellDat[i + 2]}','${curCard.cellDat[i + 3]}','${curCard.cellDat[i + 4]}'],['${curCard.cellDat[i + 5]}','${curCard.cellDat[i + 6]}','${curCard.cellDat[i + 7]}','${curCard.cellDat[i + 8]}','${curCard.cellDat[i + 9]}'],['${curCard.cellDat[i + 10]}','${curCard.cellDat[i + 11]}',{text:'\\n\\n${curCard.freeStr}',bold:true,fontSize:${curCard.freeFontSize},color:'${curCard.freeFontColor}'},'${curCard.cellDat[i + 13]}','${curCard.cellDat[i + 14]}'],['${curCard.cellDat[i + 15]}','${curCard.cellDat[i + 16]}','${curCard.cellDat[i + 17]}','${curCard.cellDat[i + 18]}','${curCard.cellDat[i + 19]}'],['${curCard.cellDat[i + 20]}','${curCard.cellDat[i + 21]}','${curCard.cellDat[i + 22]}','${curCard.cellDat[i + 23]}','${curCard.cellDat[i + 24]}']]},${view_pageBreak}layout:{hLineColor:'${curCard.fillColor}', vLineColor:'${curCard.fillColor}',}},`;
+
+    if (i === 0) {
+      pdfBody_oneCard = pdfBody;
+    }
+  }
+  const pdfFooter = `],styles:{top:{alignment:'center',color:'#ffffff',fillColor:'${curCard.fillColor}'},sub:{fontSize:32,bold:true, margin:[0,44,0,0,]},fill:{fillColor:'${curCard.fillColor}'},quote:{italics:true},small:{fontSize:8}}}`;
+
+  const multiCard = `${pdfHeader}${pdfBody}${pdfFooter}`;
+  const singleCard = `${pdfHeader}${pdfBody_oneCard}${pdfFooter}`;
+
+  const pdf = new pdfmake({
+    Roboto: {
+      normal: new Buffer(require('pdfmake/build/vfs_fonts.js').pdfMake.vfs['Roboto-Regular.ttf'], 'base64'),
+      bold: new Buffer(require('pdfmake/build/vfs_fonts.js').pdfMake.vfs['Roboto-Medium.ttf'], 'base64'),
+    },
+  }).createPdfKitDocument(JSON5.parse(multiCard));
+
+  return pdf;
+}

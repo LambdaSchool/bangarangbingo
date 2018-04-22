@@ -2,7 +2,8 @@
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:8080';
-
+import { push } from 'react-router-redux';
+import { authenticate } from './auth';
 export const USER_REGISTERED = 'USER_REGISTERED';
 export const USER_AUTHENTICATED = 'USER_AUTHENTICATED';
 export const USER_UNAUTHENTICATED = 'USER_UNAUTHENTICATED';
@@ -191,8 +192,23 @@ export const processPayment = (token, options) => {
         Authorization: `Bearer ${authToken}`,
       }
     }).then(res => {
-      console.log(res);
+      const { user } = res.data;
+      if (user) {
+        dispatch(authenticate(user, authToken));
+      }
+      if (options.id) {
+        dispatch(push(`/card/download/${options.id}`))
+      } else {
+        dispatch(push(`/cards`))
+      }
+      
     });
     console.log('send to server', token, options);
   }
 }
+
+export const removeCard = () => (dispatch) => {
+  dispatch({
+    type: 'REMOVE_CARD'
+  })
+};

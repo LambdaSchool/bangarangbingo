@@ -13,6 +13,9 @@ const CardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  paid: {
+    type: Boolean,
+  },
 });
 
 module.exports = mongoose.model('Card', CardSchema);

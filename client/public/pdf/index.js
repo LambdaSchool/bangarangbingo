@@ -30,7 +30,7 @@ function checkText(id, old, delay) {
     curCard = loadCard;
     // alert(`checkText00: loadCard: ${loadCard}`);
     loadCard = {};
-    console.log(curCard);
+    console.log
     // document.getElementById(id).value = curCard.cell_viewStr;
     curCard.randMode = 'none';
     update(null, true);
@@ -39,14 +39,14 @@ function checkText(id, old, delay) {
     document.getElementById('input_field').value = `${curCard.numCards}`;
     delay = 200;
   } else {
-    let val = document.getElementById(id).value;
-
-    if (
-      !curCard.isNum &&
-      val !== old &&
-      val !== curCard.cell_viewStr &&
-      !val.match(/\\/i)
-    ) {
+    let val = document.getElementById(id).value; 
+    
+    if(
+        !curCard.isNum &&
+        val !== old && 
+        val !== curCard.cell_viewStr &&
+        !val.match(/\\/i)
+      ) {
       //update(null, true);
       //console.log(document.getElementById(id).value);
       curCard.randMode = 'none';
@@ -140,17 +140,6 @@ function setTextColor(picker) {
   document.getElementsByTagName('body')[0].style.color = '#' + picker.toString();
 }
 */
-function order(e) {
-
-}
-
-const orderButton = document.getElementById('order');
-orderButton.addEventListener('click', (e) => {
-  console.log("this was called, how many times", e);
-  e.preventDefault();
-  window.parent.postMessage(exportCard(), '*');
-  return false;
-});
 
 function update(color, updateText) {
   // console.log('color: ' + color);

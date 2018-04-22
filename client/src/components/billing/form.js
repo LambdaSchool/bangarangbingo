@@ -100,7 +100,7 @@ class Form extends Component {
           onChange={e => this.handleChange(e, 'email')}
         />
         <CardElement />
-        <button type="submit">Confirm Subscription</button>
+        <button type="submit">Confirm Purchase</button>
         <style jsx scoped>
           {`
           form button {

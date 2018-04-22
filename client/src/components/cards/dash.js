@@ -20,9 +20,10 @@ class Dash extends Component {
             <Link to="/card/create">Create Cards</Link>
           </header>
           <section className="content">
-            {!!props.cards.length && props.cards.map(card => (
+            <div className="cards">{!!props.cards.length && props.cards.map(card => (
               <Link to={`card/edit/${card._id}`} key={card._id} className="card-link">{card.title}</Link>
               ))}
+            </div>
             {!props.cards.length &&
               <Link to="/card/create" className="empty">
                 <span>You don't have any bingo cards!</span>
@@ -66,6 +67,27 @@ class Dash extends Component {
           }
           .content :global(.card-link) {
             display: block;
+          }
+          .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            background: #249999;
+            padding: 20px;
+
+
+          }
+          .cards :global(.card-link) {
+            min-width: 250px;
+            padding: 10px 25px;
+            box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            width: 300px;
+            border: 2px solid #125454;
+            text-decoration: none;
+            color: #125454;
+            background: #fff;
+        }
           }
           `}
           </style>

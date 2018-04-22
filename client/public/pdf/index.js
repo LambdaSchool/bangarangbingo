@@ -18,8 +18,10 @@ function bindEvent(element, eventName, eventHandler) {
 }
 
 bindEvent(window, 'message', (e) => {
-  console.log('this was calling in iframe', e);
-  loadCard = e.data;
+  console.log('this was calling in iframe', e.data, e);
+  if (e.data) {
+    loadCard = JSON.parse(e.data);
+  }
 });
 
 
@@ -28,6 +30,7 @@ function checkText(id, old, delay) {
     curCard = loadCard;
     // alert(`checkText00: loadCard: ${loadCard}`);
     loadCard = {};
+    console.log(curCard);
     // document.getElementById(id).value = curCard.cell_viewStr;
     curCard.randMode = 'none';
     update(null, true);
@@ -36,14 +39,14 @@ function checkText(id, old, delay) {
     document.getElementById('input_field').value = `${curCard.numCards}`;
     delay = 200;
   } else {
-    let val = document.getElementById(id).value; 
-    
-    if(
-        !curCard.isNum &&
-        val !== old && 
-        val !== curCard.cell_viewStr &&
-        !val.match(/\\/i)
-      ) {
+    let val = document.getElementById(id).value;
+
+    if (
+      !curCard.isNum &&
+      val !== old &&
+      val !== curCard.cell_viewStr &&
+      !val.match(/\\/i)
+    ) {
       //update(null, true);
       //console.log(document.getElementById(id).value);
       curCard.randMode = 'none';

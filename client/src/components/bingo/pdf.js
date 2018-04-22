@@ -14,8 +14,10 @@ class PDFViewer extends Component {
     console.log("BUT IT UPDATED", this.props.cardToEdit);    
     if (this.props.cardToEdit) {
       const iframe = document.getElementById("PDFViewer");
-      console.log('SENDING MESSAGE', this.props.cardToEdit);
-      iframe.contentWindow.postMessage("THIS IS MY MESSAGE", '*');
+
+      iframe.onload = event => {
+        iframe.contentWindow.postMessage(this.props.cardToEdit, '*');
+      }
     }
   }
   handleMessage(e) {

@@ -21,7 +21,7 @@ class Dash extends Component {
           </header>
           <section className="content">
             {!!props.cards.length && props.cards.map(card => (
-              <Link to={`card/edit/${card._id}`} key={card._id} className="card-link">{card._id}</Link>
+              <Link to={`card/edit/${card._id}`} key={card._id} className="card-link">{card.title}</Link>
               ))}
             {!props.cards.length &&
               <Link to="/card/create" className="empty">

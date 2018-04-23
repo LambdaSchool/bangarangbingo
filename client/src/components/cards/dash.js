@@ -88,6 +88,7 @@ class Dash extends Component {
             color: #125454;
             background: #fff;
         }
+        
           }
           `}
           </style>

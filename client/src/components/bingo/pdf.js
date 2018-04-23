@@ -15,6 +15,7 @@ class PDFViewer extends Component {
     window.addEventListener('message', this.handleMessage);
   }
   componentDidUpdate() {
+    console.log('update: ', this.props);
     if (this.props.cardToEdit) {
       const iframe = document.getElementById("PDFViewer");
       iframe.onload = (event) => {
@@ -31,7 +32,9 @@ class PDFViewer extends Component {
     const { source } = message;
     if (source === 'pdf-design' && origin === ROOT_URL) {
       const { card } = message;
-      this.props.initOrder(card);
+      const { cardname: name } = this.props;
+      console.log('we have a name: ', name);
+      this.props.initOrder(name, card);
     }
   }
   render() {

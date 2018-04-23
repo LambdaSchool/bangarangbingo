@@ -76,10 +76,10 @@ const CardController = {
       const decodedToken = await jwt.verify(authToken, SECRET);
       const { username } = decodedToken;
       const user = await User.findOne({ username }).exec();
-      const { content: card } = await Card.findOne({ _id: id }).exec();
-      console.log(card);
+      const { title, content: card } = await Card.findOne({ _id: id }).exec();
       res.json({
         card,
+        title,
       });
     } catch (e) {
       console.log('get card: ', e);
@@ -108,11 +108,11 @@ const CardController = {
       const user = await User.findOne({ username }).exec();
       const id = user._id;
 
-      const { card } = req.body;
+      const { card, title } = req.body;
 
       const newCard = await Card.create({
         author: id,
-        title: 'Bingo Card',
+        title: title || 'Bingo Card',
         content: JSON.stringify(card),
       });
 

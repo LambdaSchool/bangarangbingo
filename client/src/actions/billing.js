@@ -12,12 +12,13 @@ export const setCard = ({ card, id }) => ({
   },
 });
 
-export const initOrder = card => async (dispatch, getState) => {
+export const initOrder = (name, card) => async (dispatch, getState) => {
   const { auth } = getState();
   const { user } = auth;
   const authToken = window.localStorage.getItem('token');
   const { data } = await axios.post(`${ROOT_URL}/card/create`, {
     card,
+    title: name,
   }, {
     headers: {
       Authorization: `Bearer ${authToken}`,

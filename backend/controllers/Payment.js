@@ -48,8 +48,9 @@ const PaymentController = {
         }
         if (newUser) {
           res.json({ success: 200, user: newUser });
+        } else {
+          res.json({ success: 200 });
         }
-        res.json({ success: 200 });
       } else {
         res.status(422).json({ error: 'Payment could not be processed' });
       }

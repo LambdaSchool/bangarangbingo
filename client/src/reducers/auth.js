@@ -8,6 +8,7 @@ const defaultState = {
   user: {
     id: '',
     email: '',
+    subscriber: false,
   },
   token: '',
 };

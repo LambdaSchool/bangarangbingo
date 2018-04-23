@@ -24,6 +24,13 @@ class Downloads extends Component {
             </section>
           </section>
         </div>
+        <style jsx scoped>
+          {`
+            .root {
+              text-align: center;
+            }
+          `}
+        </style>
       </Layout>
     );
   }

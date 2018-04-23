@@ -5,6 +5,7 @@ import Card from './card';
 import CardEdit from './cardEdit';
 import Billing from './billing/index';
 import Header from './header';
+import AboutUs from './aboutUs';
 
 export {
   // eslint-disable-next-line import/prefer-default-export
@@ -15,4 +16,5 @@ export {
   CardEdit,
   Billing,
   Header,
+  AboutUs,
 };

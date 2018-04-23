@@ -194,6 +194,7 @@ export const processPayment = (token, options) => {
     }).then(res => {
       const { user } = res.data;
       if (user) {
+        console.log('USER WE GOT BACK', user);
         dispatch(authenticate(user, authToken));
       }
       if (options.id) {

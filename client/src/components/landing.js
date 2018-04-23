@@ -20,6 +20,7 @@ const Landing = () => (
         </p>
       </div>
       <div className="content__button"><Link to="/login" className="links__button">Make Your Bingo Card Now!</Link></div>
+      <div><Link to="/aboutUs">About Us</Link></div>
     </div>
     <style jsx scoped>
     {`
@@ -96,7 +97,6 @@ const Landing = () => (
       color: #fff;
       cursor: pointer;
   }
-
     `}
     </style>
   </div>

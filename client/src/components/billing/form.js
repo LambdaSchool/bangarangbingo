@@ -64,7 +64,7 @@ class Form extends Component {
     const card = hasCard ? this.props.card.card : null;
     const { auth } = this.props;
     const { user } = auth;
-    console.log(user);
+    console.log('user being used for render: ', user);
     if (hasCard) {
       this.state.bingoCard = this.props.card;
       this.state.numCardsOrdered = this.props.card.card.numCards;

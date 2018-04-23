@@ -9,6 +9,9 @@ export const authenticate = (user, token) => {
   if (!token) {
     token = window.localStorage.getItem('token');
   }
+  if (user) {
+    window.localStorage.setItem('user', JSON.stringify(user));
+  }
   console.log('called');
   return {
     type: AUTHENTICATE_USER,

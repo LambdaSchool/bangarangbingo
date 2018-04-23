@@ -29,11 +29,12 @@ server.post('/auth/login', auth.login);
 server.post('/auth/reset', auth.reset);
 server.post('/auth/update', auth.update);
 server.get('/cards', card.getAll);
-server.get('/card/:id', card.get);
 server.post('/card/create', card.create);
 server.post('/card/edit', card.edit);
-server.get('/cards/download', card.download);
+server.get('/card/download/:id', card.download);
+server.get('/card/:id', card.get);
 server.post('/payments', payments.process);
+server.get('/pdf/download/:id', card.pdfdownload);
 server.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });

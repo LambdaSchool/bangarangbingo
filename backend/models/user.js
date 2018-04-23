@@ -16,6 +16,15 @@ const UserSchema = new mongoose.Schema({
     required: false,
     unique: false,
   },
+  subscriber: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  cards: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Card',
+  },
 });
 UserSchema.static('authenticate', async function authenticate(username, password) {
   const user = await this.findOne({ username }).exec();

@@ -20,6 +20,7 @@ const Layout = props => (
         <Link to="/cards">Cards</Link>
         <Link to="/billing">Billing</Link>
         <Link to="/settings">Settings</Link>
+        <Link to="/aboutUs">About</Link>
       </nav>
     </div>
     <section className="pageContent">
@@ -72,6 +73,7 @@ const Layout = props => (
         }
         .navigation {
           display: flex;
+          flex-wrap: wrap;
           justify-content: space-between;
           align-items: center;
           padding: 75px 20px;

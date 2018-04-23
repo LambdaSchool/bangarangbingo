@@ -2,7 +2,8 @@
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:8080';
-
+import { push } from 'react-router-redux';
+import { authenticate } from './auth';
 export const USER_REGISTERED = 'USER_REGISTERED';
 export const USER_AUTHENTICATED = 'USER_AUTHENTICATED';
 export const USER_UNAUTHENTICATED = 'USER_UNAUTHENTICATED';
@@ -102,26 +103,44 @@ export const getCards = () => {
   };
 };
 
-export const getCard = (id) => {
-  const authToken = window.localStorage.getItem('token');
-  return dispatch => {
-    axios
-      .get(`${ROOT_URL}/cards/${id}`, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        }
-      })
-      .then((res) => {
-        dispatch({
-          type: GET_CARD,
-          payload: res
-        });
-      })
-      .catch(() => {
-        dispatch(authError('Failed to get card by that id'));
-      });
-  };
-};
+
+export const getCard = id => async (dispatch) => {
+  try {
+    const authToken = window.localStorage.getItem('token');
+    const { data } = await axios.get(`${ROOT_URL}/card/${id}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      }
+    });
+    const { card } = data;
+    //we have card, now we have to set the card to edit;
+    console.log('get card: ', data);
+  } catch (e) {
+    console.log('get card: ', e);
+  }
+}
+
+
+// export const getCard = (id) => {
+//   const authToken = window.localStorage.getItem('token');
+//   return dispatch => {
+//     axios
+//       .get(`${ROOT_URL}/card/${id}`, {
+//         headers: {
+//           Authorization: `Bearer ${authToken}`,
+//         }
+//       })
+//       .then((res) => {
+//         dispatch({
+//           type: GET_CARD,
+//           payload: res
+//         });
+//       })
+//       .catch(() => {
+//         dispatch(authError('Failed to get card by that id'));
+//       });
+//   };
+// };
 
 export const addCard = (card) => {
   const authToken = window.localStorage.getItem('token');
@@ -173,8 +192,24 @@ export const processPayment = (token, options) => {
         Authorization: `Bearer ${authToken}`,
       }
     }).then(res => {
-      console.log(res);
+      const { user } = res.data;
+      if (user) {
+        console.log('USER WE GOT BACK', user);
+        dispatch(authenticate(user, authToken));
+      }
+      if (options.id) {
+        dispatch(push(`/card/download/${options.id}`))
+      } else {
+        dispatch(push(`/cards`))
+      }
+      
     });
     console.log('send to server', token, options);
   }
 }
+
+export const removeCard = () => (dispatch) => {
+  dispatch({
+    type: 'REMOVE_CARD'
+  })
+};

@@ -1,3 +1,4 @@
+/* eslint-disable */
 
 let init = false;
 let curCard = new BingoCard();
@@ -50,7 +51,10 @@ function checkText(id, old, delay) {
       delay = 500;
     }
   }
-  setTimeout(function () { checkText(id, old, delay); }, delay);  if(loadCard.dateModified) {
+  setTimeout(function () {
+    
+  checkText(id, old, delay); }, delay);
+  if(loadCard.dateModified) {
     curCard = loadCard;
     //alert(`checkText00: loadCard: ${loadCard}`);
     loadCard = {};
@@ -308,7 +312,7 @@ function update(color, updateText) {
   
   pdf00 = pdfMake.createPdf(dd2, pdfMake.fonts, pdfMake.vfs);
   pdf01 = pdfMake.createPdf(dd2_multiCard, pdfMake.fonts, pdfMake.vfs);
-
+  console.log('pdf', pdf01);
   height = window.innerHeight - 32;
   pdf00.getBase64((data) => { 
     //data = preData + data;
@@ -501,7 +505,7 @@ setTimeout(function () { checkText2(200); }, 200);
 
 
 
-function goPDF(str = 'open', dd = docDefinition, PDFname = 'doc.pdf') { 
+function goPDF(str = 'open', dd = null, PDFname = 'doc.pdf') { 
   switch(str) {
     case 'open':
       try { //pdfMake.createPdf(dd, pdfMake.fonts, pdfMake.vfs).open({}, window); 
@@ -513,7 +517,7 @@ function goPDF(str = 'open', dd = docDefinition, PDFname = 'doc.pdf') {
       try { //pdfMake.createPdf(dd).download(PDFname); }
         pdf01.download(PDFname);
       }
-      catch(err){ console.log('PDF failed to download.') };
+      catch(err){ console.log('PDF failed to download.'); console.log(err) };
       break;
     case 'print':
       try { pdf00.print({}, window); }

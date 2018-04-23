@@ -10,8 +10,11 @@ const CardSchema = new mongoose.Schema({
     required: true,
   },
   content: {
-    type: [String],
+    type: String,
     required: true,
+  },
+  paid: {
+    type: Boolean,
   },
 });
 

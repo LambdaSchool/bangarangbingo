@@ -8,7 +8,7 @@ class CreateCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'game of thrones night',
+      name: 'bingo card title',
     };
   }
   handleChange(e, field) {

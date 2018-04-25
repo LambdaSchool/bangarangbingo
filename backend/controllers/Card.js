@@ -133,15 +133,25 @@ const CardController = {
   async pdfdownload(req, res) {
     try {
       const { id } = req.params;
-      res.download(`./pdfs/${id}.pdf`, (err) => {
-        if (err) {
-          res.status(422).json({ error: 'failed to download ' });
-        }
-        fs.unlink(`./pdfs/${id}.pdf`, (e) => {
-          console.log('had some error', e);
+      const { content } = await Card.findOne({ _id: id }).exec();
+      const pdf = generatePDF(content);
+
+
+      pdf.pipe(fs.createWriteStream(`./pdfs/${id}.pdf`));
+      pdf.on('end', () => {
+        res.download(`./pdfs/${id}.pdf`, (err) => {
+          if (err) {
+            console.log(err);
+            res.status(422).json({ error: 'failed to download ' });
+          }
+          fs.unlink(`./pdfs/${id}.pdf`, (e) => {
+            console.log('had some error', e);
+          });
         });
       });
+      pdf.end();
     } catch (e) {
+      console.log(e)
       res.status(422).json({ error: 'failed to download ' });
     }
   },
@@ -155,14 +165,14 @@ const CardController = {
       const { content } = await Card.findOne({ _id: id }).exec();
 
       const card = content;
-      console.log(card);
-      const pdf = generatePDF(card);
-      pdf.pipe(fs.createWriteStream(`./pdfs/${id}.pdf`));
-      pdf.on('end', () => {
-        res.json({ success: 200 });
-      });
-      pdf.end();
-    
+      // console.log(card);
+      // const pdf = generatePDF(card);
+      // pdf.pipe(fs.createWriteStream(`./pdfs/${id}.pdf`));
+      // pdf.on('end', () => {
+      //   res.json({ success: 200 });
+      // });
+      // pdf.end();
+      res.json({ success: 200 });
     } catch (e) {
       console.log(e);
       res.status(422).json({ error: 'Unable to provide download.' });

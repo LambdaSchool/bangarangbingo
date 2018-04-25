@@ -4,7 +4,7 @@ import Layout from '../layout';
 import UpdatePassword from './updatePassword';
 import UpdateEmail from './updateEmail';
 
-const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:3000';
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.com' : 'http://localhost:3000';
 
 const Settings = props => (
   <Layout logout={props.logout}>

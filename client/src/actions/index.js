@@ -1,7 +1,7 @@
 /* eslint-disable */
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.herokuapp.com' : 'http://localhost:8080';
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.com' : 'http://localhost:8080';
 import { push } from 'react-router-redux';
 import { authenticate } from './auth';
 export const USER_REGISTERED = 'USER_REGISTERED';

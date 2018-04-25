@@ -137,16 +137,16 @@ const CardController = {
       const pdf = generatePDF(content);
 
 
-      pdf.pipe(fs.createWriteStream(`./pdfs/${id}.pdf`));
-      pdf.on('end', () => {
+      const response = pdf.pipe(fs.createWriteStream(`./pdfs/${id}.pdf`));
+      response.on('finish', () => {
         res.download(`./pdfs/${id}.pdf`, (err) => {
           if (err) {
             console.log(err);
             res.status(422).json({ error: 'failed to download ' });
           }
-          // fs.unlink(`./pdfs/${id}.pdf`, (e) => {
-          //   console.log('had some error', e);
-          // });
+          fs.unlink(`./pdfs/${id}.pdf`, (e) => {
+            console.log('had some error', e);
+          });
         });
       });
       pdf.end();

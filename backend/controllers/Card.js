@@ -6,7 +6,7 @@ const PDFDocument = require('pdfkit');
 const SVGtoPDF = require('svg-to-pdfkit');
 const pdfmake = require('pdfmake');
 const { createPdf } = require('pdfmake');
-console.log("pdfmake", createPdf)
+console.log("pdfmake", createPdf);
 const JSON5 = require('json5');
 
 const SECRET = process.env.APP_SECRET;
@@ -144,14 +144,14 @@ const CardController = {
             console.log(err);
             res.status(422).json({ error: 'failed to download ' });
           }
-          fs.unlink(`./pdfs/${id}.pdf`, (e) => {
-            console.log('had some error', e);
-          });
+          // fs.unlink(`./pdfs/${id}.pdf`, (e) => {
+          //   console.log('had some error', e);
+          // });
         });
       });
       pdf.end();
     } catch (e) {
-      console.log(e)
+      console.log(e);
       res.status(422).json({ error: 'failed to download ' });
     }
   },

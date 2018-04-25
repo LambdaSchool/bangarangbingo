@@ -20,7 +20,7 @@ const Landing = () => (
         </p>
       </div>
       <div className="content__button"><Link to="/login" className="links__button">Make Your Bingo Card Now!</Link></div>
-      <div><Link to="/aboutUs">About Us</Link></div>
+      <div className="link"><Link to="/aboutUs">About Us</Link></div>
     </div>
     <style jsx scoped>
     {`
@@ -56,8 +56,10 @@ const Landing = () => (
   }
   
   .content {
-      position: fixed;
-      bottom: 0%;
+    position: relative;
+    padding-top: 300px;
+    padding-top: 40vh;
+    text-align: center;    
       width: 100%;
   }
   
@@ -83,7 +85,7 @@ const Landing = () => (
   }
   
   .content__button {
-      margin: 15px 0px 15px 0px;
+      margin: 25px 0px 25px 0px;
   }
   
   .content :global(a.links__button) {
@@ -96,6 +98,12 @@ const Landing = () => (
       font-size: 18px;
       color: #fff;
       cursor: pointer;
+  }
+  .link :global(a) {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 0;
+    display: inline-block;
   }
     `}
     </style>

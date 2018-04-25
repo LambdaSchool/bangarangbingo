@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { initOrder } from '../../actions/billing';
 import { push } from 'react-router-redux';
 
-const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://bangarangbingo.com' : 'http://localhost:3000';
+const ROOT_URL = process.env.NODE_ENV === 'production' ? 'https://www.bangarangbingo.com' : 'http://localhost:3000';
 
 class PDFViewer extends Component {
   constructor(props) {

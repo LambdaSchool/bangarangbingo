@@ -11,7 +11,7 @@ const DB_URL = process.env.MONGODB_URI || 'mongodb://localhost:27017/bingo';
 const server = express();
 
 server.use(cors({
-  origin: process.env.MONGODB_URI ? 'https://bangarangbingo.com' : 'http://localhost:3000',
+  origin: process.env.MONGODB_URI ? 'https://www.bangarangbingo.com' : 'http://localhost:3000',
   credentials: true,
 }));
 

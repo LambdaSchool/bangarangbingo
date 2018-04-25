@@ -138,6 +138,10 @@ const CardController = {
 
 
       const response = pdf.pipe(fs.createWriteStream(`./pdfs/${id}.pdf`));
+      repsonse.on('error', e => {
+        console.log('response error', e);
+      });
+      
       response.on('finish', () => {
         res.download(`./pdfs/${id}.pdf`, (err) => {
           if (err) {
